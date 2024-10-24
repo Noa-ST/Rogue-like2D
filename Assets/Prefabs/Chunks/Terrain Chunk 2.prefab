@@ -476,7 +476,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40c172e566d599146bb1f10cfd900548, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetMap: {fileID: 0}
+  targetMap: {fileID: 2188342019806288076}
 --- !u!61 &1157985334237466348
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3919,8 +3919,8 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1960131327
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0.5, y: 0.5, z: 0}

@@ -14,7 +14,7 @@ public class MapController : MonoBehaviour
     [Header("Optimization")]
     public List<GameObject> spawnedChunks;
     GameObject _latestChunk;
-    public float maxOpDist; //Must be greater than the length and width of the tilemap
+    public float maxOpDist; 
     float _opDist;
     float _optimizerCooldown;
     public float optimizerCooldownDur;
@@ -108,6 +108,7 @@ public class MapController : MonoBehaviour
         int rand = Random.Range(0, terrainChunks.Count);
         _latestChunk = Instantiate(terrainChunks[rand], noTerrainPosition, Quaternion.identity);
         spawnedChunks.Add(_latestChunk);
+        currentChunk = _latestChunk;
     }
 
     void ChunkOptimzer()
