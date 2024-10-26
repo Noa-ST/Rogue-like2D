@@ -1,12 +1,11 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed;
-    Rigidbody2D _rb;
+    // Movement
     [HideInInspector]
     public float lastHorizontalVector;
     [HideInInspector]
@@ -15,6 +14,11 @@ public class PlayerMovement : MonoBehaviour
     public Vector2 moveDir;
     [HideInInspector]
     public Vector2 lastMoveVector;
+
+    // Tham chiếu 
+    Rigidbody2D _rb;
+    public CharacterScriptObject characterData;
+
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -34,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-        _rb.velocity = new Vector2(moveDir.x * moveSpeed, moveDir.y * moveSpeed);
+        _rb.velocity = new Vector2(moveDir.x * characterData.MoveSpeed, moveDir.y * characterData.MoveSpeed);
 
         if (moveDir.x != 0)
         {

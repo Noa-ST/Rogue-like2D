@@ -12,14 +12,22 @@ public class GarlicBehavior : MeleWeaponBehavior
         markedEnemies = new List<GameObject>();
     }
 
-    protected override void OnTriggerEnter2D(Collider2D col)
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (col.CompareTag("Enemy") && !markedEnemies.Contains(col.gameObject))
+        if (collision.CompareTag("Enemy") && !markedEnemies.Contains(collision.gameObject))
         {
-            EnemyStat enemy = col.GetComponent<EnemyStat>();
+            EnemyStat enemy = collision.GetComponent<EnemyStat>();
             enemy.TakeDamage(currentDamage);
 
-            markedEnemies.Add(col.gameObject);  //Mark the enemy
+            markedEnemies.Add(collision.gameObject);  //Mark the enemy
+        }
+        else if (collision.CompareTag("Prop"))
+        {
+            if (collision.gameObject.TryGetComponent(out BreakableProps breakable))
+            {
+                breakable.TakeDamage(currentDamage);
+                markedEnemies.Add(collision.gameObject);
+            }
         }
     }
 }
