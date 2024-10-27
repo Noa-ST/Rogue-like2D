@@ -4,14 +4,24 @@ using UnityEngine;
 
 public class PlayerStat : MonoBehaviour
 {
-    public CharacterScriptObject characterData;
+    CharacterScriptObject _characterData;
 
     // Các chỉ số hiện tại của nhân vật
-    float currentHealth;
-    float currentRecovery;
-    float currentMoveSpeed;
-    float currentMight;
-    float currentProjectileSpeed;
+
+    public float currentHealth;
+    [HideInInspector]
+    public float currentRecovery;
+    [HideInInspector]
+    public float currentMoveSpeed;
+    [HideInInspector]
+    public float currentMight;
+    [HideInInspector]
+    public float currentProjectileSpeed;
+    [HideInInspector]
+    public float currentMagnet;
+
+    // spawn vũ khí 
+    public List<GameObject> spawnedWeapons;
 
     // Kinh nghiệm và cấp độ của người chơi
     [Header("Experience/Level")]
@@ -37,12 +47,18 @@ public class PlayerStat : MonoBehaviour
 
     private void Awake()
     {
+        _characterData = CharacterSelector.GetData();
+        CharacterSelector.instance.destroySingleTon();
+
         // Khởi tạo chỉ số hiện tại từ ScriptableObject characterData
-        currentHealth = characterData.MaxHealth;
-        currentRecovery = characterData.Recovery;
-        currentMoveSpeed = characterData.MoveSpeed;
-        currentMight = characterData.Might;
-        currentProjectileSpeed = characterData.ProjectTileSpeed;
+        currentHealth = _characterData.MaxHealth;
+        currentRecovery = _characterData.Recovery;
+        currentMoveSpeed = _characterData.MoveSpeed;
+        currentMight = _characterData.Might;
+        currentProjectileSpeed = _characterData.ProjectTileSpeed;
+        currentMagnet = _characterData.Magnet;
+
+        SpawnWeapon(_characterData.StartingWeapon);
     }
 
     private void Start()
@@ -61,6 +77,8 @@ public class PlayerStat : MonoBehaviour
         {
             isInvincible = false;
         }
+
+        Recover();
     }
 
     public void IncreaseExperience(int amount)
@@ -109,15 +127,37 @@ public class PlayerStat : MonoBehaviour
         Debug.Log("Player isdead");
     }
 
-    internal void Restore(int healthToRestore)
+    public void Restore(int healthToRestore)
     {
-        if (currentHealth < characterData.MaxHealth)
+        if (currentHealth < _characterData.MaxHealth)
         {
             currentHealth += healthToRestore;
-            if (currentHealth > characterData.MaxHealth)
+            if (currentHealth > _characterData.MaxHealth)
             {
-                currentHealth = characterData.MaxHealth;
+                currentHealth = _characterData.MaxHealth;
             }
         }
+    }
+
+    void Recover()
+    {
+        if (currentHealth < _characterData.MaxHealth)
+        {
+            {
+                currentHealth += currentRecovery * Time.deltaTime;
+
+                if (currentHealth > _characterData.MaxHealth)
+                {
+                    currentHealth = _characterData.MaxHealth;
+                }
+            }
+        }
+    }
+
+    public void SpawnWeapon(GameObject weapon)
+    {
+        GameObject spawnWeapon = Instantiate(weapon, transform.position, Quaternion.identity);
+        spawnWeapon.transform.SetParent(transform);
+        spawnedWeapons.Add(spawnWeapon);
     }
 }

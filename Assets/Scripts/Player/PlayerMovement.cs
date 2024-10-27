@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.U2D.Animation;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -17,11 +18,12 @@ public class PlayerMovement : MonoBehaviour
 
     // Tham chiếu 
     Rigidbody2D _rb;
-    public CharacterScriptObject characterData;
+    PlayerStat _player;
 
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _player = GetComponent<PlayerStat>();
         lastMoveVector = new Vector2(1, 0f);
     }
 
@@ -36,9 +38,12 @@ public class PlayerMovement : MonoBehaviour
         Move();
     }
 
-    private void Move()
+    private void InputManagerment()
     {
-        _rb.velocity = new Vector2(moveDir.x * characterData.MoveSpeed, moveDir.y * characterData.MoveSpeed);
+        float moveX = Input.GetAxisRaw("Horizontal");
+        float moveY = Input.GetAxisRaw("Vertical");
+        moveDir = new Vector2(moveX, moveY).normalized;
+
 
         if (moveDir.x != 0)
         {
@@ -57,13 +62,8 @@ public class PlayerMovement : MonoBehaviour
             lastMoveVector = new Vector2(lastHorizontalVector, lastVerticalVector);
         }
     }
-
-    private void InputManagerment()
+    private void Move()
     {
-        float moveX = Input.GetAxisRaw("Horizontal");
-        float moveY = Input.GetAxisRaw("Vertical");
-        moveDir = new Vector2(moveX, moveY).normalized;
+        _rb.velocity = new Vector2(moveDir.x * _player.currentMoveSpeed, moveDir.y * _player.currentMoveSpeed);
     }
-
-
 }

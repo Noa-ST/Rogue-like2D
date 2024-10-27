@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8838991676725982806}
   - component: {fileID: 5002570616464683955}
   - component: {fileID: 1715056805127809142}
-  - component: {fileID: 2011573564622336958}
+  - component: {fileID: 446306119067787282}
   m_Layer: 0
   m_Name: terrain_15
   m_TagString: Prop
@@ -145,7 +145,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 1.6108155}
   m_EdgeRadius: 0
---- !u!114 &2011573564622336958
+--- !u!114 &446306119067787282
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -158,9 +158,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   drops:
-  - name: re
-    itemPrefab: {fileID: 0}
-    dropRate: 0
-  - name: 
-    itemPrefab: {fileID: 0}
-    dropRate: 0
+  - name: Red Potion
+    itemPrefab: {fileID: 7725099762864629142, guid: 5f5126b5b4072d94a9b59c8066b74c90, type: 3}
+    dropRate: 50

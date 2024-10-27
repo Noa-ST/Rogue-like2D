@@ -29,4 +29,8 @@ public class CharacterScriptObject : ScriptableObject
     [SerializeField]
     float projectTileSpeed;
     public float ProjectTileSpeed { get => projectTileSpeed; private set => projectTileSpeed = value; }
+
+    [SerializeField]
+    float magnet;
+    public float Magnet { get => magnet; private set => magnet = value; }
 }

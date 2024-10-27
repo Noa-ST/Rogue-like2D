@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9099293475743664006}
   - component: {fileID: 7535743666467400781}
-  - component: {fileID: -7219800630010441070}
   m_Layer: 0
   m_Name: terrain_19
   m_TagString: Prop
@@ -85,22 +84,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-7219800630010441070
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4409787848956456210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f54eade3b8a93c343a18b760dd6bb146, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  drops:
-  - name: Re
-    itemPrefab: {fileID: 0}
-    dropRate: 0
-  - name: 
-    itemPrefab: {fileID: 0}
-    dropRate: 0

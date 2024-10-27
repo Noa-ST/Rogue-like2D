@@ -12,6 +12,6 @@ public class KniefBehavior : ProjectileWeaponsBehavior
 
     private void Update()
     {
-        transform.position += direction * weaponData.Speed * Time.deltaTime;
+        transform.position += direction * currentSpeed * Time.deltaTime;
     }
 }

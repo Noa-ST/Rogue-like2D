@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthPotion : MonoBehaviour,IColectible
+public class HealthPotion : Pickup, IColectible
 {
     public int healthToRestore;
     public void Collect()
