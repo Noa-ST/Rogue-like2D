@@ -7,7 +7,7 @@ public class PlayerStat : MonoBehaviour
     CharacterScriptObject _characterData;
 
     // Các chỉ số hiện tại của nhân vật
-
+    [HideInInspector]
     public float currentHealth;
     [HideInInspector]
     public float currentRecovery;
@@ -39,9 +39,9 @@ public class PlayerStat : MonoBehaviour
     }
 
     [Header("I-Frames")]
-    public float invincibilityDuration;
-    float invincibilityTimer;
-    bool isInvincible;
+    public float invincibilityDuration; // Thời gian bất tử sau khi nhận sát thương
+    float _invincibilityTimer; // Bộ đếm thời gian bất tử
+    bool _isInvincible;
 
     public List<LevelRange> levelRanges;
 
@@ -69,24 +69,26 @@ public class PlayerStat : MonoBehaviour
 
     private void Update()
     {
-        if (invincibilityTimer > 0)
+        if (_invincibilityTimer > 0)
         {
-            invincibilityTimer -= Time.deltaTime;
+            _invincibilityTimer -= Time.deltaTime;
         }
-        else if (isInvincible)
+        else if (_isInvincible)
         {
-            isInvincible = false;
+            _isInvincible = false;
         }
 
         Recover();
     }
 
+    // Hàm tăng kinh nghiệm
     public void IncreaseExperience(int amount)
     {
         experience += amount;
         LevelUpChecker();
     }
 
+    // Hàm kiểm tra nếu đủ kinh nghiệm để lên cấp
     private void LevelUpChecker()
     {
         if (experience >= experienceCap)
@@ -108,13 +110,14 @@ public class PlayerStat : MonoBehaviour
         }
     }
 
+    // Hàm nhận sát thương
     public void TakeDamage(float dmg)
     {
-        if (!isInvincible)
+        if (!_isInvincible)
         {
             currentHealth -= dmg;
-            invincibilityTimer = invincibilityDuration;
-            isInvincible = true;
+            _invincibilityTimer = invincibilityDuration;
+            _isInvincible = true;
             if (currentHealth <= 0)
             {
                 Kill();
@@ -122,11 +125,13 @@ public class PlayerStat : MonoBehaviour
         }    
     }
 
+    // Hàm xử lý khi nhân vật chết
     private void Kill()
     {
         Debug.Log("Player isdead");
     }
 
+    // Hàm phục hồi máu khi nhận vật phẩm 
     public void Restore(int healthToRestore)
     {
         if (currentHealth < _characterData.MaxHealth)
@@ -139,6 +144,7 @@ public class PlayerStat : MonoBehaviour
         }
     }
 
+    // Hàm phục hồi máu dần dần theo thời gian
     void Recover()
     {
         if (currentHealth < _characterData.MaxHealth)
@@ -154,6 +160,7 @@ public class PlayerStat : MonoBehaviour
         }
     }
 
+    // Hàm spawn vũ khí cho người chơi
     public void SpawnWeapon(GameObject weapon)
     {
         GameObject spawnWeapon = Instantiate(weapon, transform.position, Quaternion.identity);

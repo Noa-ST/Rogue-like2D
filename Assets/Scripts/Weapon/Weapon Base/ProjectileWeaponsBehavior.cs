@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,52 +27,54 @@ public class ProjectileWeaponsBehavior : MonoBehaviour
         Destroy(gameObject, destroyAfterSeconds);
     }
 
+    // Phương thức nhận hướng di chuyển của đạn và điều chỉnh hướng bắn
     public void DirectionChecker(Vector3 dir)
     {
-        direction = dir;
+        direction = dir;   
 
-        float dirx = direction.x;
-        float diry = direction.y;
+        float dirx = direction.x;  
+        float diry = direction.y;   
 
-        Vector3 scale = transform.localScale;
-        Vector3 rocation = transform.rotation.eulerAngles;
+        Vector3 scale = transform.localScale;        // Lấy scale của đạn để điều chỉnh hướng
+        Vector3 rocation = transform.rotation.eulerAngles; // Lấy góc xoay hiện tại
 
-        if (dirx < 0 && diry == 0) //left
+        // Xác định hướng và điều chỉnh hướng di chuyển, scale, và góc xoay của đạn theo hướng đã cho
+        if (dirx < 0 && diry == 0)       // Nếu đi sang trái
         {
             scale.x = scale.x * -1;
             scale.y = scale.y * -1;
         }
-        else if (dirx == 0 && diry < 0) //down
+        else if (dirx == 0 && diry < 0)  // Nếu đi xuống
         {
             scale.y = scale.y * -1;
         }
-        else if (dirx == 0 && diry > 0) //up
+        else if (dirx == 0 && diry > 0)  // Nếu đi lên
         {
             scale.x = scale.x * -1;
         }
-        else if (dir.x > 0 && dir.y > 0) //right up
+        else if (dirx > 0 && diry > 0)   // Nếu đi chéo lên phải
         {
             rocation.z = 0f;
         }
-        else if (dir.x > 0 && dir.y < 0) //right down
+        else if (dirx > 0 && diry < 0)   // Nếu đi chéo xuống phải
         {
             rocation.z = -90f;
         }
-        else if (dir.x < 0 && dir.y > 0) //left up
+        else if (dirx < 0 && diry > 0)   // Nếu đi chéo lên trái
         {
             scale.x = scale.x * -1;
             scale.y = scale.y * -1;
             rocation.z = -90f;
         }
-        else if (dir.x < 0 && dir.y < 0) //left down
+        else if (dirx < 0 && diry < 0)   // Nếu đi chéo xuống trái
         {
             scale.x = scale.x * -1;
             scale.y = scale.y * -1;
             rocation.z = 0f;
         }
 
-        transform.localScale = scale;
-        transform.rotation = Quaternion.Euler(rocation);
+        transform.localScale = scale;    // Cập nhật scale
+        transform.rotation = Quaternion.Euler(rocation); // Cập nhật góc xoay
     }
 
     protected void OnTriggerEnter2D(Collider2D collision)
