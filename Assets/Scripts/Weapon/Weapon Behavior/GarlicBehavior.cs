@@ -17,7 +17,7 @@ public class GarlicBehavior : MeleWeaponBehavior
         if (collision.CompareTag("Enemy") && !markedEnemies.Contains(collision.gameObject))
         {
             EnemyStat enemy = collision.GetComponent<EnemyStat>();
-            enemy.TakeDamage(currentDamage);
+            enemy.TakeDamage(GetCurrentDamage());
 
             markedEnemies.Add(collision.gameObject);  //Mark the enemy
         }
@@ -25,9 +25,10 @@ public class GarlicBehavior : MeleWeaponBehavior
         {
             if (collision.gameObject.TryGetComponent(out BreakableProps breakable))
             {
-                breakable.TakeDamage(currentDamage);
+                breakable.TakeDamage(GetCurrentDamage());
                 markedEnemies.Add(collision.gameObject);
             }
         }
     }
 }
+    

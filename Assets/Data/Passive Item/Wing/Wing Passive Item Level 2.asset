@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89ff8f35eadd31049aaad48932a0ddb7, type: 3}
-  m_Name: Garlic Weapon
+  m_Script: {fileID: 11500000, guid: 974b793954932c04eb88329ecd9c6611, type: 3}
+  m_Name: Wing Passive Item Level 2
   m_EditorClassIdentifier: 
-  prefab: {fileID: 7419448056651099175, guid: 131dd8e77ad19704380937b713033341, type: 3}
-  damage: 2
-  speed: 0
-  cooldownDuration: 3
-  pierce: 0
+  multipler: 75
+  level: 2
+  nextLevelPrefab: {fileID: 0}

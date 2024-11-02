@@ -20,8 +20,6 @@ public class PlayerStat : MonoBehaviour
     [HideInInspector]
     public float currentMagnet;
 
-    // spawn vũ khí 
-    public List<GameObject> spawnedWeapons;
 
     // Kinh nghiệm và cấp độ của người chơi
     [Header("Experience/Level")]
@@ -45,10 +43,16 @@ public class PlayerStat : MonoBehaviour
 
     public List<LevelRange> levelRanges;
 
+    InventoryManager _inventory;
+    public int weaponIndex;
+    public int passiveitemIndex;
+
     private void Awake()
     {
         _characterData = CharacterSelector.GetData();
         CharacterSelector.instance.destroySingleTon();
+
+        _inventory = GetComponent<InventoryManager>();
 
         // Khởi tạo chỉ số hiện tại từ ScriptableObject characterData
         currentHealth = _characterData.MaxHealth;
@@ -163,8 +167,29 @@ public class PlayerStat : MonoBehaviour
     // Hàm spawn vũ khí cho người chơi
     public void SpawnWeapon(GameObject weapon)
     {
+        if (weaponIndex >= _inventory.weaponSlots.Count - 1)
+        {
+            Debug.LogError("Inventory slots already full");
+            return;
+        }
+
         GameObject spawnWeapon = Instantiate(weapon, transform.position, Quaternion.identity);
         spawnWeapon.transform.SetParent(transform);
-        spawnedWeapons.Add(spawnWeapon);
+        _inventory.AddWeapon(weaponIndex, spawnWeapon.GetComponent<WeaponController>());
+        weaponIndex++;
+    }
+
+    public void SpawnPassiveItem(GameObject passiveItem)
+    {
+        if (passiveitemIndex >= _inventory.passiveItemSlots.Count - 1)
+        {
+            Debug.LogError("Inventory slots already full");
+            return;
+        }
+
+        GameObject spawnedPassiveItem = Instantiate(passiveItem, transform.position, Quaternion.identity);
+        spawnedPassiveItem.transform.SetParent(transform);
+        _inventory.AddPassiveItem(passiveitemIndex, spawnedPassiveItem.GetComponent<PassiveItems>());
+        passiveitemIndex++;
     }
 }
