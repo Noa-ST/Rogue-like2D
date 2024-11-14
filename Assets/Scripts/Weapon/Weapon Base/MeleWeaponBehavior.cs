@@ -22,7 +22,7 @@ public class MeleWeaponBehavior : MonoBehaviour
 
     public float GetCurrentDamage()
     {
-        return currentDamage *= FindObjectOfType<PlayerStat>().currentMight;
+        return currentDamage *= FindObjectOfType<PlayerStat>().CurrentMight;
     }
 
     protected virtual void Start()

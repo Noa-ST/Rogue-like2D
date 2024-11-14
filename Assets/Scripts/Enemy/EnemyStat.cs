@@ -79,6 +79,9 @@ public class EnemyStat : MonoBehaviour
     {
         // Khi kẻ địch bị tiêu diệt, gọi hàm `OnEnemyKilled` từ `EnemySpawner` để cập nhật số lượng kẻ địch hiện tại
         EnemySpawner es = FindObjectOfType<EnemySpawner>();
-        es.OnEnemyKilled();
+        if (es != null)
+        {
+            es.OnEnemyKilled();
+        }
     }
 }
