@@ -5,7 +5,7 @@ using UnityEngine;
 public class PassiveItems : MonoBehaviour
 {
     protected PlayerStat player;
-    public PassiveItemsScriptableobject passiveitemData;
+    public PassiveItemsScriptableobject passiveItemData;
 
     protected virtual void ApplyModifier()
     {

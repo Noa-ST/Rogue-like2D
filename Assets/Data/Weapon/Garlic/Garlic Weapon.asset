@@ -18,5 +18,7 @@ MonoBehaviour:
   cooldownDuration: 3
   pierce: 0
   level: 1
-  nextLevelPrefab: {fileID: 5980329695868496243, guid: c7fa1921cb2cc284eb9739d82b8902dd, type: 3}
+  nextLevelPrefab: {fileID: 5980329695868496243, guid: 6f3e7549c2799364b880b1aa382c98d0, type: 3}
+  name: Garlic
+  description: Deals damage to every enemy to inside
   icon: {fileID: 803541574, guid: 83d0b776afdf81f479cd928573b1b119, type: 3}

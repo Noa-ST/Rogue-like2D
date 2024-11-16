@@ -154,9 +154,6 @@ public class PlayerStat : MonoBehaviour
     public int weaponIndex;
     public int passiveitemIndex;
 
-    public GameObject secondWeaponTest;
-    public GameObject firtsPassiveItemTest, secondPassiveItemTest;
-
     private void Awake()
     {
         _characterData = CharacterSelector.GetData();
@@ -173,9 +170,6 @@ public class PlayerStat : MonoBehaviour
         CurrentMagnet = _characterData.Magnet;
 
         SpawnWeapon(_characterData.StartingWeapon);
-        SpawnWeapon(secondWeaponTest);
-        SpawnPassiveItem(firtsPassiveItemTest);
-        SpawnPassiveItem(secondPassiveItemTest);
     }
 
     private void Start()
@@ -233,6 +227,8 @@ public class PlayerStat : MonoBehaviour
                 }
             }
             experienceCap += experienceCapIncrease; // Cập nhật giới hạn kinh nghiệm mới
+
+            GameManager.Ins.StartLevelUp();
         }
     }
 
