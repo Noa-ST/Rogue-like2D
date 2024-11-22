@@ -32,6 +32,7 @@ public class EnemySpawner : MonoBehaviour
     public int maxEnemiesAllowed;                 // Giới hạn số lượng kẻ địch tối đa được spawn cùng lúc
     public bool maxEnemiesReached = false;        // Cờ để kiểm tra nếu số lượng kẻ địch đã đạt giới hạn
     public float waveInterval;                    // Thời gian chờ giữa các đợt kẻ địch
+    bool isWaveActive = false;
 
     [Header("Spawn Positions")]
     public List<Transform> relativesSpawnPoints;  // Các vị trí spawn kẻ địch tương đối so với vị trí của người chơi
@@ -47,7 +48,7 @@ public class EnemySpawner : MonoBehaviour
     private void Update()
     {
         // Kiểm tra điều kiện bắt đầu đợt mới nếu chưa có kẻ địch nào spawn cho đợt hiện tại
-        if (currentWaveCount < waves.Count && waves[currentWaveCount].spawnCount == 0)
+        if (currentWaveCount < waves.Count && waves[currentWaveCount].spawnCount == 0 && !isWaveActive)
         {
             StartCoroutine(BeginNextWave());  // Bắt đầu đợt tiếp theo với một khoảng thời gian chờ
         }
@@ -64,11 +65,13 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator BeginNextWave()
     {
+        isWaveActive = true;
         yield return new WaitForSeconds(waveInterval);  // Chờ một khoảng thời gian trước khi bắt đầu đợt mới
 
         // Kiểm tra nếu vẫn còn đợt chưa được spawn
         if (currentWaveCount < waves.Count - 1)
         {
+            isWaveActive = false;
             currentWaveCount++;               // Tăng đợt hiện tại lên 1
             CalculateWaveQuota();             // Tính lại số lượng kẻ địch cần spawn cho đợt mới
         }
@@ -118,17 +121,17 @@ public class EnemySpawner : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void OnEnemyKilled()
+    {
+        enemiesAlive--;
 
         // Nếu số lượng kẻ địch hiện tại dưới giới hạn tối đa, reset maxEnemiesReached để tiếp tục spawn
         if (enemiesAlive < maxEnemiesAllowed)
         {
             maxEnemiesReached = false;
         }
-    }
-
-    public void OnEnemyKilled()
-    {
-        enemiesAlive--;   
     }
 }
 
