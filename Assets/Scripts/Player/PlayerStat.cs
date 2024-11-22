@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerStat : MonoBehaviour
 {
@@ -154,6 +155,11 @@ public class PlayerStat : MonoBehaviour
     public int weaponIndex;
     public int passiveitemIndex;
 
+    [Header("UI")]
+    public Image healthBar;
+    public Image experienceBar;
+    public Text levelTxt;
+
     private void Awake()
     {
         _characterData = CharacterSelector.GetData();
@@ -185,6 +191,10 @@ public class PlayerStat : MonoBehaviour
         GameManager.Ins.curMagnetDisplay.text = "Magnet: " + currentMagnet;
 
         GameManager.Ins.AssignChosenCharacterUI(_characterData);
+
+        UpdateHealthBar();
+        UpdateExperienceBar();
+        UpdateLevelText();
     }
 
     private void Update()
@@ -206,6 +216,7 @@ public class PlayerStat : MonoBehaviour
     {
         experience += amount;
         LevelUpChecker();
+        UpdateExperienceBar();
     }
 
     // Hàm kiểm tra nếu đủ kinh nghiệm để lên cấp
@@ -228,8 +239,20 @@ public class PlayerStat : MonoBehaviour
             }
             experienceCap += experienceCapIncrease; // Cập nhật giới hạn kinh nghiệm mới
 
+            UpdateLevelText();
+
             GameManager.Ins.StartLevelUp();
         }
+    }
+
+    void UpdateExperienceBar()
+    {
+        experienceBar.fillAmount = (float) experience / experienceCap;
+    }
+
+    void UpdateLevelText()
+    {
+        levelTxt.text = "LEVEL " + level.ToString();
     }
 
     // Hàm nhận sát thương
@@ -244,8 +267,16 @@ public class PlayerStat : MonoBehaviour
             {
                 Kill();
             }
+
+            UpdateHealthBar();
         }
     }
+
+    void UpdateHealthBar()
+    {
+        healthBar.fillAmount = currentHealth / _characterData.MaxHealth;
+    }
+
 
     // Hàm xử lý khi nhân vật chết
     private void Kill()
