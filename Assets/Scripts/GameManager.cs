@@ -1,5 +1,5 @@
-﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
         LevelUp
     }
 
-    public GameState curremtState;
+    public GameState currentState;
     public GameState previousState;
 
     [Header("Screens")]
@@ -23,29 +23,32 @@ public class GameManager : MonoBehaviour
     public GameObject levelUpScreen;
 
     [Header("Current Stat Displays")]
-    public Text curHealthDisplay;
-    public Text curRecoveryDisplay;
-    public Text curMoveSpeedDisplay;
-    public Text curMightDisplay;
-    public Text curProjectileSpeedDisplay;
-    public Text curMagnetDisplay;
+    public TMP_Text curHealthDisplay;
+    public TMP_Text curRecoveryDisplay;
+    public TMP_Text curMoveSpeedDisplay;
+    public TMP_Text curMightDisplay;
+    public TMP_Text curProjectileSpeedDisplay;
+    public TMPro.TMP_Text curMagnetDisplay;
 
     [Header("Results Screen Displays")]
     public Image chosenCharacterImage;
-    public Text chosenCharacterName;
-    public Text levelReachedDisplay;
-    public Text timeSurviedDisplay;
+    public TMP_Text chosenCharacterName;
+    public TMP_Text levelReachedDisplay;
+    public TMP_Text timeSurviedDisplay;
     public List<Image> chosenWeaponUI = new List<Image>(6);
     public List<Image> chosenPassiveItemUI = new List<Image>(6);
 
     [Header("Stopwatch")]
     public float timeLimit;
     float stopwatchTime;
-    public Text stopwatchDisplay;
+    public TMP_Text stopwatchDisplay;
 
     public bool isGameOver = false;
     public bool choosingUpgrade;
     public GameObject playerObject;
+
+    private List<GameObject> activePickups = new List<GameObject>(); // Danh sách các pickup hiện tại
+
 
     private void Awake()
     {
@@ -62,7 +65,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        switch (curremtState)
+        switch (currentState)
         {
             case GameState.Gameplay:
                 CheckForPauseAndResume();
@@ -77,6 +80,7 @@ public class GameManager : MonoBehaviour
                     isGameOver = true;
                     Time.timeScale = 0f;
                     Debug.Log("Game is over");
+                    CleanupPickups();
                     DisplayResults();
                 }
                 break;
@@ -96,15 +100,19 @@ public class GameManager : MonoBehaviour
 
     public void ChangeState(GameState newState)
     {
-        curremtState = newState;
+        currentState = newState;
+        if (newState == GameState.GameOver || newState == GameState.Paused)
+        {
+            CleanupPickups();
+        }
     }
 
     public void PauseGame()
     {
-        if (curremtState != GameState.Paused)
+        if (currentState != GameState.Paused)
         {
-            previousState = curremtState;
-            curremtState = GameState.Paused;
+            previousState = currentState;
+            currentState = GameState.Paused;
             Time.timeScale = 0f;
             pauseScreen.SetActive(true);
             Debug.Log("Game is paused");
@@ -113,9 +121,9 @@ public class GameManager : MonoBehaviour
 
     public void ResumeGame()
     {
-        if (curremtState == GameState.Paused)
+        if (currentState == GameState.Paused)
         {
-            curremtState = previousState;
+            currentState = previousState;
             Time.timeScale = 1f;
             pauseScreen.SetActive(false);
             Debug.Log("Game is resumed");
@@ -126,7 +134,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (curremtState == GameState.Paused)
+            if (currentState == GameState.Paused)
                 ResumeGame();
             else
                 PauseGame();
@@ -200,7 +208,7 @@ public class GameManager : MonoBehaviour
 
         if (stopwatchTime >= timeLimit)
         {
-            GameOver();
+            playerObject.SendMessage("Kill");
         }
     }
 
@@ -225,5 +233,27 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         levelUpScreen.SetActive(false);
         ChangeState(GameState.Gameplay);
+    }
+
+    public void RegisterPickup(GameObject pickup)
+    {
+        activePickups.Add(pickup); // Đăng ký pickup
+    }
+
+    void CleanupPickups()
+    {
+        foreach (var pickup in activePickups)
+        {
+            if (pickup != null)
+            {
+                Destroy(pickup);
+            }
+        }
+        activePickups.Clear();
+    }
+
+    void OnApplicationQuit()
+    {
+        CleanupPickups();
     }
 }

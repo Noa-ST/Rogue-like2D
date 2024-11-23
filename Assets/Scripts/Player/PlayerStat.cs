@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerStat : MonoBehaviour
 {
@@ -158,7 +159,7 @@ public class PlayerStat : MonoBehaviour
     [Header("UI")]
     public Image healthBar;
     public Image experienceBar;
-    public Text levelTxt;
+    public TMP_Text levelTxt;
 
     private void Awake()
     {

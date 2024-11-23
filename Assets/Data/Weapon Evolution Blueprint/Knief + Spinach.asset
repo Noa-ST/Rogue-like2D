@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5ea9782225b4214eb30808d495139a1, type: 3}
+  m_Name: Knief + Spinach
+  m_EditorClassIdentifier: 
+  baseWeaponData: {fileID: 11400000, guid: 41d0a2980279270419b7daeca937147b, type: 2}
+  catalystPasiveItemData: {fileID: 11400000, guid: c598ff11af4981840a5f18edc708d39a, type: 2}
+  evolvedWeaponData: {fileID: 11400000, guid: 175b6d71c6012b34bbfb5cac80442d45, type: 2}
+  evolveWeapon: {fileID: 544535721847134337, guid: aee2d581d8aef974ba3cb431cc4d8a14, type: 3}

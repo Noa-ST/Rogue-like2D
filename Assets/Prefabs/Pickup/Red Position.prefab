@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5817645583435570130}
   - component: {fileID: 1591871215404554584}
   - component: {fileID: 8299966676374814250}
+  - component: {fileID: 6559835587965961310}
   m_Layer: 0
   m_Name: Red Position
   m_TagString: Untagged
@@ -172,3 +173,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthToRestore: 100
+--- !u!114 &6559835587965961310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7725099762864629142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 328023c908eab484b8cad80a0ad4cdb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frequency: 3
+  magitude: 0.1
+  direction: {x: 0, y: 1, z: 0}
