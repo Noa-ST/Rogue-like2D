@@ -130,6 +130,8 @@ public class PlayerStat : MonoBehaviour
     }
     #endregion
 
+    public ParticleSystem damageEffect;
+
     // Kinh nghiệm và cấp độ của người chơi
     [Header("Experience/Level")]
     public int experience = 0;
@@ -262,6 +264,10 @@ public class PlayerStat : MonoBehaviour
         if (!_isInvincible)
         {
             CurrentHealth -= dmg;
+
+            if (damageEffect)
+                Instantiate(damageEffect, transform.position, Quaternion.identity);
+
             _invincibilityTimer = invincibilityDuration;
             _isInvincible = true;
             if (CurrentHealth <= 0)

@@ -1,19 +1,30 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
+[RequireComponent(typeof(SpriteRenderer))]
 public class EnemyStat : MonoBehaviour
 {
-    public EnemyScriptableObject enemyData;  
+    public EnemyScriptableObject enemyData;
 
     // Current stats
     [HideInInspector]
-    public float currentMoveSpeed;  
+    public float currentMoveSpeed;
     [HideInInspector]
-    public float currentHealth;     
+    public float currentHealth;
     [HideInInspector]
-    public float currentDamage;     
+    public float currentDamage;
 
     public float despawnDistance = 20f;      // Khoảng cách tối đa từ người chơi mà kẻ địch sẽ bị di chuyển lại gần
     Transform _player;                       // Biến lưu vị trí của người chơi
+
+    [Header("Damage Feedback")]
+    public Color damageColor = new Color(1, 0, 0, 1);
+    public float damageFlashDuration = 0.2f;
+    public float damageFadeTime = 0.6f;
+    Color _originalColor;
+    SpriteRenderer _sr;
+    EnemyMovement _em;
+    public float deathFadeTime;
 
     void Awake()
     {
@@ -25,7 +36,10 @@ public class EnemyStat : MonoBehaviour
 
     private void Start()
     {
-        _player = FindObjectOfType<PlayerStat>().transform;  
+        _player = FindObjectOfType<PlayerStat>().transform;
+        _sr = GetComponent<SpriteRenderer>();
+        _originalColor = _sr.color;
+        _em = GetComponent<EnemyMovement>();
     }
 
     private void Update()
@@ -45,10 +59,17 @@ public class EnemyStat : MonoBehaviour
         transform.position = _player.position + es.relativesSpawnPoints[Random.Range(0, es.relativesSpawnPoints.Count)].position;
     }
 
-    public void TakeDamage(float dmg)
+    public void TakeDamage(float dmg, Vector2 sourcePostion, float knockbackForce = 5f, float knockbackDuration = 0.2f)
     {
         // Giảm máu của kẻ địch dựa trên sát thương nhận được
         currentHealth -= dmg;
+        StartCoroutine(DamageFlash());
+
+        if (knockbackForce > 0)
+        {
+            Vector2 dir = (Vector2)transform.position - sourcePostion;
+            _em.KnockBack(dir.normalized * knockbackForce, knockbackDuration);
+        }
 
         // Kiểm tra nếu máu <= 0, tiêu diệt kẻ địch
         if (currentHealth <= 0)
@@ -57,9 +78,31 @@ public class EnemyStat : MonoBehaviour
         }
     }
 
+    IEnumerator DamageFlash()
+    {
+        _sr.color = damageColor;
+        yield return new WaitForSeconds(damageFlashDuration);
+        _sr.color = _originalColor;
+    }
+
     public void Kill()
     {
-        // Phá hủy đối tượng kẻ địch khỏi trò chơi khi bị tiêu diệt
+        StartCoroutine(KillFade());
+    }
+
+    IEnumerator KillFade()
+    {
+        WaitForEndOfFrame w = new WaitForEndOfFrame();
+        float t = 0, origAlpha = _sr.color.a;
+
+        while (t < deathFadeTime)
+        {
+            yield return w;
+            t += Time.deltaTime;
+
+            _sr.color = new Color(_sr.color.r, _sr.color.g, _sr.color.b, (1 - t / deathFadeTime) * origAlpha);
+        }
+
         Destroy(gameObject);
     }
 

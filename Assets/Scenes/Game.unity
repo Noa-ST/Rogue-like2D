@@ -4220,6 +4220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94d8e8cfc71a4a34fb70ca7ba79845bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageEffect: {fileID: 3883891147360282796, guid: 5bf909ceb41d84949b29f19b6e2c0340, type: 3}
   experience: 0
   level: 1
   experienceCap: 0
