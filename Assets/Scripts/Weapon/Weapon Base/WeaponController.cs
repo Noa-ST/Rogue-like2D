@@ -9,7 +9,6 @@ public class WeaponController : MonoBehaviour
     public WeaponScriptableObject weaponData;
     float _curCooldown;
 
-
     protected PlayerMovement pm;
 
     protected virtual void Start()

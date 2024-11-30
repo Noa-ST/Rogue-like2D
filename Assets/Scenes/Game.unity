@@ -4220,7 +4220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94d8e8cfc71a4a34fb70ca7ba79845bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageEffect: {fileID: 3883891147360282796, guid: 5bf909ceb41d84949b29f19b6e2c0340, type: 3}
+  damageEffect: {fileID: 5184859275262686554, guid: 7c140a7572ec2244399c91ef06d97039, type: 3}
   experience: 0
   level: 1
   experienceCap: 0
@@ -9959,6 +9959,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   previousState: 0
+  damageTxtCanvas: {fileID: 1291169716}
+  txtFontSize: 20
+  txtFont: {fileID: 0}
+  referenceCamera: {fileID: 519420031}
   pauseScreen: {fileID: 1909118315}
   resultsScreen: {fileID: 1986441707}
   levelUpScreen: {fileID: 1746164042}

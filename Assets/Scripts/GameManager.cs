@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -16,6 +18,12 @@ public class GameManager : MonoBehaviour
 
     public GameState currentState;
     public GameState previousState;
+
+    [Header("Damage Text Settings")]
+    public Canvas damageTxtCanvas;
+    public float txtFontSize = 30;
+    public TMP_FontAsset txtFont;
+    public Camera referenceCamera;
 
     [Header("Screens")]
     public GameObject pauseScreen;
@@ -48,7 +56,6 @@ public class GameManager : MonoBehaviour
     public GameObject playerObject;
 
     private List<GameObject> activePickups = new List<GameObject>(); // Danh sách các pickup hiện tại
-
 
     private void Awake()
     {
@@ -97,6 +104,67 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
+
+    public static void GenerateFloatingText(string text, Transform target, float duration = 1f, float speed = 1f)
+    {
+        if (Ins.damageTxtCanvas == null || target == null || Ins.referenceCamera == null) return;  // Kiểm tra các đối tượng quan trọng trước
+
+        Ins.StartCoroutine(Ins.GenerateFloatingCoroutine(text, target, duration, speed));
+    }
+
+
+    IEnumerator GenerateFloatingCoroutine(string text, Transform target, float duration = 1f, float speed = 50f)
+    {
+        if (target == null) yield break; // Nếu target null, kết thúc Coroutine ngay
+
+        GameObject txtObj = new GameObject("Damage Floating Text");
+        RectTransform rect = txtObj.AddComponent<RectTransform>();
+        TextMeshProUGUI tmPro = txtObj.AddComponent<TextMeshProUGUI>();
+        tmPro.text = text;
+        tmPro.horizontalAlignment = HorizontalAlignmentOptions.Center;
+        tmPro.verticalAlignment = VerticalAlignmentOptions.Middle;
+        tmPro.fontSize = txtFontSize;
+        if (txtFont) tmPro.font = txtFont;
+
+        // Set vị trí ban đầu của đối tượng
+        rect.position = referenceCamera.WorldToScreenPoint(target.position);
+
+        Destroy(txtObj, duration); // Tự động hủy đối tượng sau thời gian `duration`
+
+        txtObj.transform.SetParent(Ins.damageTxtCanvas.transform);
+
+        WaitForEndOfFrame w = new WaitForEndOfFrame();
+        float t = 0;
+        float yOffset = 0;
+
+        while (t < duration)
+        {
+            // Kiểm tra rect có null không trước khi thay đổi thuộc tính
+            if (rect == null || rect.gameObject == null)
+            {
+                yield break; // Nếu rect bị hủy, kết thúc Coroutine
+            }
+
+            yield return w;
+            t += Time.deltaTime;
+
+            // Kiểm tra nếu target đã bị hủy
+            if (target == null || rect == null) yield break;
+
+            tmPro.color = new Color(tmPro.color.r, tmPro.color.g, tmPro.color.b, 1 - t / duration);
+
+            yOffset += speed * Time.deltaTime;
+            rect.position = referenceCamera.WorldToScreenPoint(target.position + new Vector3(0, yOffset));
+        }
+
+        // Kiểm tra nếu đối tượng còn tồn tại trước khi hủy
+        if (txtObj != null)
+        {
+            Destroy(txtObj);
+        }
+    }
+
+
 
     public void ChangeState(GameState newState)
     {
