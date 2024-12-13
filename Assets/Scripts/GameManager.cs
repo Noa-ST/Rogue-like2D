@@ -227,7 +227,7 @@ public class GameManager : MonoBehaviour
         resultsScreen.SetActive(true);
     }
 
-    public void AssignChosenCharacterUI(CharacterScriptObject chosenCharacterData)
+    public void AssignChosenCharacterUI(CharacterData chosenCharacterData)
     {
         chosenCharacterImage.sprite = chosenCharacterData.Icon;
         chosenCharacterName.text = chosenCharacterData.Name;
@@ -238,16 +238,16 @@ public class GameManager : MonoBehaviour
         levelReachedDisplay.text = levelReachedData.ToString();
     }
 
-    public void AssignChosenWeaponAndPassiveItemUI(List<Image> chosenWeaponsData, List<Image> chosenPassivesData)
+    public void AssignChosenWeaponAndPassiveItemUI(List<PlayerInventory.Slot> chosenWeaponsData, List<PlayerInventory.Slot> chosenPassivesData)
     {
         if (chosenWeaponsData.Count != chosenWeaponUI.Count || chosenPassivesData.Count != chosenWeaponUI.Count) return;
 
         for (int i = 0; i < chosenWeaponUI.Count; i++)
         {
-            if (chosenWeaponsData[i].sprite)
+            if (chosenWeaponsData[i].image.sprite)
             {
                 chosenWeaponUI[i].enabled = true;
-                chosenWeaponUI[i].sprite = chosenWeaponsData[i].sprite;
+                chosenWeaponUI[i].sprite = chosenWeaponsData[i].image.sprite;
             } else
             {
                 chosenWeaponUI[i].enabled = false;
@@ -256,10 +256,10 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < chosenPassiveItemUI.Count; i++)
         {
-            if (chosenPassivesData[i].sprite)
+            if (chosenPassivesData[i].image.sprite)
             {
                 chosenPassiveItemUI[i].enabled = true;
-                chosenPassiveItemUI[i].sprite = chosenPassivesData[i].sprite;
+                chosenPassiveItemUI[i].sprite = chosenPassivesData[i].image.sprite;
             }
             else
             {
@@ -292,7 +292,7 @@ public class GameManager : MonoBehaviour
     public void StartLevelUp()
     {
         ChangeState(GameState.LevelUp);
-        playerObject.SendMessage("RemoveAndApplyUpgrade");
+        playerObject.SendMessage("RemoveAndApplyUpgrades");
     }
 
     public void EndLevelUp()

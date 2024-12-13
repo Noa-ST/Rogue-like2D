@@ -2,31 +2,32 @@ using UnityEngine;
 
 public class TreasureChest : MonoBehaviour
 {
-    InventoryManager _inventory;
-
-    private void Start()
-    {
-        _inventory = FindAnyObjectByType<InventoryManager>();
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        PlayerInventory p = collision.GetComponent<PlayerInventory>();
+        if (p)
         {
-            OpenTreasureChest();
-            Destroy(gameObject);
+            bool randomBool = Random.Range(0, 2) == 0;
+
+            OpenTreasureChest(p, randomBool);
         }
     }
 
-    private void OpenTreasureChest()
+    private void OpenTreasureChest(PlayerInventory inventory, bool isHigherTier)
     {
-        if (_inventory.GetPossibleEvolutions().Count <= 0)
+        foreach (PlayerInventory.Slot s in inventory.weaponSlots)
         {
-            Debug.LogWarning("No Available Evolutions");
-            return;
-        }
+            Weapon w = s.item as Weapon;
+            if (w.data.evolutionsData == null) continue;
 
-        WeaponEvolutionBluePrint toEvole = _inventory.GetPossibleEvolutions()[Random.Range(0, _inventory.GetPossibleEvolutions().Count)];
-        _inventory.EvolveWeapon(toEvole);
+            foreach (ItemData.Evolution e in w.data.evolutionsData)
+            {
+                if (e.condition == ItemData.Evolution.Condition.treasureChest)
+                {
+                    bool attempt = w.AttemptEvolution(e, 0);
+                    if (attempt) return;
+                }
+            }
+        }
     }
 }

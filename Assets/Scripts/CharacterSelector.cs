@@ -5,7 +5,7 @@ using UnityEngine;
 public class CharacterSelector : MonoBehaviour
 {
     public static CharacterSelector instance; // Biến tĩnh để lưu singleton instance của CharacterSelector
-    public CharacterScriptObject characterData; 
+    public CharacterData characterData; 
 
     private void Awake()
     {
@@ -23,16 +23,34 @@ public class CharacterSelector : MonoBehaviour
     }
 
     // Phương thức tĩnh để lấy dữ liệu của nhân vật hiện tại
-    public static CharacterScriptObject GetData()
+    public static CharacterData GetData()
     {
-        return instance.characterData; // Trả về characterData của instance
+        if (instance && instance.characterData)
+            return instance.characterData;
+        else
+        {
+            CharacterData[] characters = Resources.FindObjectsOfTypeAll<CharacterData>();
+            if (characters.Length > 0) 
+            {
+                return characters[Random.Range(0, characters.Length)];
+            }
+        }
+        return null;
     }
 
     // Phương thức để chọn một nhân vật mới
-    public void SelectCharacter(CharacterScriptObject character)
+    public void SelectCharacter(CharacterData character)
     {
-        characterData = character; // Gán characterData mới
+        if (character == null)
+        {
+            Debug.LogError("Selected character is null!");
+            return;
+        }
+
+        characterData = character;
+        Debug.Log($"Character selected: {character.name}");
     }
+
 
     // Phương thức để hủy singleton và đối tượng
     public void destroySingleTon()

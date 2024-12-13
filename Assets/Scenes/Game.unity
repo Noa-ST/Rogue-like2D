@@ -4056,6 +4056,7 @@ GameObject:
   - component: {fileID: 809384994}
   - component: {fileID: 809384995}
   - component: {fileID: 809384998}
+  - component: {fileID: 809384999}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -4220,6 +4221,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94d8e8cfc71a4a34fb70ca7ba79845bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  baseStats:
+    maxHealth: 0
+    recovery: 0
+    moveSpeed: 0
+    might: 0
+    speed: 0
+    magnet: 0
+  actualStats:
+    maxHealth: 0
+    recovery: 0
+    moveSpeed: 0
+    might: 0
+    speed: 0
+    magnet: 0
   damageEffect: {fileID: 5184859275262686554, guid: 7c140a7572ec2244399c91ef06d97039, type: 3}
   experience: 0
   level: 1
@@ -4305,7 +4320,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 809384988}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7f0063c8700855545924cc7f4ba5c088, type: 3}
   m_Name: 
@@ -4373,6 +4388,68 @@ MonoBehaviour:
     upgradeButton: {fileID: 445151848}
   weaponEvolutions:
   - {fileID: 11400000, guid: cc9db57b1fd25764fbd451cf8872f776, type: 2}
+--- !u!114 &809384999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809384988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 142ddd21a08e43f4ebaa6e4ad5868fc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponSlots:
+  - item: {fileID: 0}
+    image: {fileID: 1956994514}
+  - item: {fileID: 0}
+    image: {fileID: 1008412048}
+  - item: {fileID: 0}
+    image: {fileID: 658877635}
+  - item: {fileID: 0}
+    image: {fileID: 1463486617}
+  - item: {fileID: 0}
+    image: {fileID: 700197206}
+  - item: {fileID: 0}
+    image: {fileID: 784773233}
+  passiveSlots:
+  - item: {fileID: 0}
+    image: {fileID: 21899283}
+  - item: {fileID: 0}
+    image: {fileID: 1515488699}
+  - item: {fileID: 0}
+    image: {fileID: 208761220}
+  - item: {fileID: 0}
+    image: {fileID: 1281130346}
+  - item: {fileID: 0}
+    image: {fileID: 356110087}
+  - item: {fileID: 0}
+    image: {fileID: 1182932533}
+  availableWeapons:
+  - {fileID: 11400000, guid: 3fc777862b3206b49b8d96158c550e68, type: 2}
+  - {fileID: 11400000, guid: 4e89d416d660e864c92eae4b4d96383d, type: 2}
+  availablePassives:
+  - {fileID: 11400000, guid: 8e364c67b4934e141bd9b52396e3ee75, type: 2}
+  - {fileID: 11400000, guid: 306c0bc0caf2a354599d50613d3f7464, type: 2}
+  - {fileID: 11400000, guid: f4a0098c50d7ab044b6083201b4cd72d, type: 2}
+  upgradeUIOptions:
+  - upgradeNameDisplay: {fileID: 316561822}
+    upgradeDescriptionDisplay: {fileID: 291164588}
+    upgradeIcon: {fileID: 790400241}
+    upgradeButton: {fileID: 1681913525}
+  - upgradeNameDisplay: {fileID: 821289196}
+    upgradeDescriptionDisplay: {fileID: 51976081}
+    upgradeIcon: {fileID: 1871763458}
+    upgradeButton: {fileID: 352482558}
+  - upgradeNameDisplay: {fileID: 1300441592}
+    upgradeDescriptionDisplay: {fileID: 1195326909}
+    upgradeIcon: {fileID: 1786077232}
+    upgradeButton: {fileID: 424260973}
+  - upgradeNameDisplay: {fileID: 1025722224}
+    upgradeDescriptionDisplay: {fileID: 1070478254}
+    upgradeIcon: {fileID: 886386307}
+    upgradeButton: {fileID: 445151848}
 --- !u!1 &821289192
 GameObject:
   m_ObjectHideFlags: 0
@@ -10396,63 +10473,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0542f0fca0bc2034c80233e6270db938, type: 3}
---- !u!1001 &8518741889688570537
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 7604714855592162692, guid: 8ff04b1f6b29b2f47b239cfa3bba80e8, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7604714855592162692, guid: 8ff04b1f6b29b2f47b239cfa3bba80e8, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7604714855592162692, guid: 8ff04b1f6b29b2f47b239cfa3bba80e8, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7604714855592162692, guid: 8ff04b1f6b29b2f47b239cfa3bba80e8, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7604714855592162692, guid: 8ff04b1f6b29b2f47b239cfa3bba80e8, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7604714855592162692, guid: 8ff04b1f6b29b2f47b239cfa3bba80e8, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7604714855592162692, guid: 8ff04b1f6b29b2f47b239cfa3bba80e8, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7604714855592162692, guid: 8ff04b1f6b29b2f47b239cfa3bba80e8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7604714855592162692, guid: 8ff04b1f6b29b2f47b239cfa3bba80e8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7604714855592162692, guid: 8ff04b1f6b29b2f47b239cfa3bba80e8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9073967613108160091, guid: 8ff04b1f6b29b2f47b239cfa3bba80e8, type: 3}
-      propertyPath: m_Name
-      value: Treasure chest
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 8ff04b1f6b29b2f47b239cfa3bba80e8, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -10465,4 +10485,3 @@ SceneRoots:
   - {fileID: 809384991}
   - {fileID: 1291169717}
   - {fileID: 506136531}
-  - {fileID: 8518741889688570537}

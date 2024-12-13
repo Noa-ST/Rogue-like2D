@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Obsolete("This will be replaced by the")]
 [CreateAssetMenu(fileName = "EnemyScriptableObject", menuName = "ScriptableObjects/Character")]
 public class CharacterScriptObject : ScriptableObject
 {

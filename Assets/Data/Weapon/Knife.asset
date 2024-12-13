@@ -1,0 +1,131 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4341a1428233a904dad63d05e116112a, type: 3}
+  m_Name: Knife
+  m_EditorClassIdentifier: 
+  icon: {fileID: -1611568071, guid: 83d0b776afdf81f479cd928573b1b119, type: 3}
+  maxLevel: 8
+  evolutionsData: []
+  behavior: ProjectileWeapon
+  baseStats:
+    name: Kinfe
+    description: Fires quickly in the face direction.
+    projectilePrefab: {fileID: 123333301274617722, guid: 2fcd7fd8a16fc6a45ba662b1cea40a87, type: 3}
+    auraPrefab: {fileID: 0}
+    hitEffect: {fileID: 0}
+    spawnVariance:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    lifespan: 3
+    damage: 6.5
+    damageVariance: 2
+    area: 1
+    speed: 5
+    cooldown: 1
+    projectileInterval: 0.1
+    knockback: 0.5
+    number: 1
+    piercing: 1
+    maxInstances: 70
+  linearGrowth:
+  - name: Level 2
+    description: Fires 1 more projectile
+    projectilePrefab: {fileID: 0}
+    auraPrefab: {fileID: 0}
+    hitEffect: {fileID: 0}
+    spawnVariance:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    lifespan: 0
+    damage: 0
+    damageVariance: 0
+    area: 0
+    speed: 0
+    cooldown: 0
+    projectileInterval: 0
+    knockback: 0
+    number: 0
+    piercing: 0
+    maxInstances: 0
+  - name: Level 3
+    description: Fires 1 more projectile. Base damage by 5
+    projectilePrefab: {fileID: 0}
+    auraPrefab: {fileID: 0}
+    hitEffect: {fileID: 0}
+    spawnVariance:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    lifespan: 0
+    damage: 5
+    damageVariance: 0
+    area: 0
+    speed: 0
+    cooldown: 0
+    projectileInterval: 0
+    knockback: 0
+    number: 1
+    piercing: 0
+    maxInstances: 0
+  randomGrowth:
+  - name: 
+    description: 
+    projectilePrefab: {fileID: 0}
+    auraPrefab: {fileID: 0}
+    hitEffect: {fileID: 0}
+    spawnVariance:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    lifespan: 0
+    damage: 0
+    damageVariance: 0
+    area: 0
+    speed: 0
+    cooldown: 0
+    projectileInterval: 0
+    knockback: 0
+    number: 1
+    piercing: 0
+    maxInstances: 0
+  - name: 
+    description: 
+    projectilePrefab: {fileID: 0}
+    auraPrefab: {fileID: 0}
+    hitEffect: {fileID: 0}
+    spawnVariance:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    lifespan: 0
+    damage: 5
+    damageVariance: 0
+    area: 0
+    speed: 0
+    cooldown: 0
+    projectileInterval: 0
+    knockback: 0
+    number: 1
+    piercing: 0
+    maxInstances: 0
