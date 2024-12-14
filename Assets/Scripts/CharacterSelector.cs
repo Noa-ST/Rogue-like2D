@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class CharacterSelector : MonoBehaviour
 {
     public static CharacterSelector instance; // Biến tĩnh để lưu singleton instance của CharacterSelector
-    public CharacterData characterData; 
+    public CharacterData characterData;
 
     private void Awake()
     {
@@ -29,11 +30,31 @@ public class CharacterSelector : MonoBehaviour
             return instance.characterData;
         else
         {
-            CharacterData[] characters = Resources.FindObjectsOfTypeAll<CharacterData>();
-            if (characters.Length > 0) 
+#if UNITY_EDITOR
+            string[] allAssetPaths = AssetDatabase.GetAllAssetPaths();
+            List<CharacterData> characters = new List<CharacterData>();
+
+            foreach (string assetPath in allAssetPaths)
             {
-                return characters[Random.Range(0, characters.Length)];
+                if (assetPath.EndsWith(".asset"))
+                {
+                    CharacterData characterData = AssetDatabase.LoadAssetAtPath<CharacterData>(assetPath);
+                    if (characterData != null)
+                    {
+                        characters.Add(characterData);
+                    }
+                }
             }
+
+            if (characters.Count > 0)
+                return characters[Random.Range(0, characters.Count)];
+#endif
+
+            //CharacterData[] characters = Resources.FindObjectsOfTypeAll<CharacterData>();
+            //if (characters.Length > 0) 
+            //{
+            //    return characters[Random.Range(0, characters.Length)];
+            //}
         }
         return null;
     }
@@ -53,7 +74,7 @@ public class CharacterSelector : MonoBehaviour
 
 
     // Phương thức để hủy singleton và đối tượng
-    public void destroySingleTon()
+    public void DestroySingleTon()
     {
         instance = null; // Đặt instance thành null
         Destroy(gameObject); // Hủy đối tượng

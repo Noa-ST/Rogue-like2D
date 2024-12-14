@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4341a1428233a904dad63d05e116112a, type: 3}
+  m_Name: Soul Eater
+  m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: a19fabff41de10a48a15be9592efdbaf, type: 3}
+  maxLevel: 1
+  evolutionsData: []
+  behavior: AuraWeapon
+  baseStats:
+    name: Soul Eater
+    description: Garlic on steroids.
+    projectilePrefab: {fileID: 0}
+    auraPrefab: {fileID: 8002532739133289669, guid: 7948a033a016d69448b33a810ba2c0df, type: 3}
+    hitEffect: {fileID: 0}
+    spawnVariance:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    lifespan: 0
+    damage: 20
+    damageVariance: 5
+    area: 1
+    speed: 0
+    cooldown: 1
+    projectileInterval: 0
+    knockback: 0
+    number: 0
+    piercing: 0
+    maxInstances: 50
+  linearGrowth: []
+  randomGrowth: []

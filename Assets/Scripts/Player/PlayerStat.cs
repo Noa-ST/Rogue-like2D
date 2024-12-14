@@ -51,7 +51,7 @@ public class PlayerStat : MonoBehaviour
 
     public float CurrentRecovery
     {
-        get { return Recovery;  }
+        get { return Recovery; }
 
         set { Recovery = value; }
     }
@@ -208,8 +208,8 @@ public class PlayerStat : MonoBehaviour
             Debug.LogError("Character data is null! Ensure a character is selected in the menu.");
             return;
         }
-
-        CharacterSelector.instance.destroySingleTon();
+        if (CharacterSelector.instance)
+            CharacterSelector.instance.DestroySingleTon();
 
         _inventory = GetComponent<PlayerInventory>();
         Debug.Log(_characterData.StartingWeapon);
@@ -312,7 +312,7 @@ public class PlayerStat : MonoBehaviour
 
     void UpdateExperienceBar()
     {
-        experienceBar.fillAmount = (float) experience / experienceCap;
+        experienceBar.fillAmount = (float)experience / experienceCap;
     }
 
     void UpdateLevelText()
@@ -342,7 +342,7 @@ public class PlayerStat : MonoBehaviour
     }
 
     void UpdateHealthBar()
-    { 
+    {
         healthBar.fillAmount = CurrentHealth / actualStats.maxHealth;
     }
 
