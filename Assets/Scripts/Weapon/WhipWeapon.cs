@@ -27,6 +27,11 @@ public class WhipWeapon : ProjectileWeapon
         float spawnDir = Mathf.Sign(movement.lastMoveVector.x) * (_currentSpawnCount % 2 != 0 ? -1 : 1);
         Vector2 spawnOffset = new Vector2(spawnDir * Random.Range(currentStats.spawnVariance.xMin, currentStats.spawnVariance.xMax), _currentSpawnYOffset);
 
+        if (currentStats.procEffect)
+        {
+            Destroy(Instantiate(currentStats.procEffect, owner.transform), 5f);
+        }
+
         Projectile prefab = Instantiate(currentStats.projectilePrefab, owner.transform.position + (Vector3)spawnOffset, Quaternion.identity);
 
         prefab.owner = owner;

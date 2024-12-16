@@ -21,7 +21,7 @@ MonoBehaviour:
     description: ' Damages nearby enemies. Reduces resistence knockback.'
     projectilePrefab: {fileID: 0}
     auraPrefab: {fileID: 7787519355140114159, guid: b32b648cd492bcc4d80016d384816ea3, type: 3}
-    hitEffect: {fileID: 0}
+    hitEffect: {fileID: 5184859275262686554, guid: 7c140a7572ec2244399c91ef06d97039, type: 3}
     spawnVariance:
       serializedVersion: 2
       x: 0

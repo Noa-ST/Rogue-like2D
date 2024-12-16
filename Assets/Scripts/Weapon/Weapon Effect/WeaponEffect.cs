@@ -12,3 +12,5 @@ public abstract class WeaponEffect : MonoBehaviour
         return weapon.GetDamage();
     }
 }
+
+

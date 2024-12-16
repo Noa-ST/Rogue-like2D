@@ -185,6 +185,7 @@ public class PlayerStat : MonoBehaviour
 
     public List<LevelRange> levelRanges;
 
+    PlayerCollector _collector;
     PlayerInventory _inventory;
     public int weaponIndex;
     public int passiveitemIndex;
@@ -212,8 +213,10 @@ public class PlayerStat : MonoBehaviour
             CharacterSelector.instance.DestroySingleTon();
 
         _inventory = GetComponent<PlayerInventory>();
+        _collector = GetComponentInChildren<PlayerCollector>();
         Debug.Log(_characterData.StartingWeapon);
         baseStats = actualStats = _characterData.stats;
+        _collector.SetRadius(actualStats.magnet);
         _health = actualStats.maxHealth;
     }
 
@@ -274,6 +277,7 @@ public class PlayerStat : MonoBehaviour
                 actualStats += p.GetBoosts();
             }
         }
+        _collector.SetRadius(actualStats.magnet);
     }
 
     // Hàm tăng kinh nghiệm
@@ -368,6 +372,8 @@ public class PlayerStat : MonoBehaviour
             {
                 CurrentHealth = actualStats.maxHealth;
             }
+
+            UpdateHealthBar();
         }
     }
 
@@ -383,6 +389,8 @@ public class PlayerStat : MonoBehaviour
                 {
                     CurrentHealth = actualStats.maxHealth;
                 }
+
+                UpdateHealthBar();
             }
         }
     }

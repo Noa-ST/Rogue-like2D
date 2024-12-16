@@ -35,6 +35,11 @@ public class ProjectileWeapon : Weapon
 
         float spawnAngle = GetSpawnAngle();
 
+        if (currentStats.procEffect)
+        {
+            Destroy(Instantiate(currentStats.procEffect, owner.transform), 5f);
+        }
+
         Projectile prefabs = Instantiate(currentStats.projectilePrefab, owner.transform.position + (Vector3)GetSpawnOffSet(spawnAngle), Quaternion.Euler(0, 0, spawnAngle));
 
         prefabs.weapon = this;

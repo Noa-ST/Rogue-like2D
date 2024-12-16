@@ -16,6 +16,7 @@ public class AuraWeapon : Weapon
             currentAura = Instantiate(currentStats.auraPrefab, transform);
             currentAura.weapon = this;
             currentAura.owner = owner;
+
             currentAura.transform.localScale = new Vector3(currentStats.area, currentStats.area, currentStats.area);
         }
     }
@@ -28,6 +29,8 @@ public class AuraWeapon : Weapon
     public override bool DoLevelUp()
     {
         if (!base.DoLevelUp()) return false;
+
+        OnEquip();
 
         if (currentAura)
             currentAura.transform.localScale = new Vector3(currentStats.area, currentStats.area, currentStats.area);

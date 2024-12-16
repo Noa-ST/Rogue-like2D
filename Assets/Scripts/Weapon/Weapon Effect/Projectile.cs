@@ -69,6 +69,8 @@ public class Projectile : WeaponEffect
         EnemyStat es = collision.GetComponent<EnemyStat>();
         BreakableProps p = collision.GetComponent<BreakableProps>();
 
+        //IDamageable d = collision.GetComponent<IDamageable>();
+
         if (es)
         {
             Vector3 source = damageSource == DamageSource.owner && owner ? owner.transform.position : transform.position;

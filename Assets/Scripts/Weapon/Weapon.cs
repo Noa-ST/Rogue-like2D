@@ -12,7 +12,7 @@ public abstract class Weapon : Item
         [Header("Visuals")]
         public Projectile projectilePrefab;
         public Aura auraPrefab;
-        public ParticleSystem hitEffect;
+        public ParticleSystem hitEffect, procEffect;
         public Rect spawnVariance;
 
         [Header("Values")]
@@ -28,6 +28,7 @@ public abstract class Weapon : Item
             result.projectilePrefab = s2.projectilePrefab ?? s1.projectilePrefab;
             result.auraPrefab = s2.auraPrefab ?? s1.auraPrefab;
             result.hitEffect = s2.hitEffect == null ? s1.hitEffect : s2.hitEffect;
+            result.procEffect = s2.procEffect == null ? s1.procEffect : s2.procEffect;
             result.spawnVariance = s2.spawnVariance;
             result.lifespan = s1.lifespan + s2.lifespan;
             result.damage = s1.damage + s2.damage;

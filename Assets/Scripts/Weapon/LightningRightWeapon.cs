@@ -32,6 +32,11 @@ public class LightningRightWeapon : ProjectileWeapon
             Instantiate(currentStats.hitEffect, target.transform.position, Quaternion.identity);
         }
 
+        if (currentStats.procEffect)
+        {
+            Destroy(Instantiate(currentStats.procEffect, owner.transform), 5f);
+        }
+
         if (attackCount > 0)
         {
             currentAttackCount = attackCount - 1;
