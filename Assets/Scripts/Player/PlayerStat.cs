@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 
 public class PlayerStat : MonoBehaviour
 {
@@ -10,10 +11,18 @@ public class PlayerStat : MonoBehaviour
     public CharacterData.Stats baseStats;
     [SerializeField] CharacterData.Stats actualStats;
 
+    public CharacterData.Stats Stats
+    {
+        get { return actualStats; }
+        set
+        {
+            actualStats = value;
+        }
+    }
+
     float _health;
 
     #region Current Stats Properties
-
     public float CurrentHealth
     {
         get
@@ -25,143 +34,15 @@ public class PlayerStat : MonoBehaviour
             if (_health != value)
             {
                 _health = value;
-                if (GameManager.Ins != null)
-                {
-                    GameManager.Ins.curHealthDisplay.text = string.Format("Health: {0} / {1}", _health, actualStats.maxHealth);
-                }
-            }
-        }
-    }
-
-    public float MaxHealth
-    {
-        get { return actualStats.maxHealth; }
-        set
-        {
-            if (actualStats.maxHealth != value)
-            {
-                actualStats.maxHealth = value;
-                if (GameManager.Ins != null)
-                {
-                    GameManager.Ins.curHealthDisplay.text = string.Format("Health: {0} / {1}", _health, actualStats.maxHealth);
-                }
-            }
-        }
-    }
-
-    public float CurrentRecovery
-    {
-        get { return Recovery; }
-
-        set { Recovery = value; }
-    }
-
-    public float Recovery
-    {
-        get { return actualStats.recovery; }
-        set
-        {
-            if (actualStats.recovery != value)
-            {
-                actualStats.recovery = value;
-                if (GameManager.Ins != null)
-                {
-                    GameManager.Ins.curRecoveryDisplay.text = "Recovery: " + actualStats.recovery;
-                }
-            }
-        }
-    }
-
-    public float CurrentMoveSpeed
-    {
-        get { return MoveSpeed; }
-        set { MoveSpeed = value; }
-    }
-
-    public float MoveSpeed
-    {
-        get { return actualStats.moveSpeed; }
-        set
-        {
-            if (actualStats.moveSpeed != value)
-            {
-                actualStats.moveSpeed = value;
-                if (GameManager.Ins != null)
-                {
-                    GameManager.Ins.curMoveSpeedDisplay.text = "Move Speed: " + actualStats.moveSpeed;
-                }
-            }
-        }
-    }
-
-    public float CurrentMight
-    {
-        get { return Might; }
-        set { Might = value; }
-    }
-
-    public float Might
-    {
-        get { return actualStats.might; }
-        set
-        {
-            if (actualStats.might != value)
-            {
-                actualStats.might = value;
-                if (GameManager.Ins != null)
-                {
-                    GameManager.Ins.curMightDisplay.text = "Might: " + actualStats.might;
-                }
-            }
-        }
-    }
-
-    public float CurrentProjectileSpeed
-    {
-        get { return Speed; }
-        set { Speed = value; }
-    }
-
-    public float Speed
-    {
-        get { return actualStats.speed; }
-        set
-        {
-            if (actualStats.speed != value)
-            {
-                actualStats.speed = value;
-                if (GameManager.Ins != null)
-                {
-                    GameManager.Ins.curProjectileSpeedDisplay.text = "Projectile Speed: " + actualStats.speed;
-                }
-            }
-        }
-    }
-
-    public float CurrentMagnet
-    {
-        get { return Magnet; }
-        set { Magnet = value; }
-    }
-
-    public float Magnet
-    {
-        get { return actualStats.magnet; }
-        set
-        {
-            if (actualStats.magnet != value)
-            {
-                actualStats.magnet = value;
-                if (GameManager.Ins != null)
-                {
-                    GameManager.Ins.curMagnetDisplay.text = "Magnet: " + actualStats.magnet;
-                }
+                UpdateHealthBar();
             }
         }
     }
     #endregion
 
+    [Header("Visuals")]
     public ParticleSystem damageEffect;
+    public ParticleSystem blockedEffect;
 
     // Kinh nghiệm và cấp độ của người chơi
     [Header("Experience/Level")]
@@ -238,12 +119,7 @@ public class PlayerStat : MonoBehaviour
         // Thiết lập giới hạn kinh nghiệm ban đầu từ phạm vi cấp độ đầu tiên
         experienceCap = levelRanges[0].experienceCapIncrease;
 
-        GameManager.Ins.curHealthDisplay.text = "Health: " + CurrentHealth;
-        GameManager.Ins.curRecoveryDisplay.text = "Recovery: " + CurrentRecovery;
-        GameManager.Ins.curMoveSpeedDisplay.text = "Move Speed: " + CurrentMoveSpeed;
-        GameManager.Ins.curMightDisplay.text = "Might: " + CurrentMight;
-        GameManager.Ins.curProjectileSpeedDisplay.text = "Projectil Speed: " + CurrentProjectileSpeed;
-        GameManager.Ins.curMagnetDisplay.text = "Magnet: " + CurrentMagnet;
+
 
         GameManager.Ins.AssignChosenCharacterUI(_characterData);
 
@@ -329,19 +205,28 @@ public class PlayerStat : MonoBehaviour
     {
         if (!_isInvincible)
         {
-            CurrentHealth -= dmg;
+            dmg -= actualStats.armor;
 
-            if (damageEffect)
-                Destroy(Instantiate(damageEffect, transform.position, Quaternion.identity), 5f);
+            if (dmg > 0)
+            {
+                CurrentHealth -= dmg;
+
+                if (damageEffect)
+                    Destroy(Instantiate(damageEffect, transform.position, Quaternion.identity), 5f);
+
+                if (CurrentHealth <= 0)
+                {
+                    Kill();
+                }
+            }
+            else
+            {
+                if (blockedEffect)
+                    Destroy(Instantiate(blockedEffect, transform.position, Quaternion.identity), 5f);
+            }
 
             _invincibilityTimer = invincibilityDuration;
             _isInvincible = true;
-            if (CurrentHealth <= 0)
-            {
-                Kill();
-            }
-
-            UpdateHealthBar();
         }
     }
 
@@ -372,8 +257,6 @@ public class PlayerStat : MonoBehaviour
             {
                 CurrentHealth = actualStats.maxHealth;
             }
-
-            UpdateHealthBar();
         }
     }
 
@@ -383,46 +266,13 @@ public class PlayerStat : MonoBehaviour
         if (CurrentHealth < actualStats.maxHealth)
         {
             {
-                CurrentHealth += CurrentRecovery * Time.deltaTime;
+                CurrentHealth += Stats.recovery * Time.deltaTime;
 
                 if (CurrentHealth > actualStats.maxHealth)
                 {
                     CurrentHealth = actualStats.maxHealth;
                 }
-
-                UpdateHealthBar();
             }
         }
-    }
-
-    [System.Obsolete("Old fuction that is kept to maintain compatibility with the InventoryManager. Will be remove soon.")]
-    // Hàm spawn vũ khí cho người chơi
-    public void SpawnWeapon(GameObject weapon)
-    {
-        if (weaponIndex >= _inventory.weaponSlots.Count - 1)
-        {
-            Debug.LogError("Inventory slots already full");
-            return;
-        }
-
-        GameObject spawnWeapon = Instantiate(weapon, transform.position, Quaternion.identity);
-        spawnWeapon.transform.SetParent(transform);
-        //_inventory.AddWeapon(weaponIndex, spawnWeapon.GetComponent<WeaponController>());
-        weaponIndex++;
-    }
-
-    [System.Obsolete("No need to spawn passive items directly now.")]
-    public void SpawnPassiveItem(GameObject passiveItem)
-    {
-        if (passiveitemIndex >= _inventory.passiveSlots.Count - 1)
-        {
-            Debug.LogError("Inventory slots already full");
-            return;
-        }
-
-        GameObject spawnedPassiveItem = Instantiate(passiveItem, transform.position, Quaternion.identity);
-        spawnedPassiveItem.transform.SetParent(transform);
-        //_inventory.AddPassiveItem(passiveitemIndex, spawnedPassiveItem.GetComponent<PassiveItems>());
-        passiveitemIndex++;
     }
 }

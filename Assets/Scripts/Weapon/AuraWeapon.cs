@@ -15,9 +15,10 @@ public class AuraWeapon : Weapon
             if (currentAura) Destroy(currentAura);
             currentAura = Instantiate(currentStats.auraPrefab, transform);
             currentAura.weapon = this;
-            currentAura.owner = owner;
+            currentAura.owner = Owner;
 
-            currentAura.transform.localScale = new Vector3(currentStats.area, currentStats.area, currentStats.area);
+            float area = GetArea();
+            currentAura.transform.localScale = new Vector3(area, area, area);
         }
     }
 

@@ -223,11 +223,11 @@ public class PlayerInventory : MonoBehaviour
                 return -1;
             }
 
-            spawnedWeapon.Intitalise(data);
             Debug.LogWarning(weaponType);
             Debug.LogWarning(data.baseStats.name);
             spawnedWeapon.transform.SetParent(transform);
             spawnedWeapon.transform.localPosition = Vector2.zero;
+            spawnedWeapon.Intitalise(data);
 
             // Kiểm tra trước khi gọi OnEquip
             if (data != null)

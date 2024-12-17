@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public const float DEFAUlT_MOVESPEED = 5f;
+
     // Movement
     [HideInInspector]
     public float lastHorizontalVector;
@@ -80,6 +82,6 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        _rb.velocity = new Vector2(moveDir.x * _player.CurrentMoveSpeed, moveDir.y * _player.CurrentMoveSpeed);
+        _rb.velocity = moveDir * DEFAUlT_MOVESPEED *  _player.Stats.moveSpeed;
     }
 }

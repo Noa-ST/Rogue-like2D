@@ -27,7 +27,7 @@ public class ProjectileWeapon : Weapon
         if (!currentStats.projectilePrefab)
         {
             Debug.LogWarning(string.Format("Projectile prefabs has not been set for {0}", name));
-            currentCooldown = data.baseStats.cooldown;
+            ActivateCooldown(true);
             return false;
         }
 
@@ -37,14 +37,15 @@ public class ProjectileWeapon : Weapon
 
         if (currentStats.procEffect)
         {
-            Destroy(Instantiate(currentStats.procEffect, owner.transform), 5f);
+            Destroy(Instantiate(currentStats.procEffect, Owner.transform), 5f);
         }
 
-        Projectile prefabs = Instantiate(currentStats.projectilePrefab, owner.transform.position + (Vector3)GetSpawnOffSet(spawnAngle), Quaternion.Euler(0, 0, spawnAngle));
+        Projectile prefabs = Instantiate(currentStats.projectilePrefab, Owner.transform.position + (Vector3)GetSpawnOffSet(spawnAngle), Quaternion.Euler(0, 0, spawnAngle));
 
         prefabs.weapon = this;
-        prefabs.owner = owner;
-        currentCooldown += currentStats.cooldown;
+        prefabs.owner = Owner;
+
+        ActivateCooldown(true);
 
         attackCount--;
 

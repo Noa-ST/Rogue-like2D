@@ -11,7 +11,7 @@ public class LightningRightWeapon : ProjectileWeapon
         if (!currentStats.hitEffect)
         {
             Debug.LogWarning(string.Format("Hit effect prefab has not been set for {0}", name));
-            currentCooldown = currentStats.cooldown;
+            ActivateCooldown(true);
             return false;
         }
 
@@ -20,21 +20,21 @@ public class LightningRightWeapon : ProjectileWeapon
         if (currentCooldown <= 0)
         {
             allSelectedEnemies = new List<EnemyStat>(FindObjectsOfType<EnemyStat>());
-            currentCooldown += currentStats.cooldown;
+            ActivateCooldown(true);
             currentAttackCount = attackCount;
         }
 
         EnemyStat target = PickEnemy();
         if (target)
         {
-            DamageArea(target.transform.position, currentStats.area, GetDamage());
+            DamageArea(target.transform.position, GetArea(), GetDamage());
 
             Instantiate(currentStats.hitEffect, target.transform.position, Quaternion.identity);
         }
 
         if (currentStats.procEffect)
         {
-            Destroy(Instantiate(currentStats.procEffect, owner.transform), 5f);
+            Destroy(Instantiate(currentStats.procEffect, Owner.transform), 5f);
         }
 
         if (attackCount > 0)

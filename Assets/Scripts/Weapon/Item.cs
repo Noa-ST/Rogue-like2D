@@ -11,14 +11,19 @@ public abstract class Item : MonoBehaviour
 
     protected PlayerStat owner;
 
+    public PlayerStat Owner
+    {
+        get { return owner; }
+    }
+
     public virtual void Initialise(ItemData data)
     {
         maxLevel = data.maxLevel;
 
         evolutionData = data.evolutionsData;
         inventory = FindObjectOfType<PlayerInventory>();
-        owner = FindObjectOfType<PlayerStat>();
-    } 
+        //owner = FindObjectOfType<PlayerStat>();
+    }
 
     public virtual ItemData.Evolution[] CanEvolve()
     {
@@ -89,7 +94,7 @@ public abstract class Item : MonoBehaviour
         return true;
     }
 
-    public virtual void OnEquip() {}
+    public virtual void OnEquip() { }
 
-    public virtual void OnUnEquip() {}
+    public virtual void OnUnEquip() { }
 }

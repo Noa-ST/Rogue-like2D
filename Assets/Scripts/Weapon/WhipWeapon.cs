@@ -29,12 +29,12 @@ public class WhipWeapon : ProjectileWeapon
 
         if (currentStats.procEffect)
         {
-            Destroy(Instantiate(currentStats.procEffect, owner.transform), 5f);
+            Destroy(Instantiate(currentStats.procEffect, Owner.transform), 5f);
         }
 
-        Projectile prefab = Instantiate(currentStats.projectilePrefab, owner.transform.position + (Vector3)spawnOffset, Quaternion.identity);
+        Projectile prefab = Instantiate(currentStats.projectilePrefab, Owner.transform.position + (Vector3)spawnOffset, Quaternion.identity);
 
-        prefab.owner = owner;
+        prefab.owner = Owner;
 
         if (spawnDir < 0)
         {
@@ -44,7 +44,7 @@ public class WhipWeapon : ProjectileWeapon
         }
 
         prefab.weapon = this;
-        currentCooldown = data.baseStats.cooldown;
+        ActivateCooldown(true);
         attackCount--;
 
         _currentSpawnCount++;
