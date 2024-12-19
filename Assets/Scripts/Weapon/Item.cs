@@ -16,13 +16,19 @@ public abstract class Item : MonoBehaviour
         get { return owner; }
     }
 
+    [System.Serializable]
+    public class LevelData
+    {
+        public string name, description;
+    }
+
     public virtual void Initialise(ItemData data)
     {
         maxLevel = data.maxLevel;
 
         evolutionData = data.evolutionsData;
         inventory = FindObjectOfType<PlayerInventory>();
-        //owner = FindObjectOfType<PlayerStat>();
+        owner = FindObjectOfType<PlayerStat>();
     }
 
     public virtual ItemData.Evolution[] CanEvolve()

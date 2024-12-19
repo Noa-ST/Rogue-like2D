@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Axe
   m_EditorClassIdentifier: 
   icon: {fileID: 1797313173, guid: 83d0b776afdf81f479cd928573b1b119, type: 3}
-  maxLevel: 0
+  maxLevel: 1
   evolutionsData: []
   behavior: AxeWeapon
   baseStats:
@@ -22,6 +22,7 @@ MonoBehaviour:
     projectilePrefab: {fileID: 2169626457729444849, guid: 5dede02ceb09be74ca36a8cd843097cf, type: 3}
     auraPrefab: {fileID: 0}
     hitEffect: {fileID: 0}
+    procEffect: {fileID: 0}
     spawnVariance:
       serializedVersion: 2
       x: 0

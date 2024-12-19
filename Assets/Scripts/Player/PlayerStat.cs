@@ -187,6 +187,9 @@ public class PlayerStat : MonoBehaviour
             UpdateLevelText();
 
             GameManager.Ins.StartLevelUp();
+
+            if (experience >= experienceCap)
+                LevelUpChecker();
         }
     }
 

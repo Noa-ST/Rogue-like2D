@@ -14,50 +14,101 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: -1378705971, guid: 83d0b776afdf81f479cd928573b1b119, type: 3}
   maxLevel: 5
+  evolutionsData: []
   baseStats:
     name: Spinach
-    desription: Makes you like Popeye
+    description: Increase Might by 10%.
     boosts:
       maxHealth: 0
       recovery: 0
+      armor: 0
       moveSpeed: 0
       might: 0.1
+      area: 0
       speed: 0
+      duration: 0
+      amount: 0
+      cooldown: 0
+      luck: 0
+      growth: 0
+      greed: 0
+      curse: 0
       magnet: 0
+      revival: 0
   growth:
   - name: Level 2
-    desription: Give you more muscle
+    description: More increase Might by 10%.
     boosts:
       maxHealth: 0
       recovery: 0
+      armor: 0
       moveSpeed: 0
       might: 0.1
+      area: 0
       speed: 0
+      duration: 0
+      amount: 0
+      cooldown: 0
+      luck: 0
+      growth: 0
+      greed: 0
+      curse: 0
       magnet: 0
+      revival: 0
   - name: Level 3
-    desription: Give you more muscle
+    description: More increase Might by 10%.
     boosts:
       maxHealth: 0
       recovery: 0
+      armor: 0
       moveSpeed: 0
       might: 0.1
+      area: 0
       speed: 0
+      duration: 0
+      amount: 0
+      cooldown: 0
+      luck: 0
+      growth: 0
+      greed: 0
+      curse: 0
       magnet: 0
+      revival: 0
   - name: Level 4
-    desription: Give you more muscle
+    description: More increase Might by 10%.
     boosts:
       maxHealth: 0
       recovery: 0
+      armor: 0
       moveSpeed: 0
       might: 0.1
+      area: 0
       speed: 0
+      duration: 0
+      amount: 0
+      cooldown: 0
+      luck: 0
+      growth: 0
+      greed: 0
+      curse: 0
       magnet: 0
+      revival: 0
   - name: Level 5
-    desription: Give you more muscle
+    description: More increase Might by 10%.
     boosts:
       maxHealth: 0
       recovery: 0
+      armor: 0
       moveSpeed: 0
       might: 0.1
+      area: 0
       speed: 0
+      duration: 0
+      amount: 0
+      cooldown: 0
+      luck: 0
+      growth: 0
+      greed: 0
+      curse: 0
       magnet: 0
+      revival: 0

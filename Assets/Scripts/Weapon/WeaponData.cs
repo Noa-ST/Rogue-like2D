@@ -10,8 +10,10 @@ public class WeaponData : ItemData
     public Weapon.Stats[] linearGrowth;
     public Weapon.Stats[] randomGrowth;
 
-    public Weapon.Stats GetLevelData(int level)
+    public override Item.LevelData GetLevelData(int level)
     {
+        if (level <= 1) return baseStats;
+
         if (level - 2 < linearGrowth.Length)
             return linearGrowth[level - 2];
 

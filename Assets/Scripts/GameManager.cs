@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     public GameObject pauseScreen;
     public GameObject resultsScreen;
     public GameObject levelUpScreen;
+    int _stackedLevelUps = 0;
 
     [Header("Current Stat Displays")]
     public TMP_Text curHealthDisplay;
@@ -50,27 +51,41 @@ public class GameManager : MonoBehaviour
     public float timeLimit;
     float stopwatchTime;
     public TMP_Text stopwatchDisplay;
-
-    public bool isGameOver = false;
-    public bool choosingUpgrade;
     public GameObject playerObject;
 
-    private List<GameObject> activePickups = new List<GameObject>(); // Danh sách các pickup hiện tại
-
-    private void Awake()
+    public bool isGameOver 
+    { 
+        get 
+        { 
+            return currentState == GameState.GameOver; 
+        }
+    }
+    public bool choosingUpgrade
     {
-        if(Ins == null)
+        get
+        {
+            return currentState == GameState.LevelUp;
+        }
+    }
+
+    List<GameObject> _activePickups = new List<GameObject>(); // Danh sách các pickup hiện tại
+
+    void Awake()
+    {
+        if (Ins == null)
         {
             Ins = this;
         }
         else
         {
             Debug.LogWarning("EXTRA" + this + "DELETED");
+            Destroy(gameObject);
         }
+
         DisableScreen();
     }
 
-    private void Update()
+    void Update()
     {
         switch (currentState)
         {
@@ -78,27 +93,16 @@ public class GameManager : MonoBehaviour
                 CheckForPauseAndResume();
                 UpdateStopWatch();
                 break;
+
             case GameState.Paused:
                 CheckForPauseAndResume();
                 break;
+
             case GameState.GameOver:
-                if (!isGameOver)
-                {
-                    isGameOver = true;
-                    Time.timeScale = 0f;
-                    Debug.Log("Game is over");
-                    CleanupPickups();
-                    DisplayResults();
-                }
-                break;
+
             case GameState.LevelUp:
-                if (!choosingUpgrade)
-                {
-                    choosingUpgrade = true;
-                    Time.timeScale = 0f;
-                    levelUpScreen.SetActive(true);
-                }
                 break;
+
             default:
                 Debug.LogWarning("STATE DOES NOT EXITST");
                 break;
@@ -164,10 +168,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
-
     public void ChangeState(GameState newState)
     {
+        previousState = currentState;
         currentState = newState;
         if (newState == GameState.GameOver || newState == GameState.Paused)
         {
@@ -179,11 +182,9 @@ public class GameManager : MonoBehaviour
     {
         if (currentState != GameState.Paused)
         {
-            previousState = currentState;
-            currentState = GameState.Paused;
+            ChangeState(GameState.Paused);
             Time.timeScale = 0f;
             pauseScreen.SetActive(true);
-            Debug.Log("Game is paused");
         }
     }
 
@@ -194,7 +195,6 @@ public class GameManager : MonoBehaviour
             currentState = previousState;
             Time.timeScale = 1f;
             pauseScreen.SetActive(false);
-            Debug.Log("Game is resumed");
         }
     }
 
@@ -219,7 +219,10 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         timeSurviedDisplay.text = stopwatchDisplay.text;
+
         ChangeState(GameState.GameOver);
+        Time.timeScale = 0f;
+        DisplayResults();
     }
 
     void DisplayResults()
@@ -248,7 +251,8 @@ public class GameManager : MonoBehaviour
             {
                 chosenWeaponUI[i].enabled = true;
                 chosenWeaponUI[i].sprite = chosenWeaponsData[i].image.sprite;
-            } else
+            }
+            else
             {
                 chosenWeaponUI[i].enabled = false;
             }
@@ -292,32 +296,44 @@ public class GameManager : MonoBehaviour
     public void StartLevelUp()
     {
         ChangeState(GameState.LevelUp);
-        playerObject.SendMessage("RemoveAndApplyUpgrades");
+
+        if (levelUpScreen.activeSelf) _stackedLevelUps++;
+        else
+        {
+            levelUpScreen.SetActive(true);
+            Time.timeScale = 0f;
+            playerObject.SendMessage("RemoveAndApplyUpgrades");
+        }
     }
 
     public void EndLevelUp()
     {
-        choosingUpgrade = false;
         Time.timeScale = 1f;
         levelUpScreen.SetActive(false);
         ChangeState(GameState.Gameplay);
+
+        if (_stackedLevelUps > 0)
+        {
+            _stackedLevelUps--;
+            StartLevelUp();
+        }
     }
 
     public void RegisterPickup(GameObject pickup)
     {
-        activePickups.Add(pickup); // Đăng ký pickup
+        _activePickups.Add(pickup); // Đăng ký pickup
     }
 
     void CleanupPickups()
     {
-        foreach (var pickup in activePickups)
+        foreach (var pickup in _activePickups)
         {
             if (pickup != null)
             {
                 Destroy(pickup);
             }
         }
-        activePickups.Clear();
+        _activePickups.Clear();
     }
 
     void OnApplicationQuit()

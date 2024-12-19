@@ -30,4 +30,6 @@ public abstract class ItemData : ScriptableObject
     }
 
     public Evolution[] evolutionsData;
+
+    public abstract Item.LevelData GetLevelData(int level);
 }
