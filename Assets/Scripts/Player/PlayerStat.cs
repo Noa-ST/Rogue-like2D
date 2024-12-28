@@ -245,7 +245,7 @@ public class PlayerStat : MonoBehaviour
         if (!GameManager.Ins.isGameOver)
         {
             GameManager.Ins.AssignLevelReachedUI(level);
-            GameManager.Ins.AssignChosenWeaponAndPassiveItemUI(_inventory.weaponSlots, _inventory.passiveSlots);
+
             GameManager.Ins.GameOver();
         }
     }

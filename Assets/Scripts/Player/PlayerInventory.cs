@@ -12,7 +12,7 @@ public class PlayerInventory : MonoBehaviour
     public class Slot
     {
         public Item item;
-        public Image image;
+
         public void Assign(Item assignedItem)
         {
             item = assignedItem;
@@ -21,55 +21,10 @@ public class PlayerInventory : MonoBehaviour
             {
                 Weapon w = item as Weapon;
 
-                if (image == null)
-                {
-                    Debug.LogError("Slot image is null. Ensure the image is assigned in the Inspector.");
-                    return;
-                }
-
-                if (w.data == null)
-                {
-                    Debug.LogError("Weapon data is null. Ensure the Weapon is initialized properly.");
-                    return;
-                }
-
-                image.enabled = true;
-                image.sprite = w.data.icon;
             }
             else if (item is Passive)
             {
                 Passive p = item as Passive;
-
-                if (p == null)
-                {
-                    Debug.LogError("Assigned item is not a Passive. Check the item being assigned.");
-                    return;
-                }
-
-                if (image == null)
-                {
-                    Debug.LogError("Slot image is null. Ensure the image is assigned in the Inspector.");
-                    return;
-                }
-
-                if (p.data == null)
-                {
-                    Debug.LogError("Passive data is null. Ensure the Passive is initialized with valid data.");
-                    return;
-                }
-
-                if (p.data.icon == null)
-                {
-                    Debug.LogWarning($"Icon is null for {p.data.name}. Check the PassiveData asset.");
-                    return;
-                }
-
-                image.enabled = true;
-                image.sprite = p.data.icon;
-            }
-            else
-            {
-                Debug.LogError("Assigned item is not of a known type (Weapon or Passive).");
             }
 
             Debug.Log($"Assigned {item.name} to player.");
@@ -79,8 +34,7 @@ public class PlayerInventory : MonoBehaviour
         public void Clear()
         {
             item = null;
-            image.enabled = false;
-            image.sprite = null;
+
         }
 
         public bool IsEmpty() { return item == null; }
@@ -88,6 +42,7 @@ public class PlayerInventory : MonoBehaviour
 
     public List<Slot> weaponSlots = new List<Slot>(6);
     public List<Slot> passiveSlots = new List<Slot>(6);
+    public UIIventoryIconsDisplay weaponUI, passiveUI;
 
     [Header("UI Elements")]
     public List<WeaponData> availableWeapons = new List<WeaponData>();
@@ -235,6 +190,7 @@ public class PlayerInventory : MonoBehaviour
             }
 
             weaponSlots[slotNum].Assign(spawnedWeapon);
+            weaponUI.Refresh();
 
             if (GameManager.Ins != null && GameManager.Ins.choosingUpgrade)
                 GameManager.Ins.EndLevelUp();
@@ -272,6 +228,7 @@ public class PlayerInventory : MonoBehaviour
         p.transform.localPosition = Vector2.zero;
 
         passiveSlots[slotNum].Assign(p);
+        passiveUI.Refresh();
 
         if (GameManager.Ins != null && GameManager.Ins.choosingUpgrade)
             GameManager.Ins.EndLevelUp();
@@ -302,6 +259,9 @@ public class PlayerInventory : MonoBehaviour
             UnityEngine.Debug.LogWarning(string.Format("Failed to level up {0}.", item.name));
             return false;
         }
+
+        weaponUI.Refresh();
+        passiveUI.Refresh();
 
         if (GameManager.Ins != null && GameManager.Ins.choosingUpgrade)
         {

@@ -26,7 +26,7 @@ public class UIUpgradeWindow : MonoBehaviour
     float optionHeight;
     List<RectTransform> upgradeOptions = new List<RectTransform>();
     int activeOptions = 0;
-    Vector2 lastScreen;
+    Vector2 lastScreen; 
 
     void Awake()
     {

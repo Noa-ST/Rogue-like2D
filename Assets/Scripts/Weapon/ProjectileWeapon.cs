@@ -52,7 +52,7 @@ public class ProjectileWeapon : Weapon
         if (attackCount > 0)
         {
             currentAttackCount = attackCount;
-            currentAttackInterval = data.baseStats.projectileInterval;
+            currentAttackInterval = ((WeaponData)data).baseStats.projectileInterval;
         }
 
         return true;
@@ -82,7 +82,7 @@ public class ProjectileWeapon : Weapon
         }
 
         // Gán các chỉ số cơ bản từ WeaponData
-        currentStats = data.baseStats;
+        currentStats = ((WeaponData)data).baseStats;
 
     }
 }
