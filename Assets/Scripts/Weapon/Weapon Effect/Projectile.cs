@@ -78,6 +78,7 @@ public class Projectile : WeaponEffect
             es.TakeDamage(GetDamage(), source);
 
             Weapon.Stats stats = weapon.GetStats();
+            weapon.ApplyBuff(es);
             piercing--;
             if (stats.hitEffect)
             {

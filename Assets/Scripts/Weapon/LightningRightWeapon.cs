@@ -85,6 +85,7 @@ public class LightningRightWeapon : ProjectileWeapon
             if (es)
             {
                 es.TakeDamage(damage, transform.position);
+                ApplyBuff(es);
             }
         }
     }

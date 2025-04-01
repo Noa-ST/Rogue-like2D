@@ -13,17 +13,13 @@ public class DropRateManager : MonoBehaviour
         public float dropRate;
     }
 
+    public bool active = false;
     public List<Drops> drops;
-    bool isQuitting = false;
-
-    void OnApplicationQuit()
-    {
-        isQuitting = true;
-    }
 
     void OnDestroy()
     {
-        if (isQuitting || SceneManager.GetActiveScene().isLoaded == false || GameManager.Ins == null || GameManager.Ins.currentState != GameManager.GameState.Gameplay) return;
+        if (!active) return;
+        if (SceneManager.GetActiveScene().isLoaded == false || GameManager.Ins == null || GameManager.Ins.currentState != GameManager.GameState.Gameplay) return;
 
         float randomNumber = Random.Range(0f, 100f);
         List<Drops> possibleDrops = new List<Drops>();

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEditor.U2D.Animation;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : SortTable
 {
     public const float DEFAUlT_MOVESPEED = 5f;
 
@@ -22,8 +22,9 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody2D _rb;
     PlayerStat _player;
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         _rb = GetComponent<Rigidbody2D>();
         _player = GetComponent<PlayerStat>();
         lastMoveVector = new Vector2(1, 0f); // Khởi tạo hướng di chuyển cuối cùng ban đầu (hướng phải)

@@ -40,6 +40,7 @@ MonoBehaviour:
     number: 1
     piercing: 1
     maxInstances: 70
+    appliedBuffs: []
   linearGrowth:
   - name: Level 2
     description: Fires 1 more projectile
@@ -64,6 +65,7 @@ MonoBehaviour:
     number: 1
     piercing: 0
     maxInstances: 0
+    appliedBuffs: []
   - name: Level 3
     description: Fires 1 more projectile. Base damage by 5
     projectilePrefab: {fileID: 0}
@@ -87,6 +89,7 @@ MonoBehaviour:
     number: 1
     piercing: 0
     maxInstances: 0
+    appliedBuffs: []
   - name: Level 4
     description: Base damage by 5 and Knockback 0.25.
     projectilePrefab: {fileID: 0}
@@ -110,6 +113,7 @@ MonoBehaviour:
     number: 0
     piercing: 0
     maxInstances: 0
+    appliedBuffs: []
   - name: Level 5
     description: ' Base damage by 5 and area by 1.'
     projectilePrefab: {fileID: 0}
@@ -133,6 +137,7 @@ MonoBehaviour:
     number: 0
     piercing: 0
     maxInstances: 0
+    appliedBuffs: []
   - name: Level 6
     description: ' Base damage by 5 and area by 1.'
     projectilePrefab: {fileID: 0}
@@ -156,6 +161,7 @@ MonoBehaviour:
     number: 1
     piercing: 0
     maxInstances: 0
+    appliedBuffs: []
   randomGrowth:
   - name: 
     description: 
@@ -180,6 +186,7 @@ MonoBehaviour:
     number: 1
     piercing: 0
     maxInstances: 0
+    appliedBuffs: []
   - name: 
     description: 
     projectilePrefab: {fileID: 0}
@@ -203,3 +210,4 @@ MonoBehaviour:
     number: 1
     piercing: 0
     maxInstances: 0
+    appliedBuffs: []

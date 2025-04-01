@@ -1,0 +1,81 @@
+BUFF DATA
+
+1. Tổng quan về enum Type : byte
+public enum Type : byte
+{
+    buff = 1,        // Buff có lợi cho nhân vật
+    debuff = 2,      // Debuff gây bất lợi cho nhân vật
+    freeze = 4,      // Buff làm đóng băng mục tiêu
+    strong = 8       // Buff giúp nhân vật mạnh hơn
+}
+enum là một kiểu dữ liệu liệt kê, giúp định nghĩa một tập hợp các hằng số có giá trị cố định.
+: byte chỉ định rằng giá trị của các phần tử trong enum sẽ được lưu trữ dưới dạng byte (từ 0 đến 255), giúp tiết kiệm bộ nhớ hơn so với kiểu mặc định int.
+Mỗi giá trị trong enum Type là một số nguyên, và chúng được khai báo với các giá trị theo lũy thừa của 2: 1, 2, 4, 8. Điều này giúp sử dụng như bit flags, cho phép kết hợp nhiều loại buff bằng toán tử bitwise (|).
+2. Giải thích từng loại Buff
+Giá trị	Enum	Giải thích
+1 (0b0001)	buff	Một buff có lợi cho nhân vật, giúp tăng sức mạnh hoặc khả năng.
+2 (0b0010)	debuff	Một debuff gây bất lợi, có thể làm yếu nhân vật hoặc kẻ địch.
+4 (0b0100)	freeze	Một buff/detriment làm đóng băng mục tiêu, ngăn chặn di chuyển hoặc hành động.
+8 (0b1000)	strong	Một buff làm nhân vật mạnh hơn, có thể tăng sát thương hoặc phòng thủ.
+Vì các giá trị là lũy thừa của 2, chúng có thể được kết hợp để tạo ra nhiều loại buff cùng lúc bằng toán tử | (bitwise OR).
+3. Ứng dụng: Kết hợp nhiều loại buff
+Khi sử dụng Flags, các loại buff có thể được kết hợp bằng cách sử dụng toán tử | (bitwise OR).
+
+BuffData.Type myBuff = BuffData.Type.buff | BuffData.Type.strong;
+myBuff bây giờ có cả buff (1) và strong (8).
+Giá trị nhị phân của myBuff là:
+buff   = 0001 (1)
+strong = 1000 (8)
+----------------
+Tổng   = 1001 (9)
+-> Nghĩa là myBuff chứa cả buff và strong.
+
+1. GetTickDamage(int variant = 0)
+🔹 Mục đích:
+
+Tính toán lượng sát thương gây ra mỗi lần tick (mỗi khoảng thời gian áp dụng sát thương).
+🔹 Cách hoạt động:
+
+Lấy dữ liệu buff theo cấp độ (variant) bằng cách gọi Get(variant).
+Nhân sát thương mỗi giây (damagePerSecond) với khoảng thời gian giữa các lần tick (tickInterval) để tính sát thương mỗi lần tick.
+🔹 Công thức:
+
+TickDamage=damagePerSecond×tickInterval
+2. GetTickHeal(int variant = 0)
+🔹 Mục đích:
+
+Tính toán lượng hồi máu mỗi lần tick.
+🔹 Cách hoạt động:
+
+Lấy dữ liệu buff theo cấp độ (variant).
+Nhân hồi máu mỗi giây (healPerSecond) với khoảng thời gian giữa các lần tick (tickInterval) để tính lượng hồi máu mỗi lần tick.
+🔹 Công thức:
+
+TickHeal=healPerSecond×tickInterval
+3. Get(int variant = -1)
+🔹 Mục đích:
+
+Lấy thông tin buff theo cấp độ (variant).
+🔹 Cách hoạt động:
+
+Nếu variant nhỏ hơn 0, mặc định lấy buff cấp thấp nhất (variations[0]).
+Sử dụng Mathf.Max(0, variant) để đảm bảo variant không nhỏ hơn 0 (tránh lỗi truy cập mảng).
+Trả về thông tin buff (Stats) tương ứng.
+Ví dụ minh họa
+Giả sử ta có buff sau:
+
+variations[0] = new Stats { damagePerSecond = 4f, healPerSecond = 2f, tickInterval = 0.5f };
+variations[1] = new Stats { damagePerSecond = 6f, healPerSecond = 3f, tickInterval = 0.25f };
+👉 Tính sát thương mỗi lần tick cho buff cấp 0:
+
+csharp
+Copy
+Edit
+float damage = GetTickDamage(0); // 4 * 0.5 = 2 sát thương mỗi tick
+👉 Tính hồi máu mỗi lần tick cho buff cấp 1:
+
+float heal = GetTickHeal(1); // 3 * 0.25 = 0.75 máu mỗi tick
+Tóm tắt
+GetTickDamage() và GetTickHeal() tính toán sát thương hoặc hồi máu mỗi lần tick dựa trên dữ liệu buff.
+Get() lấy thông tin buff theo cấp độ, nếu không có sẽ lấy cấp thấp nhất.
+Mục tiêu: Giúp dễ dàng quản lý hiệu ứng buff theo thời gian (DoT, HoT) mà không cần tính toán thủ công trong gameplay.

@@ -49,13 +49,13 @@ public class GameManager : MonoBehaviour
     public float timeLimit;
     float stopwatchTime;
     public TMP_Text stopwatchDisplay;
-    public GameObject playerObject;
+    PlayerStat[] players;
 
-    public bool isGameOver 
-    { 
-        get 
-        { 
-            return currentState == GameState.GameOver; 
+    public bool isGameOver
+    {
+        get
+        {
+            return currentState == GameState.GameOver;
         }
     }
     public bool choosingUpgrade
@@ -66,10 +66,41 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public float GetElapsedTime()
+    {
+        return stopwatchTime;
+    }
+
     List<GameObject> _activePickups = new List<GameObject>(); // Danh sách các pickup hiện tại
+
+    public static float GetCumulativeCurse()
+    {
+        if (!Ins) return 1;
+
+        float totalCurse = 0;
+        foreach (PlayerStat p in Ins.players)
+        {
+            totalCurse += p.Actual.curse;
+        }
+        return Mathf.Max(1, 1 + totalCurse);
+    }
+
+    public static int GetCumulativeLevels()
+    {
+        if (!Ins) return 1;
+
+        int totalLevel = 0;
+
+        foreach (PlayerStat p in Ins.players)
+        {
+            totalLevel += p.level;
+        }
+        return Mathf.Max(1, totalLevel);
+    }
 
     void Awake()
     {
+        players = FindObjectsOfType<PlayerStat>();
         if (Ins == null)
         {
             Ins = this;
@@ -247,7 +278,10 @@ public class GameManager : MonoBehaviour
 
         if (stopwatchTime >= timeLimit)
         {
-            playerObject.SendMessage("Kill");
+            foreach (PlayerStat p in players)
+            {
+                p.SendMessage("KIll");
+            }
         }
     }
 
@@ -269,7 +303,10 @@ public class GameManager : MonoBehaviour
         {
             levelUpScreen.SetActive(true);
             Time.timeScale = 0f;
-            playerObject.SendMessage("RemoveAndApplyUpgrades");
+            foreach (PlayerStat p in players)
+            {
+                p.SendMessage("RemoveAndApplyUpgrades");
+            }
         }
     }
 

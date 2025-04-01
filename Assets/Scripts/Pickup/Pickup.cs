@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pickup : MonoBehaviour
+public class Pickup : SortTable
 {
     public float lifespan = 0.5f;
     protected PlayerStat targer;
@@ -28,8 +28,9 @@ public class Pickup : MonoBehaviour
     public int experience;
     public int health;
 
-    protected virtual void Start()
+    protected override void Start()
     {
+        base.Start();
         _initialPostion = transform.position;
         _intitialOffset = Random.Range(0, bobbingAnimation.frequency);
     }
@@ -67,6 +68,6 @@ public class Pickup : MonoBehaviour
     {
         if (!targer) return;
         if (experience != 0) targer.IncreaseExperience(experience);
-        if (health != 0) targer.Restore(health);
+        if (health != 0) targer.RestoreHealth(health);
     }
 }

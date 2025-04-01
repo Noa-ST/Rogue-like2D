@@ -282,6 +282,8 @@ GameObject:
   m_Component:
   - component: {fileID: 33918825}
   - component: {fileID: 33918824}
+  - component: {fileID: 33918826}
+  - component: {fileID: 33918827}
   m_Layer: 0
   m_Name: Enemy Spawner
   m_TagString: Untagged
@@ -296,7 +298,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 33918823}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4ba82cf8925b60478cc85c5d39af72f, type: 3}
   m_Name: 
@@ -383,6 +385,39 @@ Transform:
   - {fileID: 1688001311}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &33918826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 33918823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33466b5286a341e449e00e8a31b41de8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data:
+  - {fileID: 11400000, guid: d678e84af2b3d5c449eaf4f8ca908f39, type: 2}
+  - {fileID: 11400000, guid: c3f63f2fb4b2e44428de9d0017dfbcff, type: 2}
+  referenceCamera: {fileID: 519420031}
+  maximumEnemyCount: 300
+--- !u!114 &33918827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 33918823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b289e376e931eea45bdc93b213f3a5cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  events:
+  - {fileID: 11400000, guid: c44001d9bb84a25428087c39023c3341, type: 2}
+  firstTriggerDelay: 10
+  triggerInterval: 10
 --- !u!1 &38046792
 GameObject:
   m_ObjectHideFlags: 0
@@ -6240,10 +6275,10 @@ MonoBehaviour:
   levelRanges:
   - startLevel: 1
     endLevel: 3
-    experienceCapIncrease: 100
+    experienceCapIncrease: 150
   - startLevel: 4
     endLevel: 5
-    experienceCapIncrease: 200
+    experienceCapIncrease: 300
   weaponIndex: 0
   passiveitemIndex: 0
   healthBar: {fileID: 275929273}

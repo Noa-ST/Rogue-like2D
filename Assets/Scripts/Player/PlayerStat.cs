@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 
-public class PlayerStat : MonoBehaviour
+public class PlayerStat : EntityStats
 {
     CharacterData _characterData;
     public CharacterData.Stats baseStats;
@@ -20,20 +21,24 @@ public class PlayerStat : MonoBehaviour
         }
     }
 
-    float _health;
+    public CharacterData.Stats Actual
+    {
+        get { return actualStats; }
+    }
+
 
     #region Current Stats Properties
     public float CurrentHealth
     {
         get
         {
-            return _health;
+            return health;
         }
         set
         {
-            if (_health != value)
+            if (health != value)
             {
-                _health = value;
+                health = value;
                 UpdateHealthBar();
             }
         }
@@ -68,8 +73,6 @@ public class PlayerStat : MonoBehaviour
 
     PlayerCollector _collector;
     PlayerInventory _inventory;
-    public int weaponIndex;
-    public int passiveitemIndex;
 
     [Header("UI")]
     public Image healthBar;
@@ -78,31 +81,18 @@ public class PlayerStat : MonoBehaviour
 
     private void Awake()
     {
-        if (CharacterSelector.instance == null)
-        {
-            Debug.LogError("CharacterSelector instance is null! Ensure the CharacterSelector GameObject is in the scene and not destroyed.");
-            return;
-        }
-
-        _characterData = CharacterSelector.GetData();
-        if (_characterData == null)
-        {
-            Debug.LogError("Character data is null! Ensure a character is selected in the menu.");
-            return;
-        }
-        if (CharacterSelector.instance)
-            CharacterSelector.instance.DestroySingleTon();
+        _characterData = UICharacterSelector.GetData();
 
         _inventory = GetComponent<PlayerInventory>();
         _collector = GetComponentInChildren<PlayerCollector>();
-        Debug.Log(_characterData.StartingWeapon);
         baseStats = actualStats = _characterData.stats;
         _collector.SetRadius(actualStats.magnet);
-        _health = actualStats.maxHealth;
+        health = actualStats.maxHealth;
     }
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         if (_characterData == null)
         {
             Debug.LogError("CharacterData is null in PlayerStat. Ensure it is passed correctly from CharacterSelector.");
@@ -118,9 +108,6 @@ public class PlayerStat : MonoBehaviour
         _inventory.Add(_characterData.StartingWeapon);
         // Thiết lập giới hạn kinh nghiệm ban đầu từ phạm vi cấp độ đầu tiên
         experienceCap = levelRanges[0].experienceCapIncrease;
-
-
-
         GameManager.Ins.AssignChosenCharacterUI(_characterData);
 
         UpdateHealthBar();
@@ -128,8 +115,9 @@ public class PlayerStat : MonoBehaviour
         UpdateLevelText();
     }
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         if (_invincibilityTimer > 0)
         {
             _invincibilityTimer -= Time.deltaTime;
@@ -142,7 +130,7 @@ public class PlayerStat : MonoBehaviour
         Recover();
     }
 
-    public void RecalculateStats()
+    public override void RecalculateStats()
     {
         actualStats = baseStats;
         foreach (PlayerInventory.Slot s in _inventory.passiveSlots)
@@ -153,6 +141,42 @@ public class PlayerStat : MonoBehaviour
                 actualStats += p.GetBoosts();
             }
         }
+
+        CharacterData.Stats multiplier = new CharacterData.Stats
+        {
+            maxHealth = 1f,
+            recovery = 1f,
+            armor = 1f,
+            moveSpeed = 1f,
+            might = 1f,
+            area = 1f,
+            speed = 1f,
+            duration = 1f,
+            amount = 1,
+            cooldown = 1f,
+            luck = 1f,
+            growth = 1f,
+            greed = 1f,
+            curse = 1f,
+            magnet = 1f,
+            revival = 1
+        };
+
+        foreach (Buff b in activeBuffs)
+        {
+            BuffData.Stats bd = b.GetData();
+            switch (bd.modifierType)
+            {
+                case BuffData.ModifierType.additive:
+                    actualStats += bd.playerModifier;
+                    break;
+                case BuffData.ModifierType.multiplicative:
+                    multiplier *= bd.playerModifier;
+                    break;
+            }
+        }
+        actualStats *= multiplier;
+
         _collector.SetRadius(actualStats.magnet);
     }
 
@@ -204,7 +228,7 @@ public class PlayerStat : MonoBehaviour
     }
 
     // Hàm nhận sát thương
-    public void TakeDamage(float dmg)
+    public override void TakeDamage(float dmg)
     {
         if (!_isInvincible)
         {
@@ -240,7 +264,7 @@ public class PlayerStat : MonoBehaviour
 
 
     // Hàm xử lý khi nhân vật chết
-    public void Kill()
+    public override void Kill()
     {
         if (!GameManager.Ins.isGameOver)
         {
@@ -251,7 +275,7 @@ public class PlayerStat : MonoBehaviour
     }
 
     // Hàm phục hồi máu khi nhận vật phẩm 
-    public void Restore(float amount)
+    public override void RestoreHealth(float amount)
     {
         if (CurrentHealth < actualStats.maxHealth)
         {

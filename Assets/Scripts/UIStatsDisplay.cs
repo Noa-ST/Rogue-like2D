@@ -10,6 +10,7 @@ using UnityEngine;
 public class UIStatsDisplay : MonoBehaviour
 {
     public PlayerStat player;
+    public CharacterData character;
     public bool updateInEditor = false;
     public bool displayCurrentHealth = false;
     TextMeshProUGUI _statNames, _statsValues;
@@ -22,6 +23,13 @@ public class UIStatsDisplay : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         if (updateInEditor) UpdateStatFields();
+    }
+
+    public CharacterData.Stats GetDisplayedStats()
+    {
+        if (player) return player.Stats;
+        else if (character) return character.stats;
+        return new CharacterData.Stats();
     }
 
     public void UpdateStatFields()

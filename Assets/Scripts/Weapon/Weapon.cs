@@ -18,6 +18,8 @@ public abstract class Weapon : Item
         public float damage, damageVariance, area, speed, cooldown, projectileInterval, knockback;
         public int number, piercing, maxInstances;
 
+        public EntityStats.BuffInfo[] appliedBuffs;
+
         public static Stats operator +(Stats s1, Stats s2)
         {
             Stats result = new Stats();
@@ -38,6 +40,7 @@ public abstract class Weapon : Item
             result.piercing = s1.piercing + s2.piercing;
             result.projectileInterval = s1.projectileInterval + s2.projectileInterval;
             result.knockback = s1.knockback + s2.knockback;
+            result.appliedBuffs = s2.appliedBuffs == null || s2.appliedBuffs.Length <= 0 ? s1.appliedBuffs : s2.appliedBuffs;
             return result;
         }
 
@@ -94,6 +97,7 @@ public abstract class Weapon : Item
 
     public virtual bool CanAttack()
     {
+        if (Mathf.Approximately(owner.Stats.might, 0)) return false;
         return currentCooldown <= 0;
     }
 
@@ -130,5 +134,13 @@ public abstract class Weapon : Item
 
         currentCooldown = Mathf.Min(actualCooldown, currentCooldown + actualCooldown);
         return true;
+    }
+
+    public void ApplyBuff(EntityStats e)
+    {
+        foreach (EntityStats.BuffInfo b in GetStats().appliedBuffs)
+        {
+            e.ApplyBuff(b, owner.Actual.duration);
+        }
     }
 }
