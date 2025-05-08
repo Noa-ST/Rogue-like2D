@@ -82,7 +82,6 @@ public class PlayerMovement : SortTable
         {
             return;
         }
-
         _rb.velocity = moveDir * DEFAUlT_MOVESPEED *  _player.Stats.moveSpeed;
     }
 }

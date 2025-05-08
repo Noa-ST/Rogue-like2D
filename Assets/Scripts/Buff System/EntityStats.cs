@@ -8,15 +8,16 @@ using UnityEngine;
 /// </summary>
 public abstract class EntityStats : MonoBehaviour
 {
-    protected float health;
+    protected float health; // Chỉ số máu 
+    protected SpriteRenderer sprite; 
+    protected Animator aminator; 
+    protected Color originalColor; // Lưu trữ màu gốc của thực thể
+    protected List<Color> appliedTints = new List<Color>(); // Danh sách màu sắc được áp dụng do buff
+    protected const float TINT_FACTOR = 4f; // Hệ số điều chỉnh màu khi bị ảnh hưởng bởi buff
 
-    protected SpriteRenderer sprite;
-    protected Animator aminator;
-    protected Color originalColor;
-    protected List<Color> appliedTints = new List<Color>();
-    protected const float TINT_FACTOR = 4f;
-
-    // Định nghĩa lớp Buff đại diện cho các hiệu ứng tạm thời tác động lên thực thể
+    /// <summary>
+    /// Lớp Buff đại diện cho các hiệu ứng tạm thời tác động lên thực thể.
+    /// </summary>
     [System.Serializable]
     public class Buff
     {
@@ -28,7 +29,9 @@ public abstract class EntityStats : MonoBehaviour
         public Color tint; // Màu áp dụng khi buff có hiệu ứng màu
         public float animationSpeed = 1f; // Tốc độ hoạt ảnh khi có buff
 
-        // Constructor khởi tạo buff
+        /// <summary>
+        /// Khởi tạo buff với dữ liệu, chủ sở hữu, phiên bản và hệ số thời gian.
+        /// </summary>
         public Buff(BuffData d, EntityStats owner, int variant = 0, float durationMultiplier = 1f)
         {
             data = d; // Lưu trữ dữ liệu buff
@@ -60,9 +63,9 @@ public abstract class EntityStats : MonoBehaviour
 
     protected virtual void Start()
     {
-        sprite = GetComponent<SpriteRenderer>(); // Lấy component SpriteRenderer
+        sprite = GetComponent<SpriteRenderer>(); 
         originalColor = sprite.color; // Lưu màu gốc
-        aminator = GetComponent<Animator>(); // Lấy component Animator
+        aminator = GetComponent<Animator>();
     }
 
     [System.Serializable]
@@ -73,7 +76,7 @@ public abstract class EntityStats : MonoBehaviour
         [Range(0f, 1f)] public float probability = 1f;
     }
 
-    // Điều chỉnh tốc độ hoạt ảnh
+    // Điều chỉnh tốc độ hoạt ảnh của thực thể theo hệ số nhân.
     public virtual void ApplyAnimationMutiplier(float factor)
     {
         aminator.speed *= Mathf.Approximately(0, factor) ? 0.000001f : factor;
@@ -110,7 +113,9 @@ public abstract class EntityStats : MonoBehaviour
         sprite.color = targetColor / totalWeight; // Áp dụng màu cuối cùng
     }
 
-    // Kiểm tra xem thực thể có buff nhất định không
+    // <summary>
+    /// Kiểm tra xem thực thể có buff nhất định không.
+    /// </summary>
     public virtual Buff GetBuff(BuffData data, int variant = -1)
     {
         foreach (Buff b in activeBuffs)
@@ -122,7 +127,6 @@ public abstract class EntityStats : MonoBehaviour
                     if (b.variant == variant) return b;
 
                 }
-
                 else
                 {
                     return b;
@@ -139,10 +143,13 @@ public abstract class EntityStats : MonoBehaviour
         return false;
     }
 
-    // Áp dụng buff lên thực thể
+    /// <summary>
+    /// Áp dụng buff lên thực thể theo cơ chế stack khác nhau.
+    /// </summary>
     public virtual bool ApplyBuff(BuffData data, int variant = 0, float durationMultiplier = 1f)
     {
         Buff b;
+        // Lấy thông tin buff (s) từ BuffData theo phiên bản (variant).
         BuffData.Stats s = data.Get(variant);
 
         switch (s.stackType)
@@ -165,20 +172,18 @@ public abstract class EntityStats : MonoBehaviour
                 break;
 
             case BuffData.StackType.doesNotStack: // Không cho phép stack buff
-                b = GetBuff(data, variant);
-
-                if (b != null)
-                {
-                    activeBuffs.Add(new Buff(data, this, variant, durationMultiplier));
-                    RecalculateStats();
-                    return true;
-                }
-                return false;
+                if (GetBuff(data, variant) != null)
+                    return false; // Nếu buff đã tồn tại, không làm gì cả
+                activeBuffs.Add(new Buff(data, this, variant, durationMultiplier));
+                RecalculateStats();
+                return true;
         }
         return false;
     }
 
-    // Loại bỏ buff khỏi thực thể
+    /// <summary>
+    /// Loại bỏ buff khỏi thực thể.
+    /// </summary>
     public virtual bool RemoveBuff(BuffData data, int variant = -1)
     {
         List<Buff> toRemove = new List<Buff>();
@@ -217,39 +222,25 @@ public abstract class EntityStats : MonoBehaviour
     // Hàm Update gọi mỗi frame để xử lý buff
     protected virtual void Update()
     {
+        //lưu các buff đã hết hạn
         List<Buff> expired = new List<Buff>();
         foreach (Buff b in activeBuffs)
         {
             BuffData.Stats s = b.data.Get(b.variant);
-            // Tick down on the damage / heal timer.
             b.nextTick -= Time.deltaTime;
-
             if (b.nextTick < 0)
             {
                 float tickDmg = b.data.GetTickDamage(b.variant);
-
                 if (tickDmg > 0) TakeDamage(tickDmg);
-
                 float tickHeal = b.data.GetTickHeal(b.variant);
-
                 if (tickHeal > 0) RestoreHealth(tickHeal);
-
                 b.nextTick = s.tickInterval;
             }
-
             if (s.duration <= 0) continue;
-
-            // Also tick down on the remaining buff duration.
-
-            b.remainingDuration = Time.deltaTime;
-
+            b.remainingDuration -= Time.deltaTime;
             if (b.remainingDuration < 0) expired.Add(b);
-
         }
-
-
         activeBuffs.RemoveAll(item => expired.Contains(item));
-
         RecalculateStats();
     }
 }

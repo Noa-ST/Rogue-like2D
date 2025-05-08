@@ -1,17 +1,19 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
 
 public class PlayerStat : EntityStats
 {
+    // Dữ liệu của nhân vật, được truyền từ UI Character Selector
     CharacterData _characterData;
+
+    // Chỉ số cơ bản và chỉ số thực tế của nhân vật
     public CharacterData.Stats baseStats;
     [SerializeField] CharacterData.Stats actualStats;
 
+    // Thuộc tính để lấy và thiết lập chỉ số của nhân vật
     public CharacterData.Stats Stats
     {
         get { return actualStats; }
@@ -28,6 +30,7 @@ public class PlayerStat : EntityStats
 
 
     #region Current Stats Properties
+    // Thuộc tính cho máu hiện tại của người chơi
     public float CurrentHealth
     {
         get
@@ -39,6 +42,7 @@ public class PlayerStat : EntityStats
             if (health != value)
             {
                 health = value;
+                // Cập nhật thanh máu khi máu thay đổi
                 UpdateHealthBar();
             }
         }
@@ -55,18 +59,21 @@ public class PlayerStat : EntityStats
     public int level = 1;
     public int experienceCap;
 
-    // Lớp phụ để thiết lập phạm vi cấp độ và mức tăng giới hạn kinh nghiệm cho từng phạm vi
+    // Cấu trúc để xác định phạm vi cấp độ và mức tăng giới hạn kinh nghiệm
     [System.Serializable]
     public class LevelRange
     {
         public int startLevel;
         public int endLevel;
-        public int experienceCapIncrease; // Mức tăng giới hạn kinh nghiệm cho phạm vi này
+        // Mức tăng giới hạn kinh nghiệm cho phạm vi này
+        public int experienceCapIncrease; 
     }
 
     [Header("I-Frames")]
-    public float invincibilityDuration; // Thời gian bất tử sau khi nhận sát thương
-    float _invincibilityTimer; // Bộ đếm thời gian bất tử
+    // Thời gian bất tử sau khi nhận sát thương
+    public float invincibilityDuration;
+    // đếm thời gian bất tử
+    float _invincibilityTimer; 
     bool _isInvincible;
 
     public List<LevelRange> levelRanges;
@@ -82,7 +89,6 @@ public class PlayerStat : EntityStats
     private void Awake()
     {
         _characterData = UICharacterSelector.GetData();
-
         _inventory = GetComponent<PlayerInventory>();
         _collector = GetComponentInChildren<PlayerCollector>();
         baseStats = actualStats = _characterData.stats;
@@ -93,26 +99,19 @@ public class PlayerStat : EntityStats
     protected override void Start()
     {
         base.Start();
-        if (_characterData == null)
-        {
-            Debug.LogError("CharacterData is null in PlayerStat. Ensure it is passed correctly from CharacterSelector.");
-            return;
-        }
+        if (_characterData == null) return;      
+        if (_characterData.StartingWeapon == null) return;
 
-        if (_characterData.StartingWeapon == null)
-        {
-            Debug.LogError($"StartingWeapon is null for {_characterData.name}. Ensure the character has a starting weapon assigned.");
-            return;
-        }
-
+        // Thêm vũ khí khởi đầu vào inventory
         _inventory.Add(_characterData.StartingWeapon);
         // Thiết lập giới hạn kinh nghiệm ban đầu từ phạm vi cấp độ đầu tiên
         experienceCap = levelRanges[0].experienceCapIncrease;
+        // Gán UI cho nhân vật đã chọn
         GameManager.Ins.AssignChosenCharacterUI(_characterData);
 
-        UpdateHealthBar();
-        UpdateExperienceBar();
-        UpdateLevelText();
+        UpdateHealthBar(); // Cập nhật thanh máu
+        UpdateExperienceBar(); // Cập nhật thanh kinh nghiệm
+        UpdateLevelText(); // Cập nhật thông tin cấp độ
     }
 
     protected override void Update()
@@ -127,17 +126,21 @@ public class PlayerStat : EntityStats
             _isInvincible = false;
         }
 
-        Recover();
+        Recover(); // Phục hồi máu dần dần theo thời gian
     }
 
+    // Cập nhật lại các chỉ số của nhân vật sau khi buff được áp dụng
     public override void RecalculateStats()
     {
         actualStats = baseStats;
+
+        // Cộng dồn chỉ số từ các vật phẩm trong inventory
         foreach (PlayerInventory.Slot s in _inventory.passiveSlots)
         {
             Passive p = s.item as Passive;
             if (p)
             {
+                // Cộng dồn các hiệu ứng passive
                 actualStats += p.GetBoosts();
             }
         }
@@ -162,6 +165,7 @@ public class PlayerStat : EntityStats
             revival = 1
         };
 
+        // Cập nhật các chỉ số từ buff
         foreach (Buff b in activeBuffs)
         {
             BuffData.Stats bd = b.GetData();
@@ -197,6 +201,7 @@ public class PlayerStat : EntityStats
             experience -= experienceCap;
 
             int experienceCapIncrease = 0; // Biến tạm để lưu mức tăng giới hạn kinh nghiệm
+
             // Tìm mức tăng giới hạn kinh nghiệm phù hợp với cấp độ mới
             foreach (var range in levelRanges)
             {
@@ -209,19 +214,19 @@ public class PlayerStat : EntityStats
             experienceCap += experienceCapIncrease; // Cập nhật giới hạn kinh nghiệm mới
 
             UpdateLevelText();
-
             GameManager.Ins.StartLevelUp();
-
             if (experience >= experienceCap)
                 LevelUpChecker();
         }
     }
 
+    // Cập nhật thanh kinh nghiệm UI
     void UpdateExperienceBar()
     {
         experienceBar.fillAmount = (float)experience / experienceCap;
     }
 
+    // Cập nhật thông tin cấp độ UI
     void UpdateLevelText()
     {
         levelTxt.text = "LEVEL " + level.ToString();
@@ -237,10 +242,8 @@ public class PlayerStat : EntityStats
             if (dmg > 0)
             {
                 CurrentHealth -= dmg;
-
                 if (damageEffect)
                     Destroy(Instantiate(damageEffect, transform.position, Quaternion.identity), 5f);
-
                 if (CurrentHealth <= 0)
                 {
                     Kill();
@@ -257,6 +260,7 @@ public class PlayerStat : EntityStats
         }
     }
 
+    // Cập nhật thanh máu UI
     void UpdateHealthBar()
     {
         healthBar.fillAmount = CurrentHealth / actualStats.maxHealth;

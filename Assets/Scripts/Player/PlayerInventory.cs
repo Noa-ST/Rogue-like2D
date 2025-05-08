@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -12,7 +8,6 @@ public class PlayerInventory : MonoBehaviour
     public class Slot
     {
         public Item item;
-
         public void Assign(Item assignedItem)
         {
             item = assignedItem;
@@ -20,21 +15,16 @@ public class PlayerInventory : MonoBehaviour
             if (item is Weapon)
             {
                 Weapon w = item as Weapon;
-
             }
             else if (item is Passive)
             {
                 Passive p = item as Passive;
             }
-
-            Debug.Log($"Assigned {item.name} to player.");
         }
-
 
         public void Clear()
         {
             item = null;
-
         }
 
         public bool IsEmpty() { return item == null; }
@@ -89,7 +79,6 @@ public class PlayerInventory : MonoBehaviour
         return null;
     }
 
-
     public bool Remove(WeaponData data, bool removeUpgradeAvailability = false)
     {
         if (removeUpgradeAvailability) availableWeapons.Remove(data);
@@ -105,7 +94,6 @@ public class PlayerInventory : MonoBehaviour
                 return true;
             }
         }
-
         return false;
     }
 
@@ -201,7 +189,6 @@ public class PlayerInventory : MonoBehaviour
         {
             Debug.LogWarning($"Invalid weapon type specified for {data.name}. Check behavior: {data.behavior}");
         }
-
         return -1;
     }
 

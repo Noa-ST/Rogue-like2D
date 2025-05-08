@@ -402,6 +402,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c3f63f2fb4b2e44428de9d0017dfbcff, type: 2}
   referenceCamera: {fileID: 519420031}
   maximumEnemyCount: 300
+  boostedByCurse: 1
 --- !u!114 &33918827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6183,6 +6184,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cdd4aed019bf324ab4b27fe7f5ecdd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sortingActive: 1
+  minimumDistance: 0.2
   lastHorizontalVector: 0
   lastVerticalVector: 0
   moveDir: {x: 0, y: 0}
@@ -6279,8 +6282,6 @@ MonoBehaviour:
   - startLevel: 4
     endLevel: 5
     experienceCapIncrease: 300
-  weaponIndex: 0
-  passiveitemIndex: 0
   healthBar: {fileID: 275929273}
   experienceBar: {fileID: 1636338720}
   levelTxt: {fileID: 269383718}
@@ -11751,7 +11752,6 @@ MonoBehaviour:
   timeSurviedDisplay: {fileID: 1192274271}
   timeLimit: 60
   stopwatchDisplay: {fileID: 1084702631}
-  playerObject: {fileID: 809384988}
 --- !u!4 &2037265291
 Transform:
   m_ObjectHideFlags: 0
@@ -12557,6 +12557,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 809384995}
+  character: {fileID: 0}
   updateInEditor: 1
   displayCurrentHealth: 1
 --- !u!114 &2140359865

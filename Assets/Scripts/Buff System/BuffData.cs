@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
 
-//+ Tạo một menu trong Unity để tạo đối tượng BuffData từ Editor
 [CreateAssetMenu(fileName = "Buff Data", menuName = "2D Top-down Rogue-like/Buff Data")]
 public class BuffData : ScriptableObject
 {
     // tên của Buff
     public new string name = "New Buff";
 
-    // Biểu tượng của buff (hiển thị trên UI hoặc HUD)
+    // Biểu tượng của buff
     public Sprite icon;
 
     // Cờ đánh dấu loại buff bằng cách sử dụng `Flags`, cho phép kết hợp nhiều loại buff cùng lúc
