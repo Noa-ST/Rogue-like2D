@@ -6,6 +6,8 @@ using UnityEditor.Events;
 using UnityEngine;
 using UnityEngine.UI;
 
+[DisallowMultipleComponent]
+[CustomEditor(typeof(UICharacterSelector))]
 public class UICharacterSelectorEditor : Editor
 {
     UICharacterSelector selector;

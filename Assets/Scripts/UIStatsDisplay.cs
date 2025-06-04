@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Text;
 using TMPro;
@@ -25,16 +21,19 @@ public class UIStatsDisplay : MonoBehaviour
         if (updateInEditor) UpdateStatFields();
     }
 
-    public CharacterData.Stats GetDisplayedStats()
+    CharacterData.Stats GetDisplayedStats()
     {
-        if (player) return player.Stats;
-        else if (character) return character.stats;
-        return new CharacterData.Stats();
+        if (player != null)
+            return player.Actual;
+        else if (character != null)
+            return character.stats;
+        else
+            return new CharacterData.Stats();
     }
 
     public void UpdateStatFields()
     {
-        if (!player) return;
+        if (!player && !character) return;
 
         if (!_statNames) _statNames = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         if (!_statsValues) _statsValues = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
@@ -42,9 +41,9 @@ public class UIStatsDisplay : MonoBehaviour
         StringBuilder names = new StringBuilder();
         StringBuilder values = new StringBuilder();
 
-        if (displayCurrentHealth)
+        if (displayCurrentHealth && player != null)
         {
-            names.AppendLine("Heath");
+            names.AppendLine("Health");
             values.AppendLine(player.CurrentHealth.ToString());
         }
 
@@ -53,7 +52,7 @@ public class UIStatsDisplay : MonoBehaviour
         {
             names.AppendLine(field.Name);
 
-            object val = field.GetValue(player.Stats);
+            object val = field.GetValue(GetDisplayedStats());
             float fval = val is int ? (int)val : (float)val;
 
             PropertyAttribute atribute = (PropertyAttribute)PropertyAttribute.GetCustomAttribute(field, typeof(PropertyAttribute));

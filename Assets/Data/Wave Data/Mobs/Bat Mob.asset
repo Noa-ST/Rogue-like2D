@@ -19,7 +19,7 @@ MonoBehaviour:
   duration: 10
   probability: 1
   luckFator: 1
-  activeAfter: 10
+  activeAfter: 15
   possibleAngles: 360
   spawnRadius: 2
   spawnDistance: 20

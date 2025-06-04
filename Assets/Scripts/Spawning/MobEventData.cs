@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 // Đánh dấu class này là một ScriptableObject có thể tạo trong Unity Editor
 [CreateAssetMenu(fileName = "Mob Event Data", menuName = "2D Top-down Rogue-like/Event Data/Mob")]
-public class MobEventData : EvenData
+public class MobEventData : EventData
 {
     [Header("Mob Data")]
 

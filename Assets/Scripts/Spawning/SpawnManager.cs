@@ -1,7 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// Điều phối toàn bộ quá trình spawn
+/// </summary>
 public class SpawnManager : MonoBehaviour
 {
     int currentWaveIndex;
@@ -10,7 +11,7 @@ public class SpawnManager : MonoBehaviour
     public WaveData[] data;
     public Camera referenceCamera;
 
-    [Tooltip("If there are more than this number of enemies, stop spawning any more. For performance.")]
+    [Tooltip("Nếu có nhiều hơn số lượng kẻ thù này, hãy dừng việc sinh sản thêm nữa. Để có hiệu suất.")]
     public int maximumEnemyCount = 300;
     float spawnTimer;
     float currentWaveDuration = 0f;
@@ -30,25 +31,26 @@ public class SpawnManager : MonoBehaviour
         currentWaveDuration += Time.deltaTime;
 
         if (spawnTimer <= 0)
-            if (HasWaveEnded())
-            {
-                currentWaveIndex++;
-                currentWaveDuration = currentWaveSpawnCount = 0;
-
-                if (currentWaveIndex >= data.Length)
-                {
-                    Debug.Log("All waves have been spawned! Shutting down.", this);
-                    enabled = false;
-                }
-
-                return;
-            }
-
-        if (!CanSpawn())
         {
-            ActiveCooldown();
+            if (!HasWaveEnded()) goto ContinueSpawning;
+
+            currentWaveIndex++;
+            currentWaveDuration = currentWaveSpawnCount = 0;
+
+            if (currentWaveIndex >= data.Length)
+            {
+                Debug.Log("All waves have been spawned! Shutting down.", this);
+                enabled = false;
+            }
             return;
         }
+
+    ContinueSpawning:
+        if (!CanSpawn())
+        {
+            return;
+        }
+
 
         GameObject[] spawns = data[currentWaveIndex].GetSpawns(EnemyStat.count);
 
@@ -59,7 +61,6 @@ public class SpawnManager : MonoBehaviour
             Instantiate(prefab, GeneratePosition(), Quaternion.identity);
             currentWaveSpawnCount++;
         }
-
         ActiveCooldown();
     }
 
@@ -67,6 +68,7 @@ public class SpawnManager : MonoBehaviour
     {
         float curseBoost = boostedByCurse ? GameManager.GetCumulativeCurse() : 1;
         spawnTimer += data[currentWaveIndex].GetSpawnInterval() / curseBoost;
+
     }
 
     private bool CanSpawn()
@@ -116,12 +118,13 @@ public class SpawnManager : MonoBehaviour
 
         float x = Random.Range(0f, 1f), y = Random.Range(0f, 1f);
 
-        switch(Random.Range(0, 2))
+        switch (Random.Range(0, 2))
         {
-            case 0: default:
-                return Ins.referenceCamera.ViewportToWorldPoint(new Vector3(Mathf.Round(x), y) );
+            case 0:
+            default:
+                return Ins.referenceCamera.ViewportToWorldPoint(new Vector3(Mathf.Round(x), y));
             case 1:
-                return Ins.referenceCamera.ViewportToWorldPoint(new Vector3(x, Mathf.Round(y)) );
+                return Ins.referenceCamera.ViewportToWorldPoint(new Vector3(x, Mathf.Round(y)));
         }
     }
 

@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public abstract class EvenData : SpawnData
+public abstract class EventData : SpawnData
 {
-    [Header("Event Data")]
+    [Header("Event Settings")]
 
     // Xác suất cơ bản để sự kiện xảy ra, giá trị trong khoảng [0, 1]
     [Range(0f, 1f)] public float probability = 1f;
@@ -29,33 +27,25 @@ public abstract class EvenData : SpawnData
     public bool IsActive()
     {
         if (!GameManager.Ins) return false;
-
-        // Nếu thời gian đã trôi qua nhiều hơn `activeAfter`, sự kiện có thể xảy ra
         if (GameManager.Ins.GetElapsedTime() > activeAfter) return true;
-
-        // Ngược lại, sự kiện chưa đủ điều kiện để xảy ra
         return false;
     }
 
     /// <summary>
-    /// Kiểm tra xem sự kiện có xảy ra hay không dựa trên xác suất và chỉ số may mắn của người chơi
+    /// Kiểm tra xem sự kiện có xảy ra hay không dựa trên xác suất và chỉ số may mắn của người chơi.
+    /// Luck càng cao thì xác suất xảy ra càng giảm (giảm theo hàm mũ nhẹ).
     /// </summary>
-    /// <param name="s"> Thông tin chỉ số của người chơi </param>
-    /// <returns> Trả về true nếu sự kiện sẽ xảy ra, false nếu không </returns>
+    /// <param name="s">Chỉ số người chơi.</param>
+    /// <returns>True nếu sự kiện xảy ra, false nếu không.</returns>
     public bool CheckIfWillHappen(PlayerStat s)
     {
-        // Nếu xác suất = 1, sự kiện luôn xảy ra
-        if (probability >= 1) return true;
+        if (probability >= 1f) return true;
 
-        // Tính toán xác suất thực tế dựa trên chỉ số may mắn của người chơi
-        float luckImpact = Mathf.Max(1, (s.Stats.luck * luckFator)); // Đảm bảo không bao giờ chia cho 0
-        float actualProbability = probability / luckImpact;
+        // Giảm xác suất theo luck (luck càng cao, xác suất càng giảm nhẹ)
+        float luckFactor = Mathf.Pow(1f - luckFator, s.Stats.luck);
+        float actualProbability = probability * luckFactor;
 
-        // So sánh xác suất thực tế với một số ngẫu nhiên từ 0 đến 1
-        if (actualProbability >= Random.Range(0f, 1f)) return true;
-
-        // Nếu không đạt điều kiện, sự kiện không xảy ra
-        return false;
+        return actualProbability >= Random.Range(0f, 1f);
     }
 }
 

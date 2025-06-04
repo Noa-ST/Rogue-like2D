@@ -8,7 +8,7 @@ public class EventManager : MonoBehaviour
     float currentEventCooldown = 0;
 
     // Danh sách các sự kiện có thể xảy ra.
-    public EvenData[] events;
+    public EventData[] events;
 
     [Tooltip("Thời gian chờ trước khi sự kiện đầu tiên kích hoạt.")]
     public float firstTriggerDelay = 180f;
@@ -23,7 +23,7 @@ public class EventManager : MonoBehaviour
     [System.Serializable]
     public class Event
     {
-        public EvenData data; // Dữ liệu sự kiện
+        public EventData data; // Dữ liệu sự kiện
 
         public float duration; // Thời gian sự kiện diễn ra
         public float cooldown = 0; // Thời gian hồi trước khi sự kiện tiếp theo có thể xảy ra
@@ -59,7 +59,7 @@ public class EventManager : MonoBehaviour
         if (currentEventCooldown <= 0)
         {
             // Lấy một sự kiện ngẫu nhiên và kiểm tra xem nó có xảy ra không
-            EvenData e = GetRandomEvent();
+            EventData e = GetRandomEvent();
             if (e && e.CheckIfWillHappen(allPlayers[Random.Range(0, allPlayers.Length)]))         
                 // Thêm sự kiện vào danh sách đang chạy
                 runningEvents.Add(new Event
@@ -96,7 +96,7 @@ public class EventManager : MonoBehaviour
                 e.data.Activate(allPlayers[Random.Range(0, allPlayers.Length)]);
 
                 // Đặt lại cooldown dựa trên khoảng thời gian spawn của sự kiện
-                e.cooldown = e.data.GetSpawnInterval();
+                //e.cooldown = e.data.GetSpawnInterval();
             }
         }
 
@@ -109,14 +109,14 @@ public class EventManager : MonoBehaviour
     /// Lấy một sự kiện ngẫu nhiên từ danh sách
     /// </summary>
     /// <returns>Một sự kiện hợp lệ hoặc null nếu không có sự kiện nào có thể xảy ra</returns>
-    public EvenData GetRandomEvent()
+    public EventData GetRandomEvent()
     {
         // Nếu không có sự kiện nào được thiết lập, trả về null
         if (events.Length <= 0) return null;
 
-        List<EvenData> possibleEvents = new List<EvenData>();
+        List<EventData> possibleEvents = new List<EventData>();
 
-        foreach (EvenData e in events)
+        foreach (EventData e in events)
         {
             if (e.IsActive())
             {
@@ -126,7 +126,7 @@ public class EventManager : MonoBehaviour
 
         if (possibleEvents.Count > 0)
         {
-            EvenData result = possibleEvents[Random.Range(0, possibleEvents.Count)];
+            EventData result = possibleEvents[Random.Range(0, possibleEvents.Count)];
             return result;
         }
 

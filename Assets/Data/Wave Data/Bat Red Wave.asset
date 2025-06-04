@@ -10,15 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f99e969e68f9b5744ba656772c2f5ece, type: 3}
-  m_Name: Bat Wave 1
+  m_Name: Bat Red Wave
   m_EditorClassIdentifier: 
   possibleSpawnPrefabs:
-  - {fileID: 2811138236154012134, guid: a47249ac5b140df4580975f044082bfb, type: 3}
   - {fileID: 2811138236154012134, guid: f7960212a39465647bc449b0632830b3, type: 3}
-  spawnInterval: {x: 1, y: 2}
-  spawnsPerTick: {x: 4, y: 5}
+  spawnInterval: {x: 2, y: 3}
+  spawnsPerTick: {x: 1, y: 1}
   duration: 60
-  startingCount: 25
+  startingCount: 4
   totalSpawns: 100
   exitConditions: 1
   mustKillAll: 1

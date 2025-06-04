@@ -10,10 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4455dbe986cf25b49852600a5bf101bc, type: 3}
-  m_Name: Kinfe Character
+  m_Name: Athur Character
   m_EditorClassIdentifier: 
   icon: {fileID: -657105104, guid: 2a2659b127d58ce4e8720b570ff0cb64, type: 3}
-  name: Kinfe Character
+  name: Athur
+  fullName: Estel Athur
+  characterDescription: "Nh\xE2n v\u1EADt c\xF3 th\u1EC3 ph\xF3ng ra dao"
   startingWeapon: {fileID: 11400000, guid: 3fc777862b3206b49b8d96158c550e68, type: 2}
   stats:
     maxHealth: 100
