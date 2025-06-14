@@ -10,26 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4341a1428233a904dad63d05e116112a, type: 3}
-  m_Name: Knife
+  m_Name: Knife Update
   m_EditorClassIdentifier: 
-  icon: {fileID: -1611568071, guid: 83d0b776afdf81f479cd928573b1b119, type: 3}
+  icon: {fileID: 103461583, guid: 83d0b776afdf81f479cd928573b1b119, type: 3}
   maxLevel: 8
-  evolutionsData:
-  - name: Knife Update
-    condition: 1
-    consumes: 2
-    evolutionLevel: 1
-    catalysts:
-    - itemType: {fileID: 11400000}
-      level: 1
-    - itemType: {fileID: 11400000, guid: 4e89d416d660e864c92eae4b4d96383d, type: 2}
-      level: 1
-    outcome:
-      itemType: {fileID: 11400000, guid: f426c41d964fb1c4087fba040499efd3, type: 2}
-      level: 1
+  evolutionsData: []
   behavior: ProjectileWeapon
   baseStats:
-    name: Kinfe
+    name: Kinfe Update
     description: Fires quickly in the face direction.
     projectilePrefab: {fileID: 123333301274617722, guid: 2fcd7fd8a16fc6a45ba662b1cea40a87, type: 3}
     auraPrefab: {fileID: 0}
@@ -42,10 +30,10 @@ MonoBehaviour:
       width: 0
       height: 0
     lifespan: 3
-    damage: 6.5
-    damageVariance: 2
-    area: 1
-    speed: 5
+    damage: 10
+    damageVariance: 3
+    area: 2
+    speed: 6
     cooldown: 1
     projectileInterval: 0.1
     knockback: 0.5

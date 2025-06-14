@@ -32,36 +32,37 @@ public class SpawnManager : MonoBehaviour
 
         if (spawnTimer <= 0)
         {
-            if (!HasWaveEnded()) goto ContinueSpawning;
-
-            currentWaveIndex++;
-            currentWaveDuration = currentWaveSpawnCount = 0;
-
-            if (currentWaveIndex >= data.Length)
+            if (HasWaveEnded())
             {
-                Debug.Log("All waves have been spawned! Shutting down.", this);
-                enabled = false;
+                currentWaveIndex++;
+                currentWaveDuration = currentWaveSpawnCount = 0;
+
+                if (currentWaveIndex >= data.Length)
+                {
+                    Debug.Log("All waves have been spawned! Shutting down.", this);
+                    enabled = false;
+                }
+                return;
             }
-            return;
+
+            if (!CanSpawn())
+            {
+                spawnTimer += data[currentWaveIndex].GetSpawnInterval();
+                return;
+            }
+
+            GameObject[] spawns = data[currentWaveIndex].GetSpawns(EnemyStat.count);
+
+            foreach (GameObject prefab in spawns)
+            {
+                if (!CanSpawn()) continue;
+
+                Instantiate(prefab, GeneratePosition(), Quaternion.identity);
+                currentWaveSpawnCount++;
+            }
+
+            spawnTimer += data[currentWaveIndex].GetSpawnInterval();
         }
-
-    ContinueSpawning:
-        if (!CanSpawn())
-        {
-            return;
-        }
-
-
-        GameObject[] spawns = data[currentWaveIndex].GetSpawns(EnemyStat.count);
-
-        foreach (GameObject prefab in spawns)
-        {
-            if (!CanSpawn()) continue;
-
-            Instantiate(prefab, GeneratePosition(), Quaternion.identity);
-            currentWaveSpawnCount++;
-        }
-        ActiveCooldown();
     }
 
     private void ActiveCooldown()

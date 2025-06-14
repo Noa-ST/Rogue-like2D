@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static EnemyMovement;
 
 public class EnemyMovement : SortTable
 {
     protected Transform player;
     protected EnemyStat enemy;
     protected Rigidbody2D rb;
+    protected SpriteRenderer spriteRenderer;
 
     protected Vector2 knockbackVelocity;
     protected float knockbackDuration;
@@ -27,6 +25,7 @@ public class EnemyMovement : SortTable
         rb = GetComponent<Rigidbody2D>();
         spawnedOutOfFrame = !SpawnManager.IsWithinBoundaries(transform);
         enemy = GetComponent<EnemyStat>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         PlayerMovement[] allPlayers = FindObjectsOfType<PlayerMovement>();
         player = allPlayers[Random.Range(0, allPlayers.Length)].transform;
@@ -86,6 +85,11 @@ reducesDuration = (knockbackVariance & KnockbackVariance.duration) > 0;
 
     public virtual void Move()
     {
+        Vector2 target = player.transform.position;
+        Vector2 current = transform.position;
+        Vector2 direction = (target - current).normalized;
+
+        FlipSprite(direction);
         if (rb)
         {
             rb.MovePosition(Vector2.MoveTowards(rb.position,
@@ -96,6 +100,16 @@ reducesDuration = (knockbackVariance & KnockbackVariance.duration) > 0;
         {
             transform.position = Vector2.MoveTowards(transform.position, player.transform.position, enemy.Actual.moveSpeed * Time.deltaTime
             );
+        }
+    }
+
+    protected void FlipSprite(Vector2 direction)
+    {
+        if (!spriteRenderer) return;
+
+        if (Mathf.Abs(direction.x) > 0.01f)
+        {
+            spriteRenderer.flipX = direction.x < 0;
         }
     }
 }
