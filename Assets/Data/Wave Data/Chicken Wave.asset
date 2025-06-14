@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f99e969e68f9b5744ba656772c2f5ece, type: 3}
-  m_Name: Caocao Wave
+  m_Name: Chicken Wave
   m_EditorClassIdentifier: 
   possibleSpawnPrefabs:
-  - {fileID: 7897284383897295597, guid: a4cfe92f11ed2bc4880f915bc53fb5a5, type: 3}
-  spawnInterval: {x: 2, y: 3}
+  - {fileID: 2811138236154012134, guid: a44214eb091a9ae408280435913e1810, type: 3}
+  spawnInterval: {x: 1, y: 1}
   spawnsPerTick: {x: 1, y: 1}
-  duration: 60
-  startingCount: 5
+  duration: 10
+  startingCount: 0
   totalSpawns: 20
-  exitConditions: -1
+  exitConditions: 1
   mustKillAll: 1
-  spawnCount: 0
+  spawnCount: 30
