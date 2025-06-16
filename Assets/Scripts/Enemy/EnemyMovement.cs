@@ -107,9 +107,9 @@ reducesDuration = (knockbackVariance & KnockbackVariance.duration) > 0;
     {
         if (!spriteRenderer) return;
 
-        if (Mathf.Abs(direction.x) > 0.01f)
+        if (Mathf.Abs(direction.x) < 0.01f)
         {
-            spriteRenderer.flipX = direction.x < 0;
+            spriteRenderer.flipX = direction.x > 0;
         }
     }
 }
