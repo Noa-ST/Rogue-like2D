@@ -56,6 +56,22 @@ public abstract class EntityStats : MonoBehaviour
         {
             return data.Get(variant);
         }
+
+        public void Dispose(EntityStats owner)
+        {
+            if (effect != null)
+            {
+                effect.Stop(); // Dừng ParticleSystem trước khi hủy
+                GameObject.Destroy(effect.gameObject);
+                Debug.Log($"Hủy ParticleSystem của buff {data.name}");
+            }
+            if (tint.a > 0)
+            {
+                owner.RemoveTint(tint);
+                Debug.Log($"Xóa tint {tint} của buff {data.name}");
+            }
+            owner.RemoveAnimationMutiplier(animationSpeed);
+        }
     }
 
     // Danh sách các buff hiện tại trên thực thể
@@ -76,15 +92,14 @@ public abstract class EntityStats : MonoBehaviour
         [Range(0f, 1f)] public float probability = 1f;
     }
 
-    // Điều chỉnh tốc độ hoạt ảnh của thực thể theo hệ số nhân.
     public virtual void ApplyAnimationMutiplier(float factor)
     {
-        aminator.speed *= Mathf.Approximately(0, factor) ? 0.000001f : factor;
+        aminator.speed *= Mathf.Max(0.01f, factor);
     }
 
     public virtual void RemoveAnimationMutiplier(float factor)
     {
-        aminator.speed /= Mathf.Approximately(0, factor) ? 0.000001f : factor;
+        aminator.speed /= Mathf.Max(0.01f, factor);
     }
 
     // Áp dụng màu sắc khi buff ảnh hưởng đến thực thể
@@ -96,22 +111,32 @@ public abstract class EntityStats : MonoBehaviour
 
     public virtual void RemoveTint(Color c)
     {
-        appliedTints.Remove(c);
-        UpdateColor();
+        if (appliedTints.Remove(c))
+        {
+            Debug.Log($"Đã xóa tint {c} khỏi appliedTints. Số tint còn lại: {appliedTints.Count}");
+            UpdateColor();
+        }
+        else
+        {
+            Debug.LogWarning($"Không tìm thấy tint {c} trong appliedTints");
+        }
     }
 
-    // Cập nhật màu sắc dựa trên danh sách buff đang tác động
     private void UpdateColor()
     {
+        if (sprite == null) return;
+
         Color targetColor = originalColor;
         float totalWeight = 1f;
         foreach (Color c in appliedTints)
         {
-            targetColor += c * c.a * TINT_FACTOR; // Cộng dồn màu sắc dựa trên hệ số alpha
+            targetColor += c * c.a * TINT_FACTOR;
             totalWeight += c.a * TINT_FACTOR;
         }
-        sprite.color = targetColor / totalWeight; // Áp dụng màu cuối cùng
+        sprite.color = targetColor / totalWeight;
+        Debug.Log($"Cập nhật màu sprite: {sprite.color}, appliedTints: {appliedTints.Count}");
     }
+
 
     // <summary>
     /// Kiểm tra xem thực thể có buff nhất định không.
@@ -189,9 +214,9 @@ public abstract class EntityStats : MonoBehaviour
         List<Buff> toRemove = new List<Buff>();
         foreach (Buff b in activeBuffs)
         {
-            if (b.data = data)
+            if (b.data == data)
             {
-                if (variant > 0)
+                if (variant >= 0)
                 {
                     if (b.variant == variant) toRemove.Add(b);
                 }
@@ -213,6 +238,8 @@ public abstract class EntityStats : MonoBehaviour
     }
 
 
+
+
     // Các phương thức trừu tượng cần được lớp con hiện thực hóa
     public abstract void TakeDamage(float dmg); // Gây sát thương lên thực thể
     public abstract void RestoreHealth(float amount); // Hồi máu
@@ -222,9 +249,8 @@ public abstract class EntityStats : MonoBehaviour
     // Hàm Update gọi mỗi frame để xử lý buff
     protected virtual void Update()
     {
-        //lưu các buff đã hết hạn
         List<Buff> expired = new List<Buff>();
-        foreach (Buff b in activeBuffs)
+        foreach (Buff b in activeBuffs.ToList()) // Sao chép danh sách để tránh lỗi sửa đổi khi lặp
         {
             BuffData.Stats s = b.data.Get(b.variant);
             b.nextTick -= Time.deltaTime;
@@ -235,13 +261,29 @@ public abstract class EntityStats : MonoBehaviour
                 float tickHeal = b.data.GetTickHeal(b.variant);
                 if (tickHeal > 0) RestoreHealth(tickHeal);
                 b.nextTick = s.tickInterval;
+                var effect = s.attackEffect as IAttackEffect;
+                effect?.Apply(this, this);
             }
-            if (s.duration <= 0) continue;
+            if (s.duration <= 0) continue; // Bỏ qua buff không có thời gian (vĩnh viễn)
             b.remainingDuration -= Time.deltaTime;
-            if (b.remainingDuration < 0) expired.Add(b);
+            if (b.remainingDuration <= 0)
+            {
+                expired.Add(b);
+            }
         }
-        activeBuffs.RemoveAll(item => expired.Contains(item));
-        RecalculateStats();
+
+        foreach (Buff b in expired)
+        {
+            Debug.Log($"Buff {b.data.name} hết hạn, gọi Dispose");
+            b.Dispose(this); // Dọn dẹp hiệu ứng
+            activeBuffs.Remove(b); // Xóa buff khỏi danh sách
+        }
+
+        if (expired.Count > 0)
+        {
+            UpdateColor(); // Cập nhật màu sắc sau khi xóa buff
+            RecalculateStats(); // Cập nhật chỉ số
+        }
     }
 }
 

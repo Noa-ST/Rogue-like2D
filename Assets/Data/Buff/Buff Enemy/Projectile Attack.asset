@@ -10,19 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d713eaeed62552649a906177db574f50, type: 3}
-  m_Name: Buff Data
+  m_Name: Projectile Attack
   m_EditorClassIdentifier: 
-  name: New Buff
+  name: Projectile
   icon: {fileID: 0}
-  type: 4
+  type: 1
   variations:
-  - name: Level 1
+  - name: Projectile
     effect: {fileID: 0}
-    tint: {r: 0, g: 0, b: 0, a: 0}
+    tint: {r: 0.90188676, g: 0, b: 0, a: 0}
     animationSpeed: 1
+    attackEffect: {fileID: 11400000, guid: 98248b531999e3a469c63e050b4e863c, type: 2}
     duration: 10
-    damagePerSecond: 1
-    healPerSecond: 1
+    damagePerSecond: 0
+    healPerSecond: 0
     tickInterval: 0.25
     stackType: 0
     modifierType: 0

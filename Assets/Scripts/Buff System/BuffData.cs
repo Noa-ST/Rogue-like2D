@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.Burst.CompilerServices;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "Buff Data", menuName = "2D Top-down Rogue-like/Buff Data")]
 public class BuffData : ScriptableObject
@@ -56,6 +57,9 @@ public class BuffData : ScriptableObject
         [Tooltip("Buff này có làm chậm hoặc tăng tốc hoạt ảnh của GameObject bị ảnh hưởng hay không.")]
         // Tốc độ hoạt ảnh của đối tượng bị buff (ví dụ: làm chậm hoặc tăng tốc)
         public float animationSpeed = 1f;
+
+        [Header("Special Attack Effect")]
+        public ScriptableObject attackEffect;
 
         [Header("Stats")]
         // Thời gian tồn tại của buff (s)

@@ -40,6 +40,7 @@ MonoBehaviour:
     number: 1
     piercing: 0
     maxInstances: 50
+    appliedBuffs: []
   linearGrowth:
   - name: Level 2
     description: Increase Damage by 1.
@@ -64,6 +65,7 @@ MonoBehaviour:
     number: 0
     piercing: 0
     maxInstances: 0
+    appliedBuffs: []
   - name: Level 3
     description: Increase Damage by 2.
     projectilePrefab: {fileID: 0}
@@ -87,6 +89,7 @@ MonoBehaviour:
     number: 0
     piercing: 0
     maxInstances: 0
+    appliedBuffs: []
   - name: Level 4
     description: Increase Damage by 2 and increase Area by 1.
     projectilePrefab: {fileID: 0}
@@ -110,6 +113,7 @@ MonoBehaviour:
     number: 0
     piercing: 0
     maxInstances: 0
+    appliedBuffs: []
   - name: Level 5
     description: Increase Damage by 2 and increase Area by 1.
     projectilePrefab: {fileID: 0}
@@ -133,6 +137,7 @@ MonoBehaviour:
     number: 0
     piercing: 0
     maxInstances: 0
+    appliedBuffs: []
   - name: Level 6
     description: Increase Damage by 2 and increase Area by 1.
     projectilePrefab: {fileID: 0}
@@ -156,6 +161,7 @@ MonoBehaviour:
     number: 0
     piercing: 0
     maxInstances: 0
+    appliedBuffs: []
   - name: Level 7
     description: Increase Damage by 2 and increase Area by 1.
     projectilePrefab: {fileID: 0}
@@ -179,6 +185,7 @@ MonoBehaviour:
     number: 0
     piercing: 0
     maxInstances: 0
+    appliedBuffs: []
   - name: Level 8
     description: Increase Damage by 2 and increase Area by 1.
     projectilePrefab: {fileID: 0}
@@ -202,4 +209,5 @@ MonoBehaviour:
     number: 0
     piercing: 0
     maxInstances: 0
+    appliedBuffs: []
   randomGrowth: []
