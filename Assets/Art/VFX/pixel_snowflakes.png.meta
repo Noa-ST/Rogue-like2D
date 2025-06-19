@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b97bb8df095af1743805933eb619a0b7
+guid: 1573151b48ee1fd4a90027462795c621
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -72,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -123,358 +123,421 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BeetleMove_0
-      rect:
-        serializedVersion: 2
-        x: 8
-        y: 104
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 990cc51d0075abf4fb7429f724512014
-      internalID: -1527468572
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BeetleMove_1
-      rect:
-        serializedVersion: 2
-        x: 40
-        y: 105
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7830a45caec0be24ba4dc2eb52bd9416
-      internalID: 690740987
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BeetleMove_2
-      rect:
-        serializedVersion: 2
-        x: 70
-        y: 105
-        width: 20
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cdd73de736e8ff64aba301248042a343
-      internalID: 204954733
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BeetleMove_3
-      rect:
-        serializedVersion: 2
-        x: 104
-        y: 104
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3da0c0489cce4c24cb6d1458c8e3c814
-      internalID: -12015330
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BeetleMove_4
-      rect:
-        serializedVersion: 2
-        x: 5
-        y: 72
-        width: 19
-        height: 14
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ff27c0868bd998840b61cfd85dbdcedd
-      internalID: -1461292250
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BeetleMove_5
-      rect:
-        serializedVersion: 2
-        x: 37
-        y: 73
-        width: 20
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f3c94ddafb5fd6040bbcd9e0fd4411d0
-      internalID: 1765258723
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BeetleMove_6
-      rect:
-        serializedVersion: 2
-        x: 69
-        y: 73
-        width: 21
-        height: 17
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ae596a03c4fafca48a03a21f2d7e0438
-      internalID: -906930252
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BeetleMove_7
-      rect:
-        serializedVersion: 2
-        x: 101
-        y: 72
-        width: 20
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 09dba49eeb24e4742b5496185b627a0d
-      internalID: 871516897
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BeetleMove_8
-      rect:
-        serializedVersion: 2
-        x: 8
-        y: 40
-        width: 19
-        height: 14
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e1470ca384fbb9f468a87018c1d7eccb
-      internalID: -167644372
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BeetleMove_9
-      rect:
-        serializedVersion: 2
-        x: 39
-        y: 41
-        width: 20
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5edb4f7e896d165469dcbe9e3e781df6
-      internalID: 1423006900
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BeetleMove_10
-      rect:
-        serializedVersion: 2
-        x: 70
-        y: 41
-        width: 21
-        height: 17
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5c5f7a6930b187a4f8c6140617fbb310
-      internalID: -1398422048
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BeetleMove_11
-      rect:
-        serializedVersion: 2
-        x: 103
-        y: 40
-        width: 20
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: af389c434cd8fed4287298e41c13b94f
-      internalID: -1271926899
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BeetleMove_12
-      rect:
-        serializedVersion: 2
-        x: 7
-        y: 10
-        width: 18
-        height: 15
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d0ccfb7372a060447bec088bc65b87ed
-      internalID: -1782135839
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BeetleMove_13
-      rect:
-        serializedVersion: 2
-        x: 38
-        y: 11
-        width: 20
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bf9614826a4fdff488568622ada7ca5e
-      internalID: 1089524019
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BeetleMove_14
-      rect:
-        serializedVersion: 2
-        x: 69
-        y: 11
-        width: 22
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5b2c1a1814acc844697297239bd52df9
-      internalID: -1736725033
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BeetleMove_15
-      rect:
-        serializedVersion: 2
-        x: 102
-        y: 10
-        width: 20
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b4689d84ed84e234f874d047e6b93116
-      internalID: -1073710268
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BeetleMove_16
+      name: pixel_snowflakes_0
       rect:
         serializedVersion: 2
         x: 1
-        y: 0
-        width: 127
-        height: 128
+        y: 19
+        width: 7
+        height: 7
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e031a64f5f268154f976e3aee36b0103
-      internalID: 1275312678
+      spriteID: bc5e667246f2ea045a1ecac403de75e4
+      internalID: 551067442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_snowflakes_1
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 19
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88a1721e330fcab4a82fa120d7961ac5
+      internalID: -1706415892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_snowflakes_2
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 19
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff9d619711ce3f0479130918b9d9cf1d
+      internalID: 1079594642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_snowflakes_3
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 19
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 037c6be483a79414e8d3535752cf8d38
+      internalID: -1366289973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_snowflakes_4
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 19
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d814025eda3e2c3449b47cfbe6960166
+      internalID: -962356146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_snowflakes_5
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 19
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4b5434af7797fa41a05ee2b809bf239
+      internalID: 251513894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_snowflakes_6
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 11
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: becbd643e38aec34887b526a1195341b
+      internalID: 1435192192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_snowflakes_7
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 11
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02c201a8ec7dfc7499dce3e5fdc6a2c8
+      internalID: -587179876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_snowflakes_8
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 11
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dce55f1dd6df00141907c4c5cf5f24ee
+      internalID: 1840637597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_snowflakes_9
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 11
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d95c018845432b344ac8ed88f584593c
+      internalID: -81602986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_snowflakes_10
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 10
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e827634ab65e7e04c80797752fdc85fb
+      internalID: 620248643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_snowflakes_11
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 10
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af82aa0b397cb154da983010144fc627
+      internalID: 1947427009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_snowflakes_12
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 3
+        width: 3
+        height: 3
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5238102b4497fb048af71e9fdbba77fe
+      internalID: 691990280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_snowflakes_13
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 2
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae1c9e227598a7346b2d9d52e6cd4e5a
+      internalID: -67642699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_snowflakes_14
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 2
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a91b3ab55601814c90b64846c25d468
+      internalID: 1211545758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_snowflakes_15
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 2
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4538debd120b7445af0768e6fede6d0
+      internalID: 1609246779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_snowflakes_16
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 2
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54456cc6bb1212c4aa2e31f28c05f452
+      internalID: -2046680528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_snowflakes_17
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 3
+        width: 3
+        height: 3
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3613767776a35b44c8a64b0ff6329a8b
+      internalID: -1688967789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_snowflakes_18
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 1
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f7e461922cf0164cbc5c3b0c0fedf6a
+      internalID: 482953606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pixel_snowflakes_19
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 1
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0638f8bdcd5fcc6488ebf8875c0fed24
+      internalID: 1271047537
       vertices: []
       indices: 
       edges: []
@@ -490,23 +553,26 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      BeetleMove_0: -1527468572
-      BeetleMove_1: 690740987
-      BeetleMove_10: -1398422048
-      BeetleMove_11: -1271926899
-      BeetleMove_12: -1782135839
-      BeetleMove_13: 1089524019
-      BeetleMove_14: -1736725033
-      BeetleMove_15: -1073710268
-      BeetleMove_16: 1275312678
-      BeetleMove_2: 204954733
-      BeetleMove_3: -12015330
-      BeetleMove_4: -1461292250
-      BeetleMove_5: 1765258723
-      BeetleMove_6: -906930252
-      BeetleMove_7: 871516897
-      BeetleMove_8: -167644372
-      BeetleMove_9: 1423006900
+      pixel_snowflakes_0: 551067442
+      pixel_snowflakes_1: -1706415892
+      pixel_snowflakes_10: 620248643
+      pixel_snowflakes_11: 1947427009
+      pixel_snowflakes_12: 691990280
+      pixel_snowflakes_13: -67642699
+      pixel_snowflakes_14: 1211545758
+      pixel_snowflakes_15: 1609246779
+      pixel_snowflakes_16: -2046680528
+      pixel_snowflakes_17: -1688967789
+      pixel_snowflakes_18: 482953606
+      pixel_snowflakes_19: 1271047537
+      pixel_snowflakes_2: 1079594642
+      pixel_snowflakes_3: -1366289973
+      pixel_snowflakes_4: -962356146
+      pixel_snowflakes_5: 251513894
+      pixel_snowflakes_6: 1435192192
+      pixel_snowflakes_7: -587179876
+      pixel_snowflakes_8: 1840637597
+      pixel_snowflakes_9: -81602986
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

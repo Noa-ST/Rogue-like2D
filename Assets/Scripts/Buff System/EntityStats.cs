@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 /// <summary>
 /// Lớp trừu tượng quản lý chỉ số và buff của thực thể trong game.
@@ -9,8 +10,8 @@ using UnityEngine;
 public abstract class EntityStats : MonoBehaviour
 {
     protected float health; // Chỉ số máu 
-    protected SpriteRenderer sprite; 
-    protected Animator aminator; 
+    protected SpriteRenderer sprite;
+    protected Animator aminator;
     protected Color originalColor; // Lưu trữ màu gốc của thực thể
     protected List<Color> appliedTints = new List<Color>(); // Danh sách màu sắc được áp dụng do buff
     protected const float TINT_FACTOR = 4f; // Hệ số điều chỉnh màu khi bị ảnh hưởng bởi buff
@@ -56,6 +57,22 @@ public abstract class EntityStats : MonoBehaviour
         {
             return data.Get(variant);
         }
+
+        public void Dispose(EntityStats owner)
+        {
+            if (effect != null)
+            {
+                effect.Stop(); // Dừng ParticleSystem trước khi hủy
+                GameObject.Destroy(effect.gameObject);
+                Debug.Log($"Hủy ParticleSystem của buff {data.name}");
+            }
+            if (tint.a > 0)
+            {
+                owner.RemoveTint(tint);
+                Debug.Log($"Xóa tint {tint} của buff {data.name}");
+            }
+            owner.RemoveAnimationMutiplier(animationSpeed);
+        }
     }
 
     // Danh sách các buff hiện tại trên thực thể
@@ -63,7 +80,7 @@ public abstract class EntityStats : MonoBehaviour
 
     protected virtual void Start()
     {
-        sprite = GetComponent<SpriteRenderer>(); 
+        sprite = GetComponent<SpriteRenderer>();
         originalColor = sprite.color; // Lưu màu gốc
         aminator = GetComponent<Animator>();
     }
@@ -76,15 +93,14 @@ public abstract class EntityStats : MonoBehaviour
         [Range(0f, 1f)] public float probability = 1f;
     }
 
-    // Điều chỉnh tốc độ hoạt ảnh của thực thể theo hệ số nhân.
     public virtual void ApplyAnimationMutiplier(float factor)
     {
-        aminator.speed *= Mathf.Approximately(0, factor) ? 0.000001f : factor;
+        aminator.speed *= Mathf.Max(0.01f, factor);
     }
 
     public virtual void RemoveAnimationMutiplier(float factor)
     {
-        aminator.speed /= Mathf.Approximately(0, factor) ? 0.000001f : factor;
+        aminator.speed /= Mathf.Max(0.01f, factor);
     }
 
     // Áp dụng màu sắc khi buff ảnh hưởng đến thực thể
@@ -96,22 +112,32 @@ public abstract class EntityStats : MonoBehaviour
 
     public virtual void RemoveTint(Color c)
     {
-        appliedTints.Remove(c);
-        UpdateColor();
+        if (appliedTints.Remove(c))
+        {
+            Debug.Log($"Đã xóa tint {c} khỏi appliedTints. Số tint còn lại: {appliedTints.Count}");
+            UpdateColor();
+        }
+        else
+        {
+            Debug.LogWarning($"Không tìm thấy tint {c} trong appliedTints");
+        }
     }
 
-    // Cập nhật màu sắc dựa trên danh sách buff đang tác động
     private void UpdateColor()
     {
+        if (sprite == null) return;
+
         Color targetColor = originalColor;
         float totalWeight = 1f;
         foreach (Color c in appliedTints)
         {
-            targetColor += c * c.a * TINT_FACTOR; // Cộng dồn màu sắc dựa trên hệ số alpha
+            targetColor += c * c.a * TINT_FACTOR;
             totalWeight += c.a * TINT_FACTOR;
         }
-        sprite.color = targetColor / totalWeight; // Áp dụng màu cuối cùng
+        sprite.color = targetColor / totalWeight;
+        Debug.Log($"Cập nhật màu sprite: {sprite.color}, appliedTints: {appliedTints.Count}");
     }
+
 
     // <summary>
     /// Kiểm tra xem thực thể có buff nhất định không.
@@ -189,9 +215,9 @@ public abstract class EntityStats : MonoBehaviour
         List<Buff> toRemove = new List<Buff>();
         foreach (Buff b in activeBuffs)
         {
-            if (b.data = data)
+            if (b.data == data)
             {
-                if (variant > 0)
+                if (variant >= 0)
                 {
                     if (b.variant == variant) toRemove.Add(b);
                 }
@@ -213,18 +239,18 @@ public abstract class EntityStats : MonoBehaviour
     }
 
 
+
+
     // Các phương thức trừu tượng cần được lớp con hiện thực hóa
     public abstract void TakeDamage(float dmg); // Gây sát thương lên thực thể
     public abstract void RestoreHealth(float amount); // Hồi máu
     public abstract void Kill(); // Hủy thực thể
     public abstract void RecalculateStats(); // Cập nhật lại chỉ số
 
-    // Hàm Update gọi mỗi frame để xử lý buff
     protected virtual void Update()
     {
-        //lưu các buff đã hết hạn
         List<Buff> expired = new List<Buff>();
-        foreach (Buff b in activeBuffs)
+        foreach (Buff b in activeBuffs.ToList())
         {
             BuffData.Stats s = b.data.Get(b.variant);
             b.nextTick -= Time.deltaTime;
@@ -238,10 +264,25 @@ public abstract class EntityStats : MonoBehaviour
             }
             if (s.duration <= 0) continue;
             b.remainingDuration -= Time.deltaTime;
-            if (b.remainingDuration < 0) expired.Add(b);
+            if (b.remainingDuration <= 0)
+            {
+                expired.Add(b);
+            }
         }
-        activeBuffs.RemoveAll(item => expired.Contains(item));
-        RecalculateStats();
+
+        foreach (Buff b in expired)
+        {
+            Debug.Log($"Buff {b.data.name} hết hạn, gọi Dispose");
+            b.Dispose(this);
+            activeBuffs.Remove(b);
+        }
+
+        if (expired.Count > 0)
+        {
+            UpdateColor();
+            RecalculateStats();
+        }
     }
 }
+
 

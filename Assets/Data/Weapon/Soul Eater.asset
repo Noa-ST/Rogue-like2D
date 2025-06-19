@@ -40,5 +40,6 @@ MonoBehaviour:
     number: 0
     piercing: 0
     maxInstances: 50
+    appliedBuffs: []
   linearGrowth: []
   randomGrowth: []

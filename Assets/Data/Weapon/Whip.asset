@@ -40,6 +40,7 @@ MonoBehaviour:
     number: 1
     piercing: 99
     maxInstances: 99
+    appliedBuffs: []
   linearGrowth:
   - name: Level 2
     description: Fires 1 more projectile.
@@ -64,4 +65,5 @@ MonoBehaviour:
     number: 1
     piercing: 0
     maxInstances: 0
+    appliedBuffs: []
   randomGrowth: []

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.Burst.CompilerServices;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "Buff Data", menuName = "2D Top-down Rogue-like/Buff Data")]
 public class BuffData : ScriptableObject
