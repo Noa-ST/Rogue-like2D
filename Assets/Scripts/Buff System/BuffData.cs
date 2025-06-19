@@ -58,9 +58,6 @@ public class BuffData : ScriptableObject
         // Tốc độ hoạt ảnh của đối tượng bị buff (ví dụ: làm chậm hoặc tăng tốc)
         public float animationSpeed = 1f;
 
-        [Header("Special Attack Effect")]
-        public ScriptableObject attackEffect;
-
         [Header("Stats")]
         // Thời gian tồn tại của buff (s)
         public float duration;

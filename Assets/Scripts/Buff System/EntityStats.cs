@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 /// <summary>
 /// Lớp trừu tượng quản lý chỉ số và buff của thực thể trong game.
@@ -9,8 +10,8 @@ using UnityEngine;
 public abstract class EntityStats : MonoBehaviour
 {
     protected float health; // Chỉ số máu 
-    protected SpriteRenderer sprite; 
-    protected Animator aminator; 
+    protected SpriteRenderer sprite;
+    protected Animator aminator;
     protected Color originalColor; // Lưu trữ màu gốc của thực thể
     protected List<Color> appliedTints = new List<Color>(); // Danh sách màu sắc được áp dụng do buff
     protected const float TINT_FACTOR = 4f; // Hệ số điều chỉnh màu khi bị ảnh hưởng bởi buff
@@ -79,7 +80,7 @@ public abstract class EntityStats : MonoBehaviour
 
     protected virtual void Start()
     {
-        sprite = GetComponent<SpriteRenderer>(); 
+        sprite = GetComponent<SpriteRenderer>();
         originalColor = sprite.color; // Lưu màu gốc
         aminator = GetComponent<Animator>();
     }
@@ -246,11 +247,10 @@ public abstract class EntityStats : MonoBehaviour
     public abstract void Kill(); // Hủy thực thể
     public abstract void RecalculateStats(); // Cập nhật lại chỉ số
 
-    // Hàm Update gọi mỗi frame để xử lý buff
     protected virtual void Update()
     {
         List<Buff> expired = new List<Buff>();
-        foreach (Buff b in activeBuffs.ToList()) // Sao chép danh sách để tránh lỗi sửa đổi khi lặp
+        foreach (Buff b in activeBuffs.ToList())
         {
             BuffData.Stats s = b.data.Get(b.variant);
             b.nextTick -= Time.deltaTime;
@@ -261,10 +261,8 @@ public abstract class EntityStats : MonoBehaviour
                 float tickHeal = b.data.GetTickHeal(b.variant);
                 if (tickHeal > 0) RestoreHealth(tickHeal);
                 b.nextTick = s.tickInterval;
-                var effect = s.attackEffect as IAttackEffect;
-                effect?.Apply(this, this);
             }
-            if (s.duration <= 0) continue; // Bỏ qua buff không có thời gian (vĩnh viễn)
+            if (s.duration <= 0) continue;
             b.remainingDuration -= Time.deltaTime;
             if (b.remainingDuration <= 0)
             {
@@ -275,15 +273,16 @@ public abstract class EntityStats : MonoBehaviour
         foreach (Buff b in expired)
         {
             Debug.Log($"Buff {b.data.name} hết hạn, gọi Dispose");
-            b.Dispose(this); // Dọn dẹp hiệu ứng
-            activeBuffs.Remove(b); // Xóa buff khỏi danh sách
+            b.Dispose(this);
+            activeBuffs.Remove(b);
         }
 
         if (expired.Count > 0)
         {
-            UpdateColor(); // Cập nhật màu sắc sau khi xóa buff
-            RecalculateStats(); // Cập nhật chỉ số
+            UpdateColor();
+            RecalculateStats();
         }
     }
 }
+
 

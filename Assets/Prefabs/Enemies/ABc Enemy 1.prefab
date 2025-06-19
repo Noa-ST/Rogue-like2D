@@ -174,7 +174,7 @@ MonoBehaviour:
     curseBoosts: 0
     levelBoosts: 0
   attackEffects:
-  - data: {fileID: 11400000, guid: ea493b270ee0e4d4ab2f359e1bf02c2f, type: 2}
+  - data: {fileID: 11400000, guid: 82d4a89cb74535f49a50733bd5dcdc08, type: 2}
     variant: 0
     probability: 1
   damageColor: {r: 1, g: 0, b: 0, a: 1}

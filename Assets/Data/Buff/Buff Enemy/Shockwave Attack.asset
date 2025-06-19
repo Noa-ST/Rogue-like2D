@@ -17,21 +17,20 @@ MonoBehaviour:
   type: 3
   variations:
   - name: Shockwave
-    effect: {fileID: 0}
+    effect: {fileID: 2305725639759634674, guid: ecc03af37c3223b4ebc3c4da841980ea, type: 3}
     tint: {r: 0.86415094, g: 0.80846226, b: 0.34402984, a: 0}
     animationSpeed: 1
-    attackEffect: {fileID: 0}
-    duration: 999
-    damagePerSecond: 1
+    duration: 5
+    damagePerSecond: 2
     healPerSecond: 0
-    tickInterval: 2
+    tickInterval: 0.25
     stackType: 0
     modifierType: 0
     playerModifier:
       maxHealth: 0
       recovery: 0
       armor: 0
-      moveSpeed: -0.2
+      moveSpeed: 0
       might: 0
       area: 0
       speed: 0
