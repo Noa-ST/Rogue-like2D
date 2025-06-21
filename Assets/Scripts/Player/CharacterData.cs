@@ -4,6 +4,18 @@ using UnityEngine;
 public class CharacterData : ScriptableObject
 {
     [SerializeField]
+    int characterId; 
+    public int CharacterId { get => characterId; private set => characterId = value; }
+
+    [SerializeField]
+    int cost; 
+    public int Cost { get => cost; private set => cost = value; }
+
+    [SerializeField]
+    private GameObject characterPrefab;
+    public GameObject CharacterPrefab { get => characterPrefab; private set => characterPrefab = value; }
+
+    [SerializeField]
     Sprite icon;
     public Sprite Icon { get => icon; private set => icon = value; }
 

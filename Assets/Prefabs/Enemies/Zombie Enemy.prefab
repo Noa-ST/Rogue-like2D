@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2137635965445216536}
   - component: {fileID: 8929667717322150410}
   - component: {fileID: 8314414535785562714}
+  - component: {fileID: 4498742463286194049}
   m_Layer: 0
   m_Name: Zombie Enemy
   m_TagString: Enemy
@@ -216,3 +217,30 @@ MonoBehaviour:
   - name: Blue Gem
     itemPrefab: {fileID: 7453044612578514901, guid: b99910ee8ce5ef94795b9fb50961ccef, type: 3}
     dropRate: 100
+--- !u!50 &4498742463286194049
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7897284383897295597}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4

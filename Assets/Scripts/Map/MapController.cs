@@ -4,7 +4,6 @@ using UnityEngine;
 public class MapController : MonoBehaviour
 {
     public List<GameObject> terrainChunks;
-    public GameObject player;
     public float checkerRadius;
     public LayerMask terrainMask;
     public GameObject currentChunk;
@@ -17,10 +16,12 @@ public class MapController : MonoBehaviour
     float _opDist;
     float _optimizerCooldown;
     public float optimizerCooldownDur;
+    GameObject player;
 
     void Start()
     {
-        playerLastPostition = player.transform.position;
+        UpdatePlayerReference();
+        playerLastPostition = player?.transform.position ?? Vector3.zero;
     }
 
     void Update()
@@ -135,6 +136,15 @@ public class MapController : MonoBehaviour
             {
                 chunk.SetActive(true);
             }
+        }
+    }
+
+    public static void UpdatePlayerReference()
+    {
+        MapController[] controllers = FindObjectsOfType<MapController>();
+        foreach (var controller in controllers)
+        {
+            controller.player = FindObjectOfType<PlayerMovement>()?.gameObject;
         }
     }
 }

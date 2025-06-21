@@ -45,11 +45,24 @@ public class GameManager : MonoBehaviour
     public TMP_Text levelReachedDisplay;
     public TMP_Text timeSurviedDisplay;
 
+    [Header("UI References")]
+    [SerializeField] private UIIventoryIconsDisplay weaponUI;
+    [SerializeField] private UIIventoryIconsDisplay passiveUI;
+    [SerializeField] private UIUpgradeWindow upgradeWindow;
+    [SerializeField] public Image experienceBar;
+    [SerializeField] public TMP_Text levelTxt;
+
+    [Header("Cinemachine Reference")]
+    [SerializeField] private CinemachineController cinemachineController;
+    //[Header("Camera Reference")]
+    //[SerializeField] private CameraMovement cameraMovement;
+
     [Header("Stopwatch")]
     public float timeLimit;
     float stopwatchTime;
     public TMP_Text stopwatchDisplay;
     PlayerStat[] players;
+    PlayerStat currentPlayerStat;
 
     public bool isGameOver
     {
@@ -104,6 +117,7 @@ public class GameManager : MonoBehaviour
         if (Ins == null)
         {
             Ins = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -112,6 +126,16 @@ public class GameManager : MonoBehaviour
         }
 
         DisableScreen();
+    }
+
+    void Start()
+    {
+        if (GameStateManager.Instance != null && GameStateManager.Instance.selectedCharacter != null)
+        {
+            AssignChosenCharacterUI(GameStateManager.Instance.selectedCharacter);
+        }
+        InitializePlayer();
+        NotifyPlayerInitialized();
     }
 
     void Update()
@@ -137,6 +161,7 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
+
 
     public static void GenerateFloatingText(string text, Transform target, float duration = 1f, float speed = 1f)
     {
@@ -248,10 +273,27 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         timeSurviedDisplay.text = stopwatchDisplay.text;
-
         ChangeState(GameState.GameOver);
         Time.timeScale = 0f;
         DisplayResults();
+
+        // Làm mới UI để phản ánh PlayerInventory hiện tại (nếu có)
+        PlayerStat[] currentPlayers = FindObjectsOfType<PlayerStat>();
+        if (currentPlayers.Length > 0)
+        {
+            PlayerInventory currentInventory = currentPlayers[0].GetComponent<PlayerInventory>();
+            if (currentInventory != null)
+            {
+                if (weaponUI != null)
+                {
+                    weaponUI.SetInventory(currentInventory);
+                }
+                if (passiveUI != null)
+                {
+                    passiveUI.SetInventory(currentInventory);
+                }
+            }
+        }
     }
 
     void DisplayResults()
@@ -305,7 +347,14 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0f;
             foreach (PlayerStat p in players)
             {
-                p.SendMessage("RemoveAndApplyUpgrades");
+                if (p != null) // Kiểm tra null trước khi gọi
+                {
+                    p.SendMessage("RemoveAndApplyUpgrades");
+                }
+                else
+                {
+                    Debug.LogWarning("PlayerStat in players array is null during StartLevelUp!");
+                }
             }
         }
     }
@@ -344,4 +393,78 @@ public class GameManager : MonoBehaviour
     {
         CleanupPickups();
     }
+
+    private void InitializePlayer()
+    {
+        if (GameStateManager.Instance != null && GameStateManager.Instance.selectedCharacter != null)
+        {
+            CharacterData selectedChar = GameStateManager.Instance.selectedCharacter;
+            if (selectedChar.CharacterPrefab != null)
+            {
+                GameObject currentPlayer = GameObject.FindGameObjectWithTag("Player");
+                Vector3 spawnPosition = Vector3.zero;
+                if (currentPlayer != null)
+                {
+                    Debug.Log("Found initial player with tag 'Player': " + currentPlayer.name);
+                    spawnPosition = currentPlayer.transform.position;
+                    Destroy(currentPlayer);
+                }
+                else
+                {
+                    Debug.LogWarning("Không tìm thấy GameObject player với tag 'Player', using default position.");
+                }
+
+                GameObject newPlayer = Instantiate(selectedChar.CharacterPrefab, spawnPosition, Quaternion.identity);
+                newPlayer.tag = "Player";
+                PlayerStat newPlayerStat = newPlayer.GetComponent<PlayerStat>();
+                if (newPlayerStat != null)
+                {
+                    newPlayerStat.Stats = selectedChar.stats;
+                    PlayerInventory inventory = newPlayerStat.GetComponent<PlayerInventory>();
+                    if (inventory != null)
+                    {
+                        inventory.SetUIReferences(weaponUI, passiveUI, upgradeWindow);
+                        if (weaponUI != null)
+                        {
+                            weaponUI.SetInventory(inventory);
+                            Debug.Log("Weapon UI inventory set to: " + inventory.name);
+                        }
+                        if (passiveUI != null)
+                        {
+                            passiveUI.SetInventory(inventory);
+                            Debug.Log("Passive UI inventory set to: " + inventory.name);
+                        }
+                        if (weaponUI != null) weaponUI.SetInventory(inventory);
+                        if (passiveUI != null) passiveUI.SetInventory(inventory);
+                        Debug.Log("UI references set for PlayerInventory on " + newPlayer.name);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("PlayerInventory not found on new player!");
+                    }
+                    newPlayerStat.SetUIReferences();
+                    cinemachineController.SetFollowTarget(newPlayer.transform);
+                    EnemyMovement.UpdatePlayerReference();
+                    Debug.Log("Player instantiated with character: " + selectedChar.Name + " at " + spawnPosition);
+                }
+                // Làm mới players sau khi tạo newPlayer
+                players = FindObjectsOfType<PlayerStat>();
+                if (players.Length > 0)
+                {
+                    currentPlayerStat = players[0];
+                    Debug.Log("Current PlayerStat updated: " + currentPlayerStat);
+                }
+            }
+            else
+            {
+                Debug.LogWarning("CharacterPrefab is null for selected character!");
+            }
+        }
+    }
+
+    private void NotifyPlayerInitialized()
+    {
+        MapController.UpdatePlayerReference();
+        EnemyMovement.UpdatePlayerReference();
+    } 
 }
