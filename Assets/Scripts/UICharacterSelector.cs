@@ -24,12 +24,18 @@ public class UICharacterSelector : MonoBehaviour
     public TextMeshProUGUI characterDescription;
     public Image selectedCharacterIcon;
     public Image selectedCharacterWeapon;
+    public Button buyButton;
 
     void Start()
     {
         Pref.InitializeDefaultCharacter();
         if (defaultCharacter) Select(defaultCharacter);
         InitializeToggles();
+        if (buyButton != null)
+        {
+            buyButton.onClick.AddListener(OnBuyButtonClicked); 
+            buyButton.gameObject.SetActive(false); 
+        }
     }
 
     // Khởi tạo toggle và kiểm tra trạng thái mở khóa
@@ -51,7 +57,7 @@ public class UICharacterSelector : MonoBehaviour
                 if (costText != null && costText.TryGetComponent(out TextMeshProUGUI costTmp))
                 {
                     costTmp.text = "Cost: " + character.Cost.ToString();
-                    costTmp.gameObject.SetActive(!Pref.IsCharacterUnlocked(character.CharacterId)); 
+                    costTmp.gameObject.SetActive(!Pref.IsCharacterUnlocked(character.CharacterId));
                 }
             }
         }
@@ -77,16 +83,15 @@ public class UICharacterSelector : MonoBehaviour
             }
         }
 #else 
-            Debug.LogWarning(" Chức năng không thể  gọi khi builds.");
+            Debug.LogWarning("Chức năng không thể gọi khi builds.");
 #endif
         return characters.ToArray();
     }
 
-
     public static CharacterData GetData()
     {
         if (selected)
-           return selected;
+            return selected;
         else
         {
             CharacterData[] characters = GetAllCharacterDataAssets();
@@ -99,13 +104,7 @@ public class UICharacterSelector : MonoBehaviour
     {
         if (character == null) { Debug.LogWarning("CharacterData được chọn là null!"); return; }
 
-        // Kiểm tra xem nhân vật đã được mở khóa chưa
-        if (!Pref.IsCharacterUnlocked(character.CharacterId))
-        {
-            Debug.LogWarning("Cannot select locked character: " + character.Name);
-            return; // Không cho phép chọn nếu chưa mở khóa
-        }
-
+        // Cập nhật UI ngay cả khi nhân vật bị khóa
         selected = statsUI.character = character;
         if (statsUI != null) statsUI.UpdateStatFields();
 
@@ -114,9 +113,34 @@ public class UICharacterSelector : MonoBehaviour
         if (selectedCharacterIcon) selectedCharacterIcon.sprite = character.Icon;
         if (selectedCharacterWeapon && character.StartingWeapon) selectedCharacterWeapon.sprite = character.StartingWeapon.icon;
 
+        // Hiển thị hoặc ẩn nút Buy dựa trên trạng thái mở khóa
+        if (buyButton != null)
+        {
+            buyButton.gameObject.SetActive(!Pref.IsCharacterUnlocked(character.CharacterId));
+        }
+
         if (GameStateManager.Instance != null) GameStateManager.Instance.selectedCharacter = character;
-        Debug.Log($"Đã chọn nhân vật: {character.Name}");
+        Debug.Log($"Đã chọn nhân vật: {character.Name} (Locked: {!Pref.IsCharacterUnlocked(character.CharacterId)})");
     }
+
+    private void OnBuyButtonClicked()
+    {
+        if (selected != null)
+        {
+            if (Pref.UnlockCharacter(selected.CharacterId, selected.Cost))
+            {
+                // Cập nhật UI sau khi mua thành công
+                InitializeToggles();
+                Select(selected); // Làm mới UI để ẩn nút Buy và lock icon
+                Debug.Log($"Đã mở khóa nhân vật: {selected.Name}");
+            }
+            else
+            {
+                Debug.LogWarning($"Không đủ coin để mở khóa nhân vật: {selected.Name}. Cần: {selected.Cost}, Hiện có: {Pref.Coins}");
+            }
+        }
+    }
+
 
     public void StartGame()
     {
@@ -126,7 +150,7 @@ public class UICharacterSelector : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Cannot start game with locked character or no character selected!");
+            Debug.LogWarning("Cannot start game with locked character: " + (selected != null ? selected.Name : "None") + " or no character selected!");
         }
     }
 }

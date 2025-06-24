@@ -4,7 +4,8 @@ using TMPro;
 public class CoinManager : MonoBehaviour
 {
     public static CoinManager Instance { get; private set; }
-    public TMP_Text coinDisplay; 
+    public TMP_Text coinDisplay;
+    public int initialCoins = 1000;
 
     void Awake()
     {
@@ -23,6 +24,7 @@ public class CoinManager : MonoBehaviour
 
     void Start()
     {
+        Pref.Coins = initialCoins;
         FindCoinDisplay(); // Tìm coinDisplay khi scene load
     }
 

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyMovement : SortTable
 {
@@ -106,10 +106,11 @@ public class EnemyMovement : SortTable
     {
         if (spriteRenderer == null) return;
 
-        if (Mathf.Abs(direction.x) < 0.01f)
-        {
-            spriteRenderer.flipX = direction.x > 0;
-        }
+        // Không flip nếu enemy gần như đứng yên (tránh rung lắc)
+        if (Mathf.Abs(direction.x) < 0.1f) return;
+
+        // Flip sprite dựa trên hướng x
+        spriteRenderer.flipX = direction.x < 0;
     }
 
     public static void UpdatePlayerReference()
