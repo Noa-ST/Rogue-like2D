@@ -1,10 +1,10 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class LoadPrefs : MonoBehaviour
+public class LoadPref : MonoBehaviour
 {
     [Header("General Settings")]
     [SerializeField] private bool canUse = false;
@@ -76,10 +76,17 @@ public class LoadPrefs : MonoBehaviour
             {
                 float loadSensitivity = PlayerPrefs.GetFloat("masterSen");
                 controllerSenTextValue.text = loadSensitivity.ToString("0");
+
+                // Sửa lỗi warning: cập nhật giá trị cho controllerSenSlider
+                if (controllerSenSlider != null)
+                {
+                    controllerSenSlider.value = loadSensitivity;
+                }
+
                 menuController.mainControllerSen = Mathf.RoundToInt(loadSensitivity);
             }
             if (PlayerPrefs.HasKey("masterInvertY"))
-            { 
+            {
                 if (PlayerPrefs.GetInt("masterInvertY") == 1)
                 {
                     invertYToggle.isOn = true;
