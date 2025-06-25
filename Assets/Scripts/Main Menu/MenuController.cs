@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -39,6 +39,7 @@ public class MenuController : MonoBehaviour
 
     [Header("Levels To Load")]
     public string _newGameLevel;
+    public string menuScene;
     private string levelToLoad;
     [SerializeField] private GameObject noSaveGameDialog = null;
 
@@ -65,6 +66,8 @@ public class MenuController : MonoBehaviour
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
+
+        Pref.InitializeGameState();
     }
     public void SetResolution(int resolutionIndex)
     {
@@ -74,25 +77,28 @@ public class MenuController : MonoBehaviour
 
     public void NewGameDialogYes()
     {
+        Pref.ResetGameData();
         SceneManager.LoadScene(_newGameLevel);
     }
 
     public void LoadGameDialogYes()
     {
-        if (PlayerPrefs.HasKey("SavedLevel"))
+        levelToLoad = PlayerPrefs.GetString("SavedLevel", menuScene); 
+        if (string.IsNullOrEmpty(levelToLoad))
         {
-            levelToLoad = PlayerPrefs.GetString("SavedLevel");
-            SceneManager.LoadScene(levelToLoad);
-        }
-        else
-        {
+            Debug.LogError("No valid scene to load!");
             noSaveGameDialog.SetActive(true);
         }
+        SceneManager.LoadScene(levelToLoad); 
     }
+
     public void ExitButton()
     {
+        // Lưu trạng thái game trước khi thoát
+        Pref.SaveGameState(SceneManager.GetActiveScene().name);
         Application.Quit();
     }
+
     public void SetVolume(float volume)
     {
         AudioListener.volume = volume;

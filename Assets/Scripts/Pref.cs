@@ -79,4 +79,31 @@ public class Pref
             Debug.LogWarning("No CharacterData assets found to initialize default character!");
         }
     }
+
+
+    // Thêm phương thức để reset toàn bộ dữ liệu
+    public static void ResetGameData()
+    {
+        PlayerPrefs.DeleteAll();
+        Coins = 0; // Reset coin về 0
+        InitializeDefaultCharacter(); // Khởi tạo lại nhân vật mặc định
+        Debug.Log("Game data has been reset.");
+    }
+
+    public static void InitializeGameState()
+    {
+        if (!PlayerPrefs.HasKey(PrefConst.COIN_KEY))
+        {
+            Coins = 0;
+            InitializeDefaultCharacter();
+            Debug.Log("Initialized default game state.");
+        }
+    }
+
+    public static void SaveGameState(string currentScene)
+    {
+        PlayerPrefs.SetString("SavedLevel", currentScene);
+        PlayerPrefs.Save();
+        Debug.Log("Game state saved. Current scene: " + currentScene + ", Coins: " + Coins);
+    }
 }
