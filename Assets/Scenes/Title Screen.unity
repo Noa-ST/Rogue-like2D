@@ -8336,6 +8336,7 @@ MonoBehaviour:
   fullScreenToggle: {fileID: 2028717253}
   confirmationPrompt: {fileID: 999361190}
   _newGameLevel: Menu
+  menuScene: 
   noSaveGameDialog: {fileID: 1249532193}
   resolutionDropdown: {fileID: 1092994633}
 --- !u!4 &1386242040
