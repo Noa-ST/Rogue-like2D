@@ -81,15 +81,19 @@ public class MenuController : MonoBehaviour
         SceneManager.LoadScene(_newGameLevel);
     }
 
+    //public void LoadGameDialogYes()
+    //{
+    //    levelToLoad = PlayerPrefs.GetString("SavedLevel", menuScene); 
+    //    if (string.IsNullOrEmpty(levelToLoad))
+    //    {
+    //        Debug.LogError("No valid scene to load!");
+    //        noSaveGameDialog.SetActive(true);
+    //    }
+    //    SceneManager.LoadScene(levelToLoad); 
+    //}
     public void LoadGameDialogYes()
     {
-        levelToLoad = PlayerPrefs.GetString("SavedLevel", menuScene); 
-        if (string.IsNullOrEmpty(levelToLoad))
-        {
-            Debug.LogError("No valid scene to load!");
-            noSaveGameDialog.SetActive(true);
-        }
-        SceneManager.LoadScene(levelToLoad); 
+        SceneManager.LoadScene("Menu");
     }
 
     public void ExitButton()
