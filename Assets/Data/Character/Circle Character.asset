@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Circle Character
   m_EditorClassIdentifier: 
   characterId: 2
-  cost: 10
+  cost: 1
   characterPrefab: {fileID: 1057602585509886172, guid: b0e550eaca490c348bc07b3d51374ce7, type: 3}
   icon: {fileID: -1412993907, guid: 2a2659b127d58ce4e8720b570ff0cb64, type: 3}
   name: 'Circle '

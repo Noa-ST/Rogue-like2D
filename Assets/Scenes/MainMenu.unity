@@ -700,7 +700,7 @@ Transform:
   m_GameObject: {fileID: 176228073}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 786.18933, y: 521.5948, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3168,7 +3168,7 @@ Transform:
   m_GameObject: {fileID: 551634496}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 786.18933, y: 521.5948, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8336,6 +8336,7 @@ MonoBehaviour:
   fullScreenToggle: {fileID: 2028717253}
   confirmationPrompt: {fileID: 999361190}
   _newGameLevel: Menu
+  menuScene: 
   noSaveGameDialog: {fileID: 1249532193}
   resolutionDropdown: {fileID: 1092994633}
 --- !u!4 &1386242040
@@ -8347,7 +8348,7 @@ Transform:
   m_GameObject: {fileID: 1386242038}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.22482316, y: 0.23914312, z: -0.0066874544}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

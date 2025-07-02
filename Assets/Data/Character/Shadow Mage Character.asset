@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Shadow Mage Character
   m_EditorClassIdentifier: 
   characterId: 4
-  cost: 50
+  cost: 1
   characterPrefab: {fileID: 1057602585509886172, guid: 11b0555f603c36f4398abae65e5eed8f, type: 3}
   icon: {fileID: 21300000, guid: cba6960f3ebf71744bbf2c95b1253afd, type: 3}
   name: Shadow

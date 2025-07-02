@@ -154,7 +154,6 @@ MonoBehaviour:
   minimumDistance: 0.2
   outOfFrameAction: 0
   knockbackVariance: 2
-  isFacingRight: 1
 --- !u!114 &4898293677518040339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,6 +198,12 @@ MonoBehaviour:
   drops:
   - name: Blue Gem
     itemPrefab: {fileID: 7453044612578514901, guid: b99910ee8ce5ef94795b9fb50961ccef, type: 3}
+    dropRate: 100
+  - name: Coin
+    itemPrefab: {fileID: 7453044612578514901, guid: 55fc92d02cfd1e24294f2f152da7a884, type: 3}
+    dropRate: 100
+  - name: Position
+    itemPrefab: {fileID: 7725099762864629142, guid: 5f5126b5b4072d94a9b59c8066b74c90, type: 3}
     dropRate: 100
 --- !u!61 &8664384762814928884
 BoxCollider2D:
