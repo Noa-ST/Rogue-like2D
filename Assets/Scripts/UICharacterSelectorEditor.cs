@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using TMPro;
 using UnityEditor;
 using UnityEditor.Events;
@@ -11,6 +10,7 @@ using UnityEngine.UI;
 public class UICharacterSelectorEditor : Editor
 {
     UICharacterSelector selector;
+    public Sprite lockSprite;
 
     private void OnEnable()
     {
@@ -20,6 +20,7 @@ public class UICharacterSelectorEditor : Editor
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
+        lockSprite = (Sprite)EditorGUILayout.ObjectField("Lock Sprite", lockSprite, typeof(Sprite), false);
         if (GUILayout.Button("Generate Selectable Character"))
         {
             CreateTogglesForCharacterData();
@@ -38,8 +39,7 @@ public class UICharacterSelectorEditor : Editor
         {
             Toggle tog = selector.toggleTemplate.transform.parent.GetChild(i).GetComponent<Toggle>();
             if (tog == selector.toggleTemplate) continue;
-            Undo.DestroyObjectImmediate(tog.gameObject); 
-
+            Undo.DestroyObjectImmediate(tog.gameObject);
         }
 
         Undo.RecordObject(selector, "Updates to UICharacterSelector.");
@@ -56,12 +56,11 @@ public class UICharacterSelectorEditor : Editor
             }
             else
             {
-                tog = Instantiate(selector.toggleTemplate, selector.toggleTemplate.transform.parent); 
+                tog = Instantiate(selector.toggleTemplate, selector.toggleTemplate.transform.parent);
                 Undo.RegisterCreatedObjectUndo(tog.gameObject, "Created a new toggle.");
             }
 
             Transform characterName = tog.transform.Find(selector.characterNamePath);
-
             if (characterName && characterName.TryGetComponent(out TextMeshProUGUI tmp))
             {
                 tmp.text = tog.gameObject.name = characters[i].Name;
@@ -74,6 +73,52 @@ public class UICharacterSelectorEditor : Editor
             Transform weaponIcon = tog.transform.Find(selector.weaponIconPath);
             if (weaponIcon && weaponIcon.TryGetComponent(out Image wpnIcon))
                 wpnIcon.sprite = characters[i].StartingWeapon.icon;
+
+            if (lockSprite && !Pref.IsCharacterUnlocked(characters[i].CharacterId))
+            {
+                Transform lockIcon = tog.transform.Find("Lock Icon");
+                Image lockImage = null;
+                if (!lockIcon)
+                {
+                    GameObject lockObj = new GameObject("Lock Icon");
+                    lockIcon = lockObj.transform;
+                    lockIcon.SetParent(tog.transform);
+                    lockIcon.localPosition = Vector3.zero;
+                    lockImage = lockObj.AddComponent<Image>();
+                    lockImage.sprite = lockSprite;
+                }
+                else
+                {
+                    lockImage = lockIcon.GetComponent<Image>();
+                }
+                if (lockImage != null)
+                {
+                    lockImage.enabled = true;
+                }
+
+                // Thêm text giá
+                Transform costText = tog.transform.Find(selector.costTextPath);
+                TextMeshProUGUI costTmp = null;
+                if (!costText)
+                {
+                    GameObject costObj = new GameObject("Cost Text");
+                    costText = costObj.transform;
+                    costText.SetParent(tog.transform);
+                    costText.localPosition = new Vector3(0, -30, 0);
+                    costTmp = costObj.AddComponent<TextMeshProUGUI>();
+                    costTmp.fontSize = 14;
+                    costTmp.alignment = TextAlignmentOptions.Center;
+                }
+                else
+                {
+                    costTmp = costText.GetComponent<TextMeshProUGUI>();
+                }
+                if (costTmp != null)
+                {
+                    costTmp.text = "Cost: " + characters[i].Cost.ToString();
+                    costTmp.gameObject.SetActive(true);
+                }
+            }
 
             selector.selectableToggles.Add(tog);
 
@@ -90,4 +135,3 @@ public class UICharacterSelectorEditor : Editor
         EditorUtility.SetDirty(selector);
     }
 }
-

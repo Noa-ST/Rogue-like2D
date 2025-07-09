@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
+using System.Collections;
 
 public class PlayerStat : EntityStats
 {
@@ -83,8 +84,8 @@ public class PlayerStat : EntityStats
 
     [Header("UI")]
     public Image healthBar;
-    public Image experienceBar;
-    public TMP_Text levelTxt;
+    Image experienceBar;
+    TMP_Text levelTxt;
 
     private void Awake()
     {
@@ -102,13 +103,12 @@ public class PlayerStat : EntityStats
         if (_characterData == null) return;      
         if (_characterData.StartingWeapon == null) return;
 
-        // Thêm vũ khí khởi đầu vào inventory
-        _inventory.Add(_characterData.StartingWeapon);
-        // Thiết lập giới hạn kinh nghiệm ban đầu từ phạm vi cấp độ đầu tiên
+        // Trì hoãn việc thêm weapon để chờ UI được gán
+        StartCoroutine(DelayedAddWeapon());
         experienceCap = levelRanges[0].experienceCapIncrease;
         // Gán UI cho nhân vật đã chọn
         GameManager.Ins.AssignChosenCharacterUI(_characterData);
-
+        SetUIReferences();
         UpdateHealthBar(); // Cập nhật thanh máu
         UpdateExperienceBar(); // Cập nhật thanh kinh nghiệm
         UpdateLevelText(); // Cập nhật thông tin cấp độ
@@ -127,6 +127,27 @@ public class PlayerStat : EntityStats
         }
 
         Recover(); // Phục hồi máu dần dần theo thời gian
+    }
+
+    private IEnumerator DelayedAddWeapon()
+    {
+        yield return null; // Chờ một frame
+        _inventory.Add(_characterData.StartingWeapon);
+    }
+
+    public void SetUIReferences()
+    {
+        if (GameManager.Ins != null)
+        {
+            experienceBar = GameManager.Ins.experienceBar; // Gán từ GameManager
+            levelTxt = GameManager.Ins.levelTxt; // Gán từ GameManager
+            if (experienceBar == null) Debug.LogWarning("experienceBar is null in PlayerStat!");
+            if (levelTxt == null) Debug.LogWarning("levelTxt is null in PlayerStat!");
+        }
+        else
+        {
+            Debug.LogWarning("GameManager.Ins is null!");
+        }
     }
 
     // Cập nhật lại các chỉ số của nhân vật sau khi buff được áp dụng

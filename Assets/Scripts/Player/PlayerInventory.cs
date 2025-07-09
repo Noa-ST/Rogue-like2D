@@ -32,18 +32,34 @@ public class PlayerInventory : MonoBehaviour
 
     public List<Slot> weaponSlots = new List<Slot>(6);
     public List<Slot> passiveSlots = new List<Slot>(6);
-    public UIIventoryIconsDisplay weaponUI, passiveUI;
+    private UIIventoryIconsDisplay weaponUI;
+    private UIIventoryIconsDisplay passiveUI;
 
     [Header("UI Elements")]
     public List<WeaponData> availableWeapons = new List<WeaponData>();
     public List<PassiveData> availablePassives = new List<PassiveData>();
 
     PlayerStat _player;
-    public UIUpgradeWindow upgradeWindow;
+    private UIUpgradeWindow upgradeWindow;
 
     private void Start()
     {
         _player = GetComponent<PlayerStat>();
+    }
+
+    public void SetUIReferences(UIIventoryIconsDisplay weapon, UIIventoryIconsDisplay passive, UIUpgradeWindow upgrade)
+    {
+        weaponUI = weapon;
+        passiveUI = passive;
+        upgradeWindow = upgrade;
+        Debug.Log("UI references set in PlayerInventory: weaponUI=" + (weaponUI != null) + ", passiveUI=" + (passiveUI != null) + ", upgradeWindow=" + (upgradeWindow != null));
+        RefreshUI(); // Cập nhật UI ngay sau khi gán
+    }
+
+    private void RefreshUI()
+    {
+        if (weaponUI != null) weaponUI.Refresh();
+        if (passiveUI != null) passiveUI.Refresh();
     }
 
     public bool Has(ItemData type) { return Get(type); }

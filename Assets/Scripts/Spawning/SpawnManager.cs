@@ -119,14 +119,11 @@ public class SpawnManager : MonoBehaviour
 
         float x = Random.Range(0f, 1f), y = Random.Range(0f, 1f);
 
-        switch (Random.Range(0, 2))
-        {
-            case 0:
-            default:
-                return Ins.referenceCamera.ViewportToWorldPoint(new Vector3(Mathf.Round(x), y));
-            case 1:
-                return Ins.referenceCamera.ViewportToWorldPoint(new Vector3(x, Mathf.Round(y)));
-        }
+        Vector3 viewportPoint = new Vector3(Mathf.Round(x), y, 0f); // Đặt Z = 0 trong viewport
+        Vector3 worldPosition = Ins.referenceCamera.ViewportToWorldPoint(viewportPoint);
+        worldPosition.z = 0f;
+        Debug.Log("Generated spawn position: " + worldPosition); // Debug vị trí spawn
+        return worldPosition;
     }
 
     public static bool IsWithinBoundaries(Transform checkedObject)

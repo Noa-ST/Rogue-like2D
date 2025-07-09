@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Burning
   icon: {fileID: 0}
-  type: 3
+  type: 1
   variations:
   - name: Burning
-    effect: {fileID: 0}
+    effect: {fileID: 7948514713363473328, guid: 8c24b8fe5e32aa64f8d69fb31b8fc020, type: 3}
     tint: {r: 0.86415094, g: 0.40212604, b: 0.16793872, a: 0}
     animationSpeed: 1
-    duration: 5
-    damagePerSecond: 6
+    duration: 6
+    damagePerSecond: 2
     healPerSecond: 0
     tickInterval: 0.25
     stackType: 0
@@ -45,7 +45,7 @@ MonoBehaviour:
       revival: 0
     enemyModifier:
       maxHealth: 0
-      moveSpeed: -1
+      moveSpeed: 0
       damage: 0
       knockbackMultiplier: 1
       resistances:

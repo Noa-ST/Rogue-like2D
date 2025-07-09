@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4455dbe986cf25b49852600a5bf101bc, type: 3}
   m_Name: Athur Character
   m_EditorClassIdentifier: 
-  icon: {fileID: -657105104, guid: 2a2659b127d58ce4e8720b570ff0cb64, type: 3}
+  characterPrefab: {fileID: 1057602585509886172, guid: c9bde4e14160faa42bcc2f352b3a264e, type: 3}
+  icon: {fileID: 1235846185, guid: 262046bb892a5144fbafae560e6cd834, type: 3}
   name: Athur
   fullName: Estel Athur
   characterDescription: "Nh\xE2n v\u1EADt c\xF3 th\u1EC3 ph\xF3ng ra dao"

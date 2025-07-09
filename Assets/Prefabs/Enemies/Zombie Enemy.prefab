@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2137635965445216536}
   - component: {fileID: 8929667717322150410}
   - component: {fileID: 8314414535785562714}
+  - component: {fileID: -8008368739063672333}
   m_Layer: 0
   m_Name: Zombie Enemy
   m_TagString: Enemy
@@ -31,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 7897284383897295597}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.733925, y: -2.5595863, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -99,7 +100,7 @@ Animator:
   m_GameObject: {fileID: 7897284383897295597}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: 423e475a3cd003b4f9b808e66347553e, type: 2}
+  m_Controller: {fileID: 9100000, guid: 530115fb8958a0040bbeb86d657cbd5e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -169,7 +170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sortingActive: 1
   minimumDistance: 0.2
-  outOfFrameAction: 2
+  outOfFrameAction: 0
   knockbackVariance: 2
 --- !u!114 &8929667717322150410
 MonoBehaviour:
@@ -185,7 +186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseStats:
     maxHealth: 10
-    moveSpeed: 1
+    moveSpeed: 3
     damage: 3
     knockbackMultiplier: 1
     resistances:
@@ -216,3 +217,33 @@ MonoBehaviour:
   - name: Blue Gem
     itemPrefab: {fileID: 7453044612578514901, guid: b99910ee8ce5ef94795b9fb50961ccef, type: 3}
     dropRate: 100
+  - name: Coin
+    itemPrefab: {fileID: 7453044612578514901, guid: 55fc92d02cfd1e24294f2f152da7a884, type: 3}
+    dropRate: 100
+--- !u!50 &-8008368739063672333
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7897284383897295597}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
