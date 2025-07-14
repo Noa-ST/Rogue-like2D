@@ -150,6 +150,8 @@ public class PlayerStat : EntityStats
         }
     }
 
+
+
     // Cập nhật lại các chỉ số của nhân vật sau khi buff được áp dụng
     public override void RecalculateStats()
     {
