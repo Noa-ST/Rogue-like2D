@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
@@ -23,5 +23,33 @@ public abstract class SortTable : MonoBehaviour
         int newSortOrder = (int)(-transform.position.y / minimumDistance);
 
         if (lastSortOrder != newSortOrder) sorted.sortingOrder = newSortOrder;
+    }
+    public override void Move()
+    {
+        if (player == null || rb == null)
+        {
+            Debug.LogWarning("Enemy " + gameObject.name + " cannot move: player=" + (player != null) + ", rb=" + (rb != null));
+            return;
+        }
+
+        Vector2 target = player.position;
+        Vector2 current = transform.position;
+        Vector2 direction = (target - current);
+        float distance = direction.magnitude;
+
+        // Nếu quá xa, không đuổi theo nữa
+        if (distance > stopDistance) return;
+
+        direction.Normalize();
+
+        // Nếu khoảng cách nhỏ hơn safeDistance => lùi lại
+        if (distance < safeDistance)
+        {
+            direction = -direction;
+        }
+
+        FlipSprite(direction);
+        float moveDistance = enemy.Actual.moveSpeed * Time.deltaTime;
+        rb.MovePosition(rb.position + direction * moveDistance);
     }
 }
