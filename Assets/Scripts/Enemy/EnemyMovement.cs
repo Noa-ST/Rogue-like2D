@@ -2,11 +2,7 @@
 
 public class EnemyMovement : SortTable
 {
-    protected Transform player;
-    protected EnemyStat enemy;
-    protected Rigidbody2D rb;
-    protected SpriteRenderer spriteRenderer;
-
+    protected EnemyStat enemy; // Chỉ cần EnemyStat
     protected Vector2 knockbackVelocity;
     protected float knockbackDuration;
 
@@ -19,21 +15,20 @@ public class EnemyMovement : SortTable
 
     protected bool spawnedOutOfFrame = false;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        enemy = GetComponent<EnemyStat>();
+        if (enemy == null) Debug.LogWarning("EnemyStat not found on " + gameObject.name + "!");
+    }
+
     protected override void Start()
     {
         base.Start();
-        rb = GetComponent<Rigidbody2D>();
         spawnedOutOfFrame = !SpawnManager.IsWithinBoundaries(transform);
-        enemy = GetComponent<EnemyStat>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-
-        UpdatePlayerReference();
-        if (player == null) Debug.LogWarning("Enemy " + gameObject.name + " has no player reference!");
-        if (enemy == null) Debug.LogWarning("EnemyStat not found on " + gameObject.name + "!");
-        if (rb == null) Debug.LogWarning("Rigidbody2D not found on " + gameObject.name + "!");
     }
 
-    protected virtual void Update()
+    protected void Update() // Loại bỏ virtual vì không cần ghi đè từ SortTable
     {
         if (knockbackDuration > 0)
         {
@@ -84,7 +79,7 @@ public class EnemyMovement : SortTable
         knockbackDuration = duration * (reducesDuration ? Mathf.Pow(enemy.Actual.knockbackMultiplier, pow) : 1);
     }
 
-    public virtual void Move()
+    public override void Move()
     {
         if (player == null || rb == null)
         {
@@ -96,33 +91,20 @@ public class EnemyMovement : SortTable
         Vector2 current = transform.position;
         Vector2 direction = (target - current).normalized;
 
-        FlipSprite(direction);
+        // Sử dụng moveSpeed từ EnemyStat
         float moveDistance = enemy.Actual.moveSpeed * Time.deltaTime;
 
         rb.MovePosition(rb.position + direction * moveDistance);
     }
 
-    protected void FlipSprite(Vector2 direction)
+    protected override void FlipSprite(Vector2 direction)
     {
-        if (spriteRenderer == null) return;
+        if (sorted == null) return;
 
         // Không flip nếu enemy gần như đứng yên (tránh rung lắc)
         if (Mathf.Abs(direction.x) < 0.1f) return;
 
         // Flip sprite dựa trên hướng x
-        spriteRenderer.flipX = direction.x < 0;
-    }
-
-    public static void UpdatePlayerReference()
-    {
-        EnemyMovement[] enemies = FindObjectsOfType<EnemyMovement>();
-        foreach (var enemy in enemies)
-        {
-            enemy.player = FindObjectOfType<PlayerMovement>()?.transform;
-            if (enemy.player == null)
-            {
-                Debug.LogWarning("Enemy " + enemy.gameObject.name + " could not find PlayerMovement!");
-            }
-        }
+        sorted.flipX = direction.x < 0;
     }
 }

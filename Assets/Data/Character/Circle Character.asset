@@ -17,9 +17,11 @@ MonoBehaviour:
   characterPrefab: {fileID: 1057602585509886172, guid: b0e550eaca490c348bc07b3d51374ce7, type: 3}
   icon: {fileID: -1412993907, guid: 2a2659b127d58ce4e8720b570ff0cb64, type: 3}
   name: 'Circle '
-  fullName: Circle Mage
-  characterDescription: "V\u1EDBi l\u1EDBp b\u1EA3o v\u1EC7 ki\xEAn c\u1ED1 v\xE0
-    s\u1EF1 t\u1EA5n c\xF4ng ho\xE0n h\u1EA3o"
+  fullName: "Circle \u2013 Ph\xE1p S\u01B0 Ma Thu\u1EADt"
+  characterDescription: "Ph\xE1p s\u01B0 c\xF3 kh\u1EA3 n\u0103ng tri\u1EC7u h\u1ED3i
+    v\xF2ng tr\xF2n ma thu\u1EADt \xE1nh s\xE1ng g\xE2y s\xE1t th\u01B0\u01A1ng di\u1EC7n
+    r\u1ED9ng. Ph\xF9 h\u1EE3p v\u1EDBi l\u1ED1i ch\u01A1i ki\u1EC3m so\xE1t kh\xF4ng
+    gian v\xE0 ph\xF2ng th\u1EE7."
   startingWeapon: {fileID: 11400000, guid: 4e89d416d660e864c92eae4b4d96383d, type: 2}
   stats:
     maxHealth: 100
@@ -28,11 +30,11 @@ MonoBehaviour:
     moveSpeed: 1
     might: 1
     area: 0
-    speed: 5
+    speed: 1
     duration: 1
     amount: 0
     cooldown: 1
-    luck: 0
+    luck: 1
     growth: 1
     greed: 1
     curse: 1

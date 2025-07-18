@@ -12,11 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4455dbe986cf25b49852600a5bf101bc, type: 3}
   m_Name: Athur Character
   m_EditorClassIdentifier: 
+  characterId: 0
+  cost: 0
   characterPrefab: {fileID: 1057602585509886172, guid: c9bde4e14160faa42bcc2f352b3a264e, type: 3}
   icon: {fileID: 1235846185, guid: 262046bb892a5144fbafae560e6cd834, type: 3}
   name: Athur
-  fullName: Estel Athur
-  characterDescription: "Nh\xE2n v\u1EADt c\xF3 th\u1EC3 ph\xF3ng ra dao"
+  fullName: "Arthur \u2013 Ki\u1EBFm V\u01B0\u01A1ng"
+  characterDescription: "Arthur l\xE0 m\u1ED9t chi\u1EBFn binh c\u1ED5 \u0111\u1EA1i,
+    s\u1EDF h\u1EEFu kh\u1EA3 n\u0103ng tri\u1EC7u h\u1ED3i v\xE0 ph\xF3ng ra nh\u1EEFng
+    thanh ki\u1EBFm ph\xE9p thu\u1EADt bay th\u1EB3ng v\u1EC1 ph\xEDa k\u1EBB \u0111\u1ECBch.
+    Ph\xF9 h\u1EE3p v\u1EDBi l\u1ED1i ch\u01A1i t\u1EA5n c\xF4ng ch\u1EE7 \u0111\u1ED9ng,
+    t\u1EA7m xa, ki\u1EC3m so\xE1t chi\u1EBFn tr\u01B0\u1EDDng."
   startingWeapon: {fileID: 11400000, guid: 3fc777862b3206b49b8d96158c550e68, type: 2}
   stats:
     maxHealth: 100

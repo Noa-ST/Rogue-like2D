@@ -2,17 +2,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using System.Collections;
 
 public class PlayerStat : EntityStats
 {
     // Dữ liệu của nhân vật, được truyền từ UI Character Selector
-    CharacterData _characterData;
+    private CharacterData _characterData;
 
     // Chỉ số cơ bản và chỉ số thực tế của nhân vật
     public CharacterData.Stats baseStats;
-    [SerializeField] CharacterData.Stats actualStats;
+    [SerializeField] private CharacterData.Stats actualStats;
 
     // Thuộc tính để lấy và thiết lập chỉ số của nhân vật
     public CharacterData.Stats Stats
@@ -29,25 +28,23 @@ public class PlayerStat : EntityStats
         get { return actualStats; }
     }
 
-
     #region Current Stats Properties
     // Thuộc tính cho máu hiện tại của người chơi
     public float CurrentHealth
     {
-        get
-        {
-            return health;
-        }
+        get { return health; }
         set
         {
             if (health != value)
             {
-                health = value;
-                // Cập nhật thanh máu khi máu thay đổi
+                health = Mathf.Clamp(value, 0, actualStats.maxHealth); // Giới hạn trong maxHealth
                 UpdateHealthBar();
+                OnHealthChanged?.Invoke(); // Thông báo khi máu thay đổi
             }
         }
     }
+
+    public event System.Action OnHealthChanged; // Sự kiện khi máu thay đổi
     #endregion
 
     [Header("Visuals")]
@@ -66,81 +63,76 @@ public class PlayerStat : EntityStats
     {
         public int startLevel;
         public int endLevel;
-        // Mức tăng giới hạn kinh nghiệm cho phạm vi này
-        public int experienceCapIncrease; 
+        public int experienceCapIncrease;
     }
 
     [Header("I-Frames")]
-    // Thời gian bất tử sau khi nhận sát thương
     public float invincibilityDuration;
-    // đếm thời gian bất tử
-    float _invincibilityTimer; 
-    bool _isInvincible;
+    private float _invincibilityTimer;
+    private bool _isInvincible;
 
     public List<LevelRange> levelRanges;
 
-    PlayerCollector _collector;
-    PlayerInventory _inventory;
+    private PlayerCollector _collector;
+    private PlayerInventory _inventory;
 
     [Header("UI")]
     public Image healthBar;
-    Image experienceBar;
-    TMP_Text levelTxt;
+    private Image experienceBar;
+    private TMP_Text levelTxt;
+
+    public event System.Action OnStatsChanged; // Sự kiện khi stats thay đổi
 
     private void Awake()
     {
         _characterData = UICharacterSelector.GetData();
         _inventory = GetComponent<PlayerInventory>();
         _collector = GetComponentInChildren<PlayerCollector>();
-        baseStats = actualStats = _characterData.stats;
-        _collector.SetRadius(actualStats.magnet);
-        health = actualStats.maxHealth;
+        if (_characterData != null)
+        {
+            baseStats = actualStats = _characterData.stats;
+            CurrentHealth = actualStats.maxHealth; // Sử dụng thuộc tính để khởi tạo
+            if (_collector != null) _collector.SetRadius(actualStats.magnet);
+        }
     }
 
     protected override void Start()
     {
         base.Start();
-        if (_characterData == null) return;      
+        if (_characterData == null) return;
         if (_characterData.StartingWeapon == null) return;
 
-        // Trì hoãn việc thêm weapon để chờ UI được gán
         StartCoroutine(DelayedAddWeapon());
-        experienceCap = levelRanges[0].experienceCapIncrease;
-        // Gán UI cho nhân vật đã chọn
+        experienceCap = levelRanges.Count > 0 ? levelRanges[0].experienceCapIncrease : 0;
         GameManager.Ins.AssignChosenCharacterUI(_characterData);
         SetUIReferences();
-        UpdateHealthBar(); // Cập nhật thanh máu
-        UpdateExperienceBar(); // Cập nhật thanh kinh nghiệm
-        UpdateLevelText(); // Cập nhật thông tin cấp độ
+        UpdateHealthBar();
+        UpdateExperienceBar();
+        UpdateLevelText();
+        StartCoroutine(InvincibilityCoroutine()); // Bắt đầu coroutine cho invincibility
     }
 
     protected override void Update()
     {
         base.Update();
-        if (_invincibilityTimer > 0)
-        {
-            _invincibilityTimer -= Time.deltaTime;
-        }
-        else if (_isInvincible)
-        {
-            _isInvincible = false;
-        }
-
-        Recover(); // Phục hồi máu dần dần theo thời gian
+        Recover();
     }
 
     private IEnumerator DelayedAddWeapon()
     {
-        yield return null; // Chờ một frame
-        _inventory.Add(_characterData.StartingWeapon);
+        yield return null;
+        if (_inventory != null && _characterData != null && _characterData.StartingWeapon != null)
+        {
+            _inventory.Add(_characterData.StartingWeapon);
+        }
     }
 
     public void SetUIReferences()
     {
         if (GameManager.Ins != null)
         {
-            experienceBar = GameManager.Ins.experienceBar; // Gán từ GameManager
-            levelTxt = GameManager.Ins.levelTxt; // Gán từ GameManager
+            experienceBar = GameManager.Ins.experienceBar;
+            levelTxt = GameManager.Ins.levelTxt;
             if (experienceBar == null) Debug.LogWarning("experienceBar is null in PlayerStat!");
             if (levelTxt == null) Debug.LogWarning("levelTxt is null in PlayerStat!");
         }
@@ -150,21 +142,18 @@ public class PlayerStat : EntityStats
         }
     }
 
-
-
-    // Cập nhật lại các chỉ số của nhân vật sau khi buff được áp dụng
     public override void RecalculateStats()
     {
         actualStats = baseStats;
 
-        // Cộng dồn chỉ số từ các vật phẩm trong inventory
-        foreach (PlayerInventory.Slot s in _inventory.passiveSlots)
+        if (_inventory != null)
         {
-            Passive p = s.item as Passive;
-            if (p)
+            foreach (PlayerInventory.Slot s in _inventory.passiveSlots)
             {
-                // Cộng dồn các hiệu ứng passive
-                actualStats += p.GetBoosts();
+                if (s.item is Passive p)
+                {
+                    actualStats += p.GetBoosts();
+                }
             }
         }
 
@@ -188,26 +177,33 @@ public class PlayerStat : EntityStats
             revival = 1
         };
 
-        // Cập nhật các chỉ số từ buff
-        foreach (Buff b in activeBuffs)
+        if (activeBuffs != null) // Kiểm tra null
         {
-            BuffData.Stats bd = b.GetData();
-            switch (bd.modifierType)
+            foreach (Buff b in activeBuffs)
             {
-                case BuffData.ModifierType.additive:
-                    actualStats += bd.playerModifier;
-                    break;
-                case BuffData.ModifierType.multiplicative:
-                    multiplier *= bd.playerModifier;
-                    break;
+                BuffData.Stats bd = b.GetData();
+                switch (bd.modifierType)
+                {
+                    case BuffData.ModifierType.additive:
+                        actualStats += bd.playerModifier;
+                        break;
+                    case BuffData.ModifierType.multiplicative:
+                        multiplier *= bd.playerModifier;
+                        break;
+                }
             }
         }
         actualStats *= multiplier;
 
-        _collector.SetRadius(actualStats.magnet);
+        if (_collector != null) _collector.SetRadius(actualStats.magnet);
+        // Điều chỉnh CurrentHealth nếu vượt quá maxHealth mới
+        if (CurrentHealth > actualStats.maxHealth)
+        {
+            CurrentHealth = actualStats.maxHealth;
+        }
+        OnStatsChanged?.Invoke(); // Thông báo thay đổi
     }
 
-    // Hàm tăng kinh nghiệm
     public void IncreaseExperience(int amount)
     {
         experience += amount;
@@ -215,47 +211,45 @@ public class PlayerStat : EntityStats
         UpdateExperienceBar();
     }
 
-    // Hàm kiểm tra nếu đủ kinh nghiệm để lên cấp
     private void LevelUpChecker()
     {
-        if (experience >= experienceCap)
+        while (experience >= experienceCap)
         {
             level++;
             experience -= experienceCap;
 
-            int experienceCapIncrease = 0; // Biến tạm để lưu mức tăng giới hạn kinh nghiệm
-
-            // Tìm mức tăng giới hạn kinh nghiệm phù hợp với cấp độ mới
+            int experienceCapIncrease = 0;
             foreach (var range in levelRanges)
             {
                 if (level >= range.startLevel && level <= range.endLevel)
                 {
                     experienceCapIncrease = range.experienceCapIncrease;
-                    break; // Dừng tìm kiếm sau khi tìm thấy phạm vi phù hợp
+                    break;
                 }
             }
-            experienceCap += experienceCapIncrease; // Cập nhật giới hạn kinh nghiệm mới
+            experienceCap += experienceCapIncrease;
 
             UpdateLevelText();
             GameManager.Ins.StartLevelUp();
-            if (experience >= experienceCap)
-                LevelUpChecker();
         }
     }
 
-    // Cập nhật thanh kinh nghiệm UI
-    void UpdateExperienceBar()
+    private void UpdateExperienceBar()
     {
-        experienceBar.fillAmount = (float)experience / experienceCap;
+        if (experienceBar != null)
+        {
+            experienceBar.fillAmount = (float)experience / experienceCap;
+        }
     }
 
-    // Cập nhật thông tin cấp độ UI
-    void UpdateLevelText()
+    private void UpdateLevelText()
     {
-        levelTxt.text = "LEVEL " + level.ToString();
+        if (levelTxt != null)
+        {
+            levelTxt.text = "LEVEL " + level.ToString();
+        }
     }
 
-    // Hàm nhận sát thương
     public override void TakeDamage(float dmg)
     {
         if (!_isInvincible)
@@ -265,17 +259,16 @@ public class PlayerStat : EntityStats
             if (dmg > 0)
             {
                 CurrentHealth -= dmg;
-                if (damageEffect)
+                if (damageEffect != null)
                     Destroy(Instantiate(damageEffect, transform.position, Quaternion.identity), 5f);
                 if (CurrentHealth <= 0)
                 {
                     Kill();
                 }
             }
-            else
+            else if (blockedEffect != null)
             {
-                if (blockedEffect)
-                    Destroy(Instantiate(blockedEffect, transform.position, Quaternion.identity), 5f);
+                Destroy(Instantiate(blockedEffect, transform.position, Quaternion.identity), 5f);
             }
 
             _invincibilityTimer = invincibilityDuration;
@@ -283,25 +276,23 @@ public class PlayerStat : EntityStats
         }
     }
 
-    // Cập nhật thanh máu UI
-    void UpdateHealthBar()
+    private void UpdateHealthBar()
     {
-        healthBar.fillAmount = CurrentHealth / actualStats.maxHealth;
+        if (healthBar != null)
+        {
+            healthBar.fillAmount = CurrentHealth / actualStats.maxHealth;
+        }
     }
 
-
-    // Hàm xử lý khi nhân vật chết
     public override void Kill()
     {
         if (!GameManager.Ins.isGameOver)
         {
             GameManager.Ins.AssignLevelReachedUI(level);
-
             GameManager.Ins.GameOver();
         }
     }
 
-    // Hàm phục hồi máu khi nhận vật phẩm 
     public override void RestoreHealth(float amount)
     {
         if (CurrentHealth < actualStats.maxHealth)
@@ -314,19 +305,31 @@ public class PlayerStat : EntityStats
         }
     }
 
-    // Hàm phục hồi máu dần dần theo thời gian
-    void Recover()
+    private void Recover()
     {
         if (CurrentHealth < actualStats.maxHealth)
         {
+            CurrentHealth += Stats.recovery * Time.deltaTime;
+            if (CurrentHealth > actualStats.maxHealth)
             {
-                CurrentHealth += Stats.recovery * Time.deltaTime;
+                CurrentHealth = actualStats.maxHealth;
+            }
+        }
+    }
 
-                if (CurrentHealth > actualStats.maxHealth)
+    private IEnumerator InvincibilityCoroutine()
+    {
+        while (true)
+        {
+            if (_invincibilityTimer > 0)
+            {
+                _invincibilityTimer -= Time.deltaTime;
+                if (_invincibilityTimer <= 0)
                 {
-                    CurrentHealth = actualStats.maxHealth;
+                    _isInvincible = false;
                 }
             }
+            yield return null;
         }
     }
 }

@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d107a438adcbef49914d478dfe809d8, type: 3}
+  m_Name: Wide Blade
+  m_EditorClassIdentifier: 
+  icon: {fileID: -1929908725, guid: 9a2f4d80e2e498149a8dfb797114ef60, type: 3}
+  maxLevel: 3
+  evolutionsData: []
+  baseStats:
+    name: "L\u01B0\u1EE1i ki\u1EBFm r\u1ED9ng"
+    description: "M\u1EDF r\u1ED9ng ph\u1EA1m vi \u1EA3nh h\u01B0\u1EDFng (+0.3 m\u1ED7i
+      c\u1EA5p), t\u0103ng v\xF9ng t\xE1c \u0111\u1ED9ng c\u1EE7a \u0111\xF2n \u0111\xE1nh."
+    boosts:
+      maxHealth: 0
+      recovery: 0
+      armor: 0
+      moveSpeed: 0
+      might: 0
+      area: 0.3
+      speed: 0
+      duration: 0
+      amount: 0
+      cooldown: 0
+      luck: 0
+      growth: 0
+      greed: 0
+      curse: 0
+      magnet: 0
+      revival: 0
+  growth:
+  - name: Level 2
+    description: "M\u1EDF r\u1ED9ng ph\u1EA1m vi \u1EA3nh h\u01B0\u1EDFng (+0.3 m\u1ED7i
+      c\u1EA5p), t\u0103ng v\xF9ng t\xE1c \u0111\u1ED9ng c\u1EE7a \u0111\xF2n \u0111\xE1nh."
+    boosts:
+      maxHealth: 0
+      recovery: 0
+      armor: 0
+      moveSpeed: 0
+      might: 0
+      area: 0.3
+      speed: 0
+      duration: 0
+      amount: 0
+      cooldown: 0
+      luck: 0
+      growth: 0
+      greed: 0
+      curse: 0
+      magnet: 0
+      revival: 0
+  - name: Level 3
+    description: "M\u1EDF r\u1ED9ng ph\u1EA1m vi \u1EA3nh h\u01B0\u1EDFng (+0.3 m\u1ED7i
+      c\u1EA5p), t\u0103ng v\xF9ng t\xE1c \u0111\u1ED9ng c\u1EE7a \u0111\xF2n \u0111\xE1nh."
+    boosts:
+      maxHealth: 0
+      recovery: 0
+      armor: 0
+      moveSpeed: 0
+      might: 0
+      area: 0.3
+      speed: 0
+      duration: 0
+      amount: 0
+      cooldown: 0
+      luck: 0
+      growth: 0
+      greed: 0
+      curse: 0
+      magnet: 0
+      revival: 0

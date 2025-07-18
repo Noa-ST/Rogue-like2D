@@ -17,18 +17,19 @@ MonoBehaviour:
   characterPrefab: {fileID: 1057602585509886172, guid: e81d7c825ecca1646bebacc601f217c8, type: 3}
   icon: {fileID: 21300000, guid: b6e9f93b26156de41b68ad873ed9ab28, type: 3}
   name: Wizard
-  fullName: Wizard Anya
-  characterDescription: "Nh\xE2n v\u1EADt c\xF3 th\u1EC3 \u0111i\u1EC1u khi\u1EC3n
-    s\u1EA5m s\xE9t"
+  fullName: "Wizard \u2013 Ph\xE1p S\u01B0 S\u1EA5m S\xE9t"
+  characterDescription: "Wizard s\u1EDF h\u1EEFu c\xE2y g\u1EADy c\xF3 kh\u1EA3 n\u0103ng
+    tri\u1EC7u h\u1ED3i s\u1EA5m s\xE9t, t\u1EA5n c\xF4ng nh\u1EEFng tia s\xE9t l\xEAn
+    k\u1EBB \u0111\u1ECBch."
   startingWeapon: {fileID: 11400000, guid: e1792d97092d4444687a3a74978915bf, type: 2}
   stats:
-    maxHealth: 100
+    maxHealth: 90
     recovery: 0
     armor: 0
-    moveSpeed: 1
-    might: 1
-    area: 0
-    speed: 5
+    moveSpeed: 1.1
+    might: 1.1
+    area: 1
+    speed: 1
     duration: 1
     amount: 0
     cooldown: 1

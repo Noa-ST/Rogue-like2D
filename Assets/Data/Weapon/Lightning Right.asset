@@ -18,7 +18,9 @@ MonoBehaviour:
   behavior: LightningRightWeapon
   baseStats:
     name: 'Lightning '
-    description: Strikes at random enemies.
+    description: "M\u1ED9t c\xE2y g\u1EADy ma ph\xE1p tri\u1EC7u h\u1ED3i s\u1EA5m
+      s\xE9t v\u1EDBi 50% c\u01A1 h\u1ED9i g\xE2y t\xEDch \u0111i\u1EC7n l\xEAn k\u1EBB
+      \u0111\u1ECBch."
     projectilePrefab: {fileID: 0}
     auraPrefab: {fileID: 0}
     hitEffect: {fileID: 414598589918480719, guid: aba94b4a611e08d43b96511a89aeb5d7, type: 3}
@@ -30,7 +32,7 @@ MonoBehaviour:
       width: 0
       height: 0
     lifespan: 0
-    damage: 15
+    damage: 10
     damageVariance: 2
     area: 1
     speed: 0
@@ -40,6 +42,9 @@ MonoBehaviour:
     number: 2
     piercing: 0
     maxInstances: 50
-    appliedBuffs: []
+    appliedBuffs:
+    - data: {fileID: 11400000, guid: 82d4a89cb74535f49a50733bd5dcdc08, type: 2}
+      variant: 0
+      probability: 0.5
   linearGrowth: []
   randomGrowth: []

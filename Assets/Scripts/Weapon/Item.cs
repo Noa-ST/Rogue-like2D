@@ -17,9 +17,11 @@ public abstract class Item : MonoBehaviour
         get { return owner; }
     }
 
+
     [System.Serializable]
     public class LevelData
     {
+        [TextArea(minLines: 3, maxLines: 10)]
         public string name, description;
     }
 

@@ -16,11 +16,10 @@ MonoBehaviour:
   icon: {fileID: 0}
   type: 4
   variations:
-  - name: Clock Lancet 1
+  - name: Freeze
     effect: {fileID: 6788488188406927784, guid: 53e079a17ec02d04fa1ac3fea32eb631, type: 3}
     tint: {r: 0.17254901, g: 0.38947323, b: 0.827451, a: 1}
     animationSpeed: 2
-    attackEffect: {fileID: 0}
     duration: 1
     damagePerSecond: 0
     healPerSecond: 0

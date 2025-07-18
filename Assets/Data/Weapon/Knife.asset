@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Knife
   m_EditorClassIdentifier: 
   icon: {fileID: -1611568071, guid: 83d0b776afdf81f479cd928573b1b119, type: 3}
-  maxLevel: 8
+  maxLevel: 5
   evolutionsData:
   - name: Knife Update
-    condition: 1
+    condition: 0
     consumes: 2
     evolutionLevel: 1
     catalysts:
@@ -30,10 +30,11 @@ MonoBehaviour:
   behavior: ProjectileWeapon
   baseStats:
     name: Kinfe
-    description: Fires quickly in the face direction.
+    description: "M\u1ED9t thanh ki\u1EBFm ch\xE9m nhanh theo h\u01B0\u1EDBng nh\xE2n
+      v\u1EADt \u0111ang di chuy\u1EC3n."
     projectilePrefab: {fileID: 123333301274617722, guid: 2fcd7fd8a16fc6a45ba662b1cea40a87, type: 3}
     auraPrefab: {fileID: 0}
-    hitEffect: {fileID: 0}
+    hitEffect: {fileID: 5184859275262686554, guid: 7c140a7572ec2244399c91ef06d97039, type: 3}
     procEffect: {fileID: 0}
     spawnVariance:
       serializedVersion: 2
@@ -55,7 +56,8 @@ MonoBehaviour:
     appliedBuffs: []
   linearGrowth:
   - name: Level 2
-    description: Fires 1 more projectile
+    description: "Khi l\xEAn c\u1EA5p, tri\u1EC7u h\u1ED3i th\xEAm m\u1ED9t thanh
+      ki\u1EBFm t\u1EA5n c\xF4ng c\xF9ng l\xFAc."
     projectilePrefab: {fileID: 0}
     auraPrefab: {fileID: 0}
     hitEffect: {fileID: 0}
@@ -79,7 +81,8 @@ MonoBehaviour:
     maxInstances: 0
     appliedBuffs: []
   - name: Level 3
-    description: Fires 1 more projectile. Base damage by 5
+    description: "Khi l\xEAn c\u1EA5p, tri\u1EC7u h\u1ED3i th\xEAm m\u1ED9t thanh
+      ki\u1EBFm t\u1EA5n c\xF4ng c\xF9ng l\xFAc"
     projectilePrefab: {fileID: 0}
     auraPrefab: {fileID: 0}
     hitEffect: {fileID: 0}
@@ -103,7 +106,9 @@ MonoBehaviour:
     maxInstances: 0
     appliedBuffs: []
   - name: Level 4
-    description: Base damage by 5 and Knockback 0.25.
+    description: "Khi l\xEAn c\u1EA5p, tri\u1EC7u h\u1ED3i th\xEAm m\u1ED9t thanh
+      ki\u1EBFm, 50% \u0111\xF3ng b\u0103ng k\u1EBB \u0111\u1ECBch, + 5 Damage, +
+      0.25 Knockback."
     projectilePrefab: {fileID: 0}
     auraPrefab: {fileID: 0}
     hitEffect: {fileID: 0}
@@ -125,9 +130,14 @@ MonoBehaviour:
     number: 0
     piercing: 0
     maxInstances: 0
-    appliedBuffs: []
+    appliedBuffs:
+    - data: {fileID: 11400000, guid: ea493b270ee0e4d4ab2f359e1bf02c2f, type: 2}
+      variant: 0
+      probability: 0.5
   - name: Level 5
-    description: ' Base damage by 5 and area by 1.'
+    description: "Khi l\xEAn c\u1EA5p, tri\u1EC7u h\u1ED3i th\xEAm m\u1ED9t thanh
+      ki\u1EBFm, 100% \u0111\xF3ng b\u0103ng k\u1EBB \u0111\u1ECBch, + 5 Damage,
+      + 0.25 Knockback."
     projectilePrefab: {fileID: 0}
     auraPrefab: {fileID: 0}
     hitEffect: {fileID: 0}
@@ -145,81 +155,12 @@ MonoBehaviour:
     speed: 0
     cooldown: 0
     projectileInterval: 0
-    knockback: 0
-    number: 0
-    piercing: 0
-    maxInstances: 0
-    appliedBuffs: []
-  - name: Level 6
-    description: ' Base damage by 5 and area by 1.'
-    projectilePrefab: {fileID: 0}
-    auraPrefab: {fileID: 0}
-    hitEffect: {fileID: 0}
-    procEffect: {fileID: 0}
-    spawnVariance:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 0
-      height: 0
-    lifespan: 0
-    damage: 5
-    damageVariance: 0
-    area: 1
-    speed: 0
-    cooldown: 0
-    projectileInterval: 0
-    knockback: 0
+    knockback: 0.25
     number: 1
     piercing: 0
     maxInstances: 0
-    appliedBuffs: []
-  randomGrowth:
-  - name: 
-    description: 
-    projectilePrefab: {fileID: 0}
-    auraPrefab: {fileID: 0}
-    hitEffect: {fileID: 0}
-    procEffect: {fileID: 0}
-    spawnVariance:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 0
-      height: 0
-    lifespan: 0
-    damage: 0
-    damageVariance: 0
-    area: 0
-    speed: 0
-    cooldown: 0
-    projectileInterval: 0
-    knockback: 0
-    number: 1
-    piercing: 0
-    maxInstances: 0
-    appliedBuffs: []
-  - name: 
-    description: 
-    projectilePrefab: {fileID: 0}
-    auraPrefab: {fileID: 0}
-    hitEffect: {fileID: 0}
-    procEffect: {fileID: 0}
-    spawnVariance:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 0
-      height: 0
-    lifespan: 0
-    damage: 5
-    damageVariance: 0
-    area: 0
-    speed: 0
-    cooldown: 0
-    projectileInterval: 0
-    knockback: 0
-    number: 1
-    piercing: 0
-    maxInstances: 0
-    appliedBuffs: []
+    appliedBuffs:
+    - data: {fileID: 11400000, guid: ea493b270ee0e4d4ab2f359e1bf02c2f, type: 2}
+      variant: 0
+      probability: 1
+  randomGrowth: []

@@ -152,6 +152,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sortingActive: 1
   minimumDistance: 0.2
+  player: {fileID: 0}
+  stopDistance: 5
+  safeDistance: 1
   outOfFrameAction: 0
   knockbackVariance: 2
 --- !u!114 &6705715600668233430
@@ -201,7 +204,10 @@ MonoBehaviour:
     dropRate: 100
   - name: Coin
     itemPrefab: {fileID: 7453044612578514901, guid: 55fc92d02cfd1e24294f2f152da7a884, type: 3}
-    dropRate: 100
+    dropRate: 50
+  - name: Red Position
+    itemPrefab: {fileID: 7725099762864629142, guid: 5f5126b5b4072d94a9b59c8066b74c90, type: 3}
+    dropRate: 20
 --- !u!61 &2254137783516433544
 BoxCollider2D:
   m_ObjectHideFlags: 0

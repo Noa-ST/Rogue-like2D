@@ -18,10 +18,11 @@ MonoBehaviour:
   behavior: WhipWeapon
   baseStats:
     name: Whip
-    description: 'Attacks horizontally, pass though enemies. '
+    description: "Ch\xE9m ngang xuy\xEAn qua k\u1EBB \u0111\u1ECBch, g\xE2y s\xE1t
+      th\u01B0\u01A1ng di\u1EC7n r\u1ED9ng"
     projectilePrefab: {fileID: 801225567637652041, guid: e3568121762a10042bbdfb072bcb1b49, type: 3}
     auraPrefab: {fileID: 0}
-    hitEffect: {fileID: 0}
+    hitEffect: {fileID: 5184859275262686554, guid: 7c140a7572ec2244399c91ef06d97039, type: 3}
     procEffect: {fileID: 0}
     spawnVariance:
       serializedVersion: 2
@@ -43,7 +44,8 @@ MonoBehaviour:
     appliedBuffs: []
   linearGrowth:
   - name: Level 2
-    description: Fires 1 more projectile.
+    description: "Ch\xE9m ngang xuy\xEAn qua k\u1EBB \u0111\u1ECBch, g\xE2y s\xE1t
+      th\u01B0\u01A1ng di\u1EC7n r\u1ED9ng. +1 \u0111\xF2n ch\xE9m."
     projectilePrefab: {fileID: 0}
     auraPrefab: {fileID: 0}
     hitEffect: {fileID: 0}

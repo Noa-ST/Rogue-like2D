@@ -28,6 +28,7 @@ public class CharacterData : ScriptableObject
     public string FullName { get => fullName; private set => fullName = value; }
 
     [SerializeField]
+    [TextArea(minLines: 3, maxLines: 10)]
     string characterDescription;
     public string CharacterDescription { get => characterDescription; private set => characterDescription = value; }
 

@@ -18,10 +18,11 @@ MonoBehaviour:
   behavior: AuraWeapon
   baseStats:
     name: Soul Eater
-    description: Garlic on steroids.
+    description: "M\u1ED9t v\xF2ng tr\xF2n ma ph\xE1p m\xE0u \u0111en g\xE2y l\u01B0\u1EE3ng
+      s\xE1t th\u01B0\u01A1ng l\u1EDBn l\xEAn k\u1EBB \u0111\u1ECBch xung quanh."
     projectilePrefab: {fileID: 0}
     auraPrefab: {fileID: 8002532739133289669, guid: 7948a033a016d69448b33a810ba2c0df, type: 3}
-    hitEffect: {fileID: 0}
+    hitEffect: {fileID: 5184859275262686554, guid: 7c140a7572ec2244399c91ef06d97039, type: 3}
     procEffect: {fileID: 0}
     spawnVariance:
       serializedVersion: 2

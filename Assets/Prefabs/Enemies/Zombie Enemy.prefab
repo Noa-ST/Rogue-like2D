@@ -170,6 +170,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sortingActive: 1
   minimumDistance: 0.2
+  player: {fileID: 0}
+  stopDistance: 5
+  safeDistance: 1
   outOfFrameAction: 0
   knockbackVariance: 2
 --- !u!114 &8929667717322150410
@@ -216,10 +219,13 @@ MonoBehaviour:
   drops:
   - name: Blue Gem
     itemPrefab: {fileID: 7453044612578514901, guid: b99910ee8ce5ef94795b9fb50961ccef, type: 3}
-    dropRate: 100
+    dropRate: 1
   - name: Coin
     itemPrefab: {fileID: 7453044612578514901, guid: 55fc92d02cfd1e24294f2f152da7a884, type: 3}
     dropRate: 100
+  - name: Red Position
+    itemPrefab: {fileID: 7453044612578514901, guid: 55fc92d02cfd1e24294f2f152da7a884, type: 3}
+    dropRate: 20
 --- !u!50 &-8008368739063672333
 Rigidbody2D:
   serializedVersion: 4

@@ -18,7 +18,9 @@ MonoBehaviour:
   behavior: AuraWeapon
   baseStats:
     name: Garlic
-    description: ' Damages nearby enemies. Reduces resistence knockback.'
+    description: "M\u1ED9t v\xF2ng tr\xF2n ma thu\u1EADt g\xE2y s\xE1t th\u01B0\u01A1ng
+      v\xE0 l\xE0m gi\u1EA3m kh\u1EA3 n\u0103ng kh\xE1ng knockback k\u1EBB \u0111\u1ECBch
+      xung quanh."
     projectilePrefab: {fileID: 0}
     auraPrefab: {fileID: 7787519355140114159, guid: b32b648cd492bcc4d80016d384816ea3, type: 3}
     hitEffect: {fileID: 5184859275262686554, guid: 7c140a7572ec2244399c91ef06d97039, type: 3}
@@ -43,7 +45,9 @@ MonoBehaviour:
     appliedBuffs: []
   linearGrowth:
   - name: Level 2
-    description: Increase Damage by 1.
+    description: "M\u1ED9t v\xF2ng tr\xF2n ma thu\u1EADt g\xE2y s\xE1t th\u01B0\u01A1ng
+      (+1) v\xE0 l\xE0m gi\u1EA3m kh\u1EA3 n\u0103ng kh\xE1ng knockback k\u1EBB \u0111\u1ECBch
+      xung quanh."
     projectilePrefab: {fileID: 0}
     auraPrefab: {fileID: 0}
     hitEffect: {fileID: 0}
@@ -67,7 +71,9 @@ MonoBehaviour:
     maxInstances: 0
     appliedBuffs: []
   - name: Level 3
-    description: Increase Damage by 2.
+    description: "M\u1ED9t v\xF2ng tr\xF2n ma thu\u1EADt g\xE2y s\xE1t th\u01B0\u01A1ng
+      (+2) v\xE0 l\xE0m gi\u1EA3m kh\u1EA3 n\u0103ng kh\xE1ng knockback k\u1EBB \u0111\u1ECBch
+      xung quanh."
     projectilePrefab: {fileID: 0}
     auraPrefab: {fileID: 0}
     hitEffect: {fileID: 0}
@@ -115,79 +121,9 @@ MonoBehaviour:
     maxInstances: 0
     appliedBuffs: []
   - name: Level 5
-    description: Increase Damage by 2 and increase Area by 1.
-    projectilePrefab: {fileID: 0}
-    auraPrefab: {fileID: 0}
-    hitEffect: {fileID: 0}
-    procEffect: {fileID: 0}
-    spawnVariance:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 0
-      height: 0
-    lifespan: 0
-    damage: 2
-    damageVariance: 0
-    area: 1
-    speed: 0
-    cooldown: 0
-    projectileInterval: 0
-    knockback: 0
-    number: 0
-    piercing: 0
-    maxInstances: 0
-    appliedBuffs: []
-  - name: Level 6
-    description: Increase Damage by 2 and increase Area by 1.
-    projectilePrefab: {fileID: 0}
-    auraPrefab: {fileID: 0}
-    hitEffect: {fileID: 0}
-    procEffect: {fileID: 0}
-    spawnVariance:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 0
-      height: 0
-    lifespan: 0
-    damage: 2
-    damageVariance: 0
-    area: 1
-    speed: 0
-    cooldown: 0
-    projectileInterval: 0
-    knockback: 0
-    number: 0
-    piercing: 0
-    maxInstances: 0
-    appliedBuffs: []
-  - name: Level 7
-    description: Increase Damage by 2 and increase Area by 1.
-    projectilePrefab: {fileID: 0}
-    auraPrefab: {fileID: 0}
-    hitEffect: {fileID: 0}
-    procEffect: {fileID: 0}
-    spawnVariance:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 0
-      height: 0
-    lifespan: 0
-    damage: 2
-    damageVariance: 0
-    area: 1
-    speed: 0
-    cooldown: 0
-    projectileInterval: 0
-    knockback: 0
-    number: 0
-    piercing: 0
-    maxInstances: 0
-    appliedBuffs: []
-  - name: Level 8
-    description: Increase Damage by 2 and increase Area by 1.
+    description: "M\u1ED9t v\xF2ng tr\xF2n ma thu\u1EADt g\xE2y +2 s\xE1t th\u01B0\u01A1ng
+      l\xEAn k\u1EBB \u0111\u1ECBch xung quanh v\xE0 gi\u1EA3m kh\u1EA3 n\u0103ng
+      kh\xE1ng \u0111\u1EA9y l\xF9i c\u1EE7a ch\xFAng."
     projectilePrefab: {fileID: 0}
     auraPrefab: {fileID: 0}
     hitEffect: {fileID: 0}

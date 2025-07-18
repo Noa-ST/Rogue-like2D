@@ -18,10 +18,11 @@ MonoBehaviour:
   behavior: AxeWeapon
   baseStats:
     name: Axe
-    description: Details  a lot of damage.
+    description: "M\u1ED9t c\xE2y r\xECu g\xE2y s\xE1t th\u01B0\u01A1ng l\u1EDBn
+      l\xEAn k\u1EBB \u0111\u1ECBch."
     projectilePrefab: {fileID: 2169626457729444849, guid: 5dede02ceb09be74ca36a8cd843097cf, type: 3}
     auraPrefab: {fileID: 0}
-    hitEffect: {fileID: 0}
+    hitEffect: {fileID: 5184859275262686554, guid: 7c140a7572ec2244399c91ef06d97039, type: 3}
     procEffect: {fileID: 0}
     spawnVariance:
       serializedVersion: 2
@@ -29,14 +30,14 @@ MonoBehaviour:
       y: 0
       width: 0
       height: 0
-    lifespan: 2
+    lifespan: 4
     damage: 20
     damageVariance: 2
     area: 1
-    speed: 1
+    speed: 3
     cooldown: 4
     projectileInterval: 0.2
-    knockback: 1
+    knockback: 2
     number: 1
     piercing: 3
     maxInstances: 70
