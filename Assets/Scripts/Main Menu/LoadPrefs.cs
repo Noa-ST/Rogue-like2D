@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,9 +10,11 @@ public class LoadPrefs : MonoBehaviour
     [SerializeField] private bool canUse = false;
     [SerializeField] private MenuController menuController;
 
-    [Header("Volume Settings")]
-    [SerializeField] private TMP_Text volumeTextValue = null;
-    [SerializeField] private Slider volumeSlider = null;
+    [Header("Music Volume Settings")]
+    [SerializeField] private TMP_Text musicVolumeTextValue = null;
+
+    [Header("Sound Volume Settings")]
+    [SerializeField] private TMP_Text soundVolumeTextValue = null;
 
     [Header("Brightness Settings")]
     [SerializeField] private Slider brightnessSlider = null;
@@ -33,62 +35,72 @@ public class LoadPrefs : MonoBehaviour
 
     private void Awake()
     {
-        if (canUse)
+        if (canUse && menuController != null)
         {
-            if (PlayerPrefs.HasKey("materVolume"))
+            // Load Music Volume
+            if (PlayerPrefs.HasKey("MusicVolume"))
             {
-                float loadedVolume = PlayerPrefs.GetFloat("materVolume");
-                volumeTextValue.text = loadedVolume.ToString("0.0");
-                volumeSlider.value = loadedVolume;
-                AudioListener.volume = loadedVolume;
+                float loadedMusicVolume = PlayerPrefs.GetFloat("MusicVolume");
+                if (musicVolumeTextValue != null) musicVolumeTextValue.text = loadedMusicVolume.ToString("0.0");
             }
-            else
+
+            // Load Sound Volume
+            if (PlayerPrefs.HasKey("SoundVolume"))
             {
-                menuController.ResetButton("Audio");
+                float loadedSoundVolume = PlayerPrefs.GetFloat("SoundVolume");
+                if (soundVolumeTextValue != null) soundVolumeTextValue.text = loadedSoundVolume.ToString("0.0");
             }
-            if (PlayerPrefs.HasKey("masterQuality"))
+
+            // Load Quality
+            if (PlayerPrefs.HasKey("masterQualityLevel"))
             {
-                int loadedQuality = PlayerPrefs.GetInt("masterQuality");
-                qualityDropdown.value = loadedQuality;
-                QualitySettings.SetQualityLevel(loadedQuality);
+                int loadedQuality = PlayerPrefs.GetInt("masterQualityLevel");
+                if (qualityDropdown != null)
+                {
+                    qualityDropdown.value = loadedQuality;
+                    QualitySettings.SetQualityLevel(loadedQuality);
+                }
             }
+
+            // Load Fullscreen
             if (PlayerPrefs.HasKey("masterFullScreen"))
             {
                 int loadedFullScreen = PlayerPrefs.GetInt("masterFullScreen");
-                if (loadedFullScreen == 1)
+                if (fullScreenToggle != null)
                 {
-                    fullScreenToggle.isOn = true;
-                    Screen.fullScreen = true;
-                }
-                else
-                {
-                    fullScreenToggle.isOn = false;
-                    Screen.fullScreen = false;
+                    fullScreenToggle.isOn = loadedFullScreen == 1;
+                    Screen.fullScreen = loadedFullScreen == 1;
                 }
             }
+
+            // Load Brightness
             if (PlayerPrefs.HasKey("masterBrightness"))
             {
                 float loadedBrightness = PlayerPrefs.GetFloat("masterBrightness");
-                brightnessTextValue.text = loadedBrightness.ToString("0.0");
-                brightnessSlider.value = loadedBrightness;
+                if (brightnessTextValue != null) brightnessTextValue.text = loadedBrightness.ToString("0.0");
+                if (brightnessSlider != null) brightnessSlider.value = loadedBrightness;
             }
-            if (PlayerPrefs.HasKey("masterSen"))
+
+            // Load Sensitivity
+            if (PlayerPrefs.HasKey("masterControllerSen"))
             {
-                float loadSensitivity = PlayerPrefs.GetFloat("masterSen");
-                controllerSenTextValue.text = loadSensitivity.ToString("0");
-                menuController.mainControllerSen = Mathf.RoundToInt(loadSensitivity);
+                float loadSensitivity = PlayerPrefs.GetFloat("masterControllerSen");
+                if (controllerSenTextValue != null) controllerSenTextValue.text = loadSensitivity.ToString("0");
+                if (menuController != null) menuController.mainControllerSen = Mathf.RoundToInt(loadSensitivity);
             }
+
+            // Load Invert Y
             if (PlayerPrefs.HasKey("masterInvertY"))
-            { 
-                if (PlayerPrefs.GetInt("masterInvertY") == 1)
+            {
+                if (invertYToggle != null)
                 {
-                    invertYToggle.isOn = true;
-                }
-                else
-                {
-                    invertYToggle.isOn = false;
+                    invertYToggle.isOn = PlayerPrefs.GetInt("masterInvertY") == 1;
                 }
             }
+        }
+        else
+        {
+            Debug.LogWarning("LoadPrefs: canUse is false or menuController is null!");
         }
     }
 }

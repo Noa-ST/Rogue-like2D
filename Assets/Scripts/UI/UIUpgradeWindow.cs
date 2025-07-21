@@ -165,9 +165,28 @@ public class UIUpgradeWindow : MonoBehaviour
 
                 b.onClick.RemoveAllListeners();
                 if (item)
-                    b.onClick.AddListener(() => inventory.LevelUp(item));
+                {
+                    int currentLevel = item.currentLevel; // Capture current level to avoid closure issue
+                    b.onClick.AddListener(() =>
+                    {
+                        if (AudioController.Ins != null)
+                        {
+                            AudioController.Ins.PlayButtonClickSound();
+                        }
+                        inventory.LevelUp(item);
+                    });
+                }
                 else
-                    b.onClick.AddListener(() => inventory.Add(selected));
+                {
+                    b.onClick.AddListener(() =>
+                    {
+                        if (AudioController.Ins != null)
+                        {
+                            AudioController.Ins.PlayButtonClickSound();
+                        }
+                        inventory.Add(selected);
+                    });
+                }
 
                 activeOptions++;
             }

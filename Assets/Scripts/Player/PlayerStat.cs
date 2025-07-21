@@ -231,6 +231,10 @@ public class PlayerStat : EntityStats
 
             UpdateLevelText();
             GameManager.Ins.StartLevelUp();
+            if (AudioController.Ins != null)
+            {
+                AudioController.Ins.PlayLevelUpSound(); 
+            }
         }
     }
 
@@ -261,6 +265,10 @@ public class PlayerStat : EntityStats
                 CurrentHealth -= dmg;
                 if (damageEffect != null)
                     Destroy(Instantiate(damageEffect, transform.position, Quaternion.identity), 5f);
+                if (AudioController.Ins != null)
+                {
+                    AudioController.Ins.PlayDamageTakenSound(); 
+                }
                 if (CurrentHealth <= 0)
                 {
                     Kill();

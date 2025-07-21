@@ -83,6 +83,10 @@ public abstract class Item : MonoBehaviour
         else if (this is Weapon && consumeWeapons) inventory.Remove((this as Weapon).data, true);
 
         inventory.Add(evolutionData.outcome.itemType);
+        if (AudioController.Ins != null)
+        {
+            AudioController.Ins.PlayEvolutionSound();
+        }
         return true;
     }
 

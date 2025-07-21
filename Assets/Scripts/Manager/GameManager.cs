@@ -236,6 +236,10 @@ public class GameManager : MonoBehaviour
     {
         if (currentState != GameState.Paused)
         {
+            if (AudioController.Ins != null)
+            {
+                AudioController.Ins.PlayPauseSound();
+            }
             ChangeState(GameState.Paused);
             Time.timeScale = 0f;
             pauseScreen.SetActive(true);
@@ -244,6 +248,10 @@ public class GameManager : MonoBehaviour
 
     public void ResumeGame()
     {
+        if (AudioController.Ins != null)
+        {
+            AudioController.Ins.PlayButtonClickSound();
+        }
         if (currentState == GameState.Paused)
         {
             currentState = previousState;

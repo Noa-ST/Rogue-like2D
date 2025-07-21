@@ -15,8 +15,6 @@ public class AudioController : Singleton<AudioController>
 
     [Header("Background Musics (by Context):")]
     public AudioClip mainMenuMusic;        // Nhạc nền cho menu chính
-    public AudioClip characterSelectionMusic; // Nhạc nền cho menu chọn nhân vật
-    // Thêm mảng hoặc clip cho gameplay nếu cần sau này
 
     [Header("Game Sounds:")]
     public AudioClip gotCollectable;            // Âm thanh thu thập vật phẩm
@@ -35,7 +33,8 @@ public class AudioController : Singleton<AudioController>
 
     public override void Start()
     {
-        PlayBackgroundMusic(); // Phát nhạc mặc định (có thể là mainMenuMusic)
+        // Phát nhạc mặc định dựa trên bối cảnh (có thể điều chỉnh theo scene hiện tại)
+        PlayMainMenuMusic(true); // Mặc định là Main Menu
     }
 
     private void UpdateAudioState()
@@ -63,7 +62,7 @@ public class AudioController : Singleton<AudioController>
         }
     }
 
-    public void PlayMusic(AudioClip music, bool loop = true)
+    private void PlayMusic(AudioClip music, bool loop = true)
     {
         if (musicAus && music != null && Pref.MusicEnabled)
         {
@@ -85,24 +84,18 @@ public class AudioController : Singleton<AudioController>
     }
 
     /// <summary>
-    /// Phát nhạc nền theo bối cảnh
+    /// Phát nhạc nền cho Main Menu
     /// </summary>
-    /// <param name="context">Bối cảnh (MainMenu, CharacterSelection, v.v.)</param>
-    public void PlayBackgroundMusic(string context = "MainMenu")
+    /// <param name="loop">Có lặp lại không</param>
+    public void PlayMainMenuMusic(bool loop = true)
     {
-        switch (context.ToLower())
-        {
-            case "mainmenu":
-                PlayMusic(mainMenuMusic, true);
-                break;
-            case "characterselection":
-                PlayMusic(characterSelectionMusic, true);
-                break;
-            default:
-                PlayMusic(mainMenuMusic, true); // Mặc định là mainMenuMusic
-                break;
-        }
+        PlayMusic(mainMenuMusic, loop);
     }
+
+    /// <summary>
+    /// Phát nhạc nền cho menu chọn nhân vật
+    /// </summary>
+    /// <param name="loop">Có lặp lại không</param>
 
     public void PlayCollectableSound()
     {

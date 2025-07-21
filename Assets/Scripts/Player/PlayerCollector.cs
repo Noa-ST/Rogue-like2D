@@ -25,6 +25,7 @@ public class PlayerCollector : MonoBehaviour
         if (collision.TryGetComponent(out Pickup p))
         {
             p.Collect(_player, pullSpeed);
+            if (AudioController.Ins != null) AudioController.Ins.PlayCollectableSound();
         }
     }
 }

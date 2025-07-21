@@ -121,6 +121,10 @@ public class UICharacterSelector : MonoBehaviour
 
         if (GameStateManager.Instance != null) GameStateManager.Instance.selectedCharacter = character;
         Debug.Log($"Đã chọn nhân vật: {character.Name} (Locked: {!Pref.IsCharacterUnlocked(character.CharacterId)})");
+        if (AudioController.Ins != null)
+        {
+            AudioController.Ins.PlayButtonClickSound();
+        }
     }
 
     private void OnBuyButtonClicked()
@@ -132,6 +136,10 @@ public class UICharacterSelector : MonoBehaviour
                 // Cập nhật UI sau khi mua thành công
                 InitializeToggles();
                 Select(selected); // Làm mới UI để ẩn nút Buy và lock icon
+                if (AudioController.Ins != null)
+                {
+                    AudioController.Ins.PlayButtonClickSound();
+                }
                 Debug.Log($"Đã mở khóa nhân vật: {selected.Name}");
             }
             else
@@ -146,6 +154,10 @@ public class UICharacterSelector : MonoBehaviour
     {
         if (selected != null && Pref.IsCharacterUnlocked(selected.CharacterId))
         {
+            if (AudioController.Ins != null)
+            {
+                AudioController.Ins.PlayButtonClickSound();
+            }
             SceneManager.LoadScene("Game");
         }
         else

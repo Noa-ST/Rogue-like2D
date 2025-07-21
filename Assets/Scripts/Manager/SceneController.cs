@@ -9,6 +9,10 @@ public class SceneController : MonoBehaviour
     {
         SceneManager.LoadScene(name);
         Time.timeScale = 1f;
+        if (AudioController.Ins != null)
+        {
+            AudioController.Ins.PlayButtonClickSound();
+        }
     }
 }
 

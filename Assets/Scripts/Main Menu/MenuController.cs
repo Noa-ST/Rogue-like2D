@@ -8,9 +8,8 @@ using System.Collections;
 public class MenuController : MonoBehaviour
 {
     [Header("Volume Setting")]
-    [SerializeField] private TMP_Text volumeTextValue = null;
-    [SerializeField] private Slider volumeSlider = null;
-    [SerializeField] private float defaultVolume = 1.0f;
+    [SerializeField] private TMP_Text musicVolumeTextValue = null;
+    [SerializeField] private TMP_Text soundVolumeTextValue = null;
 
     [Header("Gameplay Setting")]
     [SerializeField] private TMP_Text controllerSenTextValue = null;
@@ -38,13 +37,16 @@ public class MenuController : MonoBehaviour
     [SerializeField] private GameObject confirmationPrompt;
 
     [Header("Levels To Load")]
-    public string menuScene; 
+    public string menuScene;
     private string levelToLoad;
     [SerializeField] private GameObject noSaveGameDialog = null;
 
     [Header("Resolution Dropdown")]
     public TMP_Dropdown resolutionDropdown;
     private Resolution[] resolutions;
+
+    [Header("Audio Settings")]
+    [SerializeField] private SettingAudio audioSetting;
 
     private void Start()
     {
@@ -69,8 +71,7 @@ public class MenuController : MonoBehaviour
             resolutionDropdown.RefreshShownValue();
         }
 
-        Pref.InitializeGameState();
-        LoadVolumeValue();
+        LoadSettings();
         LoadControllerSenValue();
         LoadBrightnessValue();
         LoadQualityValue();
@@ -78,22 +79,14 @@ public class MenuController : MonoBehaviour
         LoadInvertYValue();
         if (AudioController.Ins != null)
         {
-            AudioController.Ins.PlayBackgroundMusic("mainMenuMusic");
+            AudioController.Ins.PlayMainMenuMusic();
         }
     }
 
-    private void LoadVolumeValue()
+    private void LoadSettings()
     {
-        float volumeValue = PlayerPrefs.GetFloat("masterVolume");
-        if (volumeValue == 0) volumeValue = defaultVolume;
-        volumeSlider.value = volumeValue;
-        AudioListener.volume = volumeValue;
-        volumeTextValue.text = volumeValue.ToString("0.0");
-        if (AudioController.Ins != null)
-        {
-            AudioController.Ins.SetMusicVolume(volumeValue);
-            AudioController.Ins.sfxAus.volume = volumeValue;
-        }
+        if (musicVolumeTextValue != null) musicVolumeTextValue.text = PlayerPrefs.GetFloat("MusicVolume", 0.3f).ToString("0.0");
+        if (soundVolumeTextValue != null) soundVolumeTextValue.text = PlayerPrefs.GetFloat("SoundVolume", 1f).ToString("0.0");
     }
 
     private void LoadControllerSenValue()
@@ -101,17 +94,17 @@ public class MenuController : MonoBehaviour
         int controllerSenValue = PlayerPrefs.GetInt("masterControllerSen");
         if (controllerSenValue == 0) controllerSenValue = defaultSen;
         mainControllerSen = controllerSenValue;
-        controllerSenSlider.value = controllerSenValue;
-        controllerSenTextValue.text = controllerSenValue.ToString("0");
+        if (controllerSenSlider != null) controllerSenSlider.value = controllerSenValue;
+        if (controllerSenTextValue != null) controllerSenTextValue.text = controllerSenValue.ToString("0");
     }
 
     private void LoadBrightnessValue()
     {
         float brightnessValue = PlayerPrefs.GetFloat("masterBrightness");
         if (brightnessValue == 0) brightnessValue = defaultBrightness;
-        brightnessSlider.value = brightnessValue;
+        if (brightnessSlider != null) brightnessSlider.value = brightnessValue;
         _brightnessLevel = brightnessValue;
-        brightnessTextValue.text = brightnessValue.ToString("0.0");
+        if (brightnessTextValue != null) brightnessTextValue.text = brightnessValue.ToString("0.0");
     }
 
     private void LoadQualityValue()
@@ -156,49 +149,10 @@ public class MenuController : MonoBehaviour
         Application.Quit();
     }
 
-    public void SetVolume(float volume)
-    {
-        AudioListener.volume = volume;
-        volumeTextValue.text = volume.ToString("0.0");
-        if (AudioController.Ins != null)
-        {
-            AudioController.Ins.SetMusicVolume(volume);
-            AudioController.Ins.sfxAus.volume = volume;
-        }
-    }
-
-    public void VolumeApply()
-    {
-        PlayerPrefs.SetFloat("masterVolume", AudioListener.volume);
-        if (AudioController.Ins != null) AudioController.Ins.PlayButtonClickSound();
-        StartCoroutine(ConfirmationBox());
-    }
-
-    public void SetControllerSen(float sensitivity)
-    {
-        mainControllerSen = Mathf.RoundToInt(sensitivity);
-        controllerSenTextValue.text = mainControllerSen.ToString("0");
-    }
-
-    public void GameplayApply()
-    {
-        if (invertYToggle != null && invertYToggle.isOn)
-        {
-            PlayerPrefs.SetInt("masterInvertY", 1);
-        }
-        else
-        {
-            PlayerPrefs.SetInt("masterInvertY", 0);
-        }
-        PlayerPrefs.SetFloat("masterControllerSen", mainControllerSen);
-        if (AudioController.Ins != null) AudioController.Ins.PlayButtonClickSound();
-        StartCoroutine(ConfirmationBox());
-    }
-
     public void SetBrightness(float brightness)
     {
         _brightnessLevel = brightness;
-        brightnessTextValue.text = brightness.ToString("0.0");
+        if (brightnessTextValue != null) brightnessTextValue.text = brightness.ToString("0.0");
     }
 
     public void SetFullScreen(bool isFullScreen)
@@ -243,18 +197,12 @@ public class MenuController : MonoBehaviour
 
         if (MenuType == "Audio")
         {
-            if (volumeSlider != null)
+            if (audioSetting != null)
             {
-                AudioListener.volume = defaultVolume;
-                volumeSlider.value = defaultVolume;
-                volumeTextValue.text = defaultVolume.ToString("0.0");
-                if (AudioController.Ins != null)
-                {
-                    AudioController.Ins.SetMusicVolume(defaultVolume);
-                    AudioController.Ins.sfxAus.volume = defaultVolume;
-                }
+                audioSetting.ResetAudioSettings();
             }
-            VolumeApply();
+            if (musicVolumeTextValue != null) musicVolumeTextValue.text = "0.3";
+            if (soundVolumeTextValue != null) soundVolumeTextValue.text = "1.0";
         }
 
         if (MenuType == "Gameplay")
@@ -270,11 +218,33 @@ public class MenuController : MonoBehaviour
         }
     }
 
+    public void GameplayApply()
+    {
+        if (invertYToggle != null && invertYToggle.isOn)
+        {
+            PlayerPrefs.SetInt("masterInvertY", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("masterInvertY", 0);
+        }
+        PlayerPrefs.SetFloat("masterControllerSen", mainControllerSen);
+        if (AudioController.Ins != null) AudioController.Ins.PlayButtonClickSound();
+        StartCoroutine(ConfirmationBox());
+    }
+
     public IEnumerator ConfirmationBox()
     {
         if (confirmationPrompt != null) confirmationPrompt.SetActive(true);
         if (AudioController.Ins != null) AudioController.Ins.PlayButtonClickSound();
         yield return new WaitForSeconds(2);
         if (confirmationPrompt != null) confirmationPrompt.SetActive(false);
+    }
+
+    // Phương thức công khai để cập nhật text từ SettingAudio
+    public void UpdateVolumeText(float musicVolume, float soundVolume)
+    {
+        if (musicVolumeTextValue != null) musicVolumeTextValue.text = musicVolume.ToString("0.0");
+        if (soundVolumeTextValue != null) soundVolumeTextValue.text = soundVolume.ToString("0.0");
     }
 }

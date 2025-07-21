@@ -36,7 +36,10 @@ public class SpawnManager : MonoBehaviour
             {
                 currentWaveIndex++;
                 currentWaveDuration = currentWaveSpawnCount = 0;
-
+                if (AudioController.Ins != null)
+                {
+                    AudioController.Ins.PlayEnemySpawnSound();
+                }
                 if (currentWaveIndex >= data.Length)
                 {
                     Debug.Log("All waves have been spawned! Shutting down.", this);
@@ -59,6 +62,7 @@ public class SpawnManager : MonoBehaviour
 
                 Instantiate(prefab, GeneratePosition(), Quaternion.identity);
                 currentWaveSpawnCount++;
+    
             }
 
             spawnTimer += data[currentWaveIndex].GetSpawnInterval();

@@ -16,17 +16,17 @@ public class Pref
 
     public static bool MusicEnabled
     {
-        set => SetBool(PrefConst.MUSIC_ENABLED_KEY, value);
-        get => GetBool(PrefConst.MUSIC_ENABLED_KEY);
+        get => PlayerPrefs.GetInt(PrefConst.MUSIC_ENABLED_KEY.ToString(), 1) == 1; // Mặc định là 1 (true)
+        set => PlayerPrefs.SetInt(PrefConst.MUSIC_ENABLED_KEY.ToString(), value ? 1 : 0);
     }
 
     public static bool SoundEnabled
     {
-        set => SetBool(PrefConst.SOUND_ENABLED_KEY, value);
-        get => GetBool(PrefConst.SOUND_ENABLED_KEY);
+        get => PlayerPrefs.GetInt(PrefConst.SOUND_ENABLED_KEY.ToString(), 1) == 1; // Mặc định là 1 (true)
+        set => PlayerPrefs.SetInt(PrefConst.SOUND_ENABLED_KEY.ToString(), value ? 1 : 0);
     }
 
-    public static void SetBool(string key, bool isOn)
+public static void SetBool(string key, bool isOn)
     {
         if (isOn)
         {
@@ -97,6 +97,8 @@ public class Pref
         if (!PlayerPrefs.HasKey(PrefConst.COIN_KEY))
         {
             Coins = 0;
+            MusicEnabled = true; 
+            SoundEnabled = true;
             InitializeDefaultCharacter();
             Debug.Log("Initialized default game state.");
         }
