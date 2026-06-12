@@ -7,31 +7,42 @@ public class Aura : WeaponEffect
     Dictionary<EnemyStat, float> affectedTargets = new Dictionary<EnemyStat, float>();
     List<EnemyStat> targetsToUnaffect = new List<EnemyStat>();
 
+    List<EnemyStat> cachedTargets = new List<EnemyStat>();
+
     private void Update()
     {
-        Dictionary<EnemyStat, float> affectedTargsCopy = new Dictionary<EnemyStat, float>(affectedTargets);
+        if (affectedTargets.Count == 0) return;
 
-        foreach (KeyValuePair<EnemyStat, float> pair in affectedTargsCopy)
+        cachedTargets.Clear();
+        cachedTargets.AddRange(affectedTargets.Keys);
+
+        foreach (EnemyStat target in cachedTargets)
         {
-            affectedTargets[pair.Key] -= Time.deltaTime;
-            if (pair.Value <= 0)
+            if (target == null)
             {
-                if (targetsToUnaffect.Contains(pair.Key))
+                affectedTargets.Remove(target);
+                continue;
+            }
+
+            affectedTargets[target] -= Time.deltaTime;
+            if (affectedTargets[target] <= 0)
+            {
+                if (targetsToUnaffect.Contains(target))
                 {
-                    affectedTargets.Remove(pair.Key);
-                    targetsToUnaffect.Remove(pair.Key);
+                    affectedTargets.Remove(target);
+                    targetsToUnaffect.Remove(target);
                 }
                 else
                 {
                     Weapon.Stats stats = weapon.GetStats();
-                    affectedTargets[pair.Key] = stats.cooldown * weapon. Owner.Stats.cooldown;
-                    pair.Key.TakeDamage(GetDamage(), transform.position, stats.knockback);
+                    affectedTargets[target] = stats.cooldown * weapon.Owner.Stats.cooldown;
+                    target.TakeDamage(GetDamage(), transform.position, stats.knockback);
 
-                    weapon.ApplyBuff(pair.Key);
+                    weapon.ApplyBuff(target);
 
                     if (stats.hitEffect)
                     {
-                        Destroy(Instantiate(stats.hitEffect, pair.Key.transform.position, Quaternion.identity), 5f);
+                        Destroy(Instantiate(stats.hitEffect, target.transform.position, Quaternion.identity), 5f);
                     }
                 }
             }

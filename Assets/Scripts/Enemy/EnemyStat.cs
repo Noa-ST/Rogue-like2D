@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
@@ -47,9 +47,9 @@ public class EnemyStat : EntityStats
 
         private static Stats Boost(Stats s1, float factor, Boostable boostable)
         {
-            if ((boostable & Boostable.health) != 0) s1.maxHealth = factor;
+            if ((boostable & Boostable.health) != 0) s1.maxHealth *= factor;
 
-            if ((boostable & Boostable.moveSpeed) != 0) s1.moveSpeed = factor;
+            if ((boostable & Boostable.moveSpeed) != 0) s1.moveSpeed *= factor;
 
             if ((boostable & Boostable.damage) != 0) s1.damage *= factor;
 
@@ -67,7 +67,7 @@ public class EnemyStat : EntityStats
         {
             s1.maxHealth += s2.maxHealth;
             s1.moveSpeed += s2.moveSpeed;
-            s1.damage += s2.maxHealth;
+            s1.damage += s2.damage;
             s1.knockbackMultiplier += s2.knockbackMultiplier;
             s1.resistances += s2.resistances;
             return s1;
@@ -77,7 +77,7 @@ public class EnemyStat : EntityStats
         {
             s1.maxHealth *= s2.maxHealth;
             s1.moveSpeed *= s2.moveSpeed;
-            s1.damage *= s2.maxHealth;
+            s1.damage *= s2.damage;
             s1.knockbackMultiplier *= s2.knockbackMultiplier;
             s1.resistances *= s2.resistances;
             return s1;
@@ -131,11 +131,6 @@ public class EnemyStat : EntityStats
 
     public override void RecalculateStats()
     {
-        foreach (Buff b in activeBuffs)
-        {
-            actualStats += b.GetData().enemyModifier;
-        }
-
         float curse = GameManager.GetCumulativeCurse(),
               level = GameManager.GetCumulativeLevels();
         actualStats = (baseStats * curse) ^ level;

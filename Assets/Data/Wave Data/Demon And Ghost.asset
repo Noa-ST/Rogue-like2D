@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Demon And Ghost
   m_EditorClassIdentifier: 
   possibleSpawnPrefabs:
-  - {fileID: 9051004412554734662, guid: 9e308d9928d090545ab75193e9e139f6, type: 3}
   - {fileID: 7996998795180232836, guid: 5a9096bce73022c448d963d36730170a, type: 3}
   spawnInterval: {x: 1, y: 1}
   spawnsPerTick: {x: 1, y: 1}

@@ -330,7 +330,7 @@ public class GameManager : MonoBehaviour
         {
             foreach (PlayerStat p in players)
             {
-                p.SendMessage("KIll");
+                p.Kill();
             }
         }
     }
@@ -357,7 +357,7 @@ public class GameManager : MonoBehaviour
             {
                 if (p != null) // Kiểm tra null trước khi gọi
                 {
-                    p.SendMessage("RemoveAndApplyUpgrades");
+                    p.GetComponent<PlayerInventory>()?.RemoveAndApplyUpgrades();
                 }
                 else
                 {

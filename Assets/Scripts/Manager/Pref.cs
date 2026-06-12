@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class Pref
 {
@@ -74,12 +74,14 @@ public static void SetBool(string key, bool isOn)
             // Sắp xếp theo characterId để lấy nhân vật đầu tiên
             System.Array.Sort(characters, (a, b) => a.CharacterId.CompareTo(b.CharacterId));
             int firstCharacterId = characters[0].CharacterId;
-            int unlockCost = characters[0].Cost;
 
             if (!IsCharacterUnlocked(firstCharacterId))
             {
-                UnlockCharacter(firstCharacterId, unlockCost);
-                Debug.Log("Default character with ID " + firstCharacterId + " unlocked at cost: " + unlockCost);
+                // Mặc định mở khóa nhân vật đầu tiên miễn phí
+                string unlockKey = "CharacterUnlocked_" + firstCharacterId;
+                SetBool(unlockKey, true);
+                PlayerPrefs.Save();
+                Debug.Log("Default character with ID " + firstCharacterId + " unlocked for free.");
             }
             else
             {

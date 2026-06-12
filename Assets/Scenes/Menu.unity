@@ -5906,9 +5906,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41467060732c58446baff3449f40d671, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultCharacter: {fileID: 11400000, guid: a3ea7378145884643b482c5677d620ff, type: 2}
+  defaultCharacter: {fileID: 11400000, guid: 5ad640174f9a1e842842c7fb2c7ef1a1, type: 2}
+  allCharacters: []
   statsUI: {fileID: 799052817847667354}
-  toggleTemplate: {fileID: 1691943459}
+  toggleTemplate: {fileID: 243963120}
   characterNamePath: Character Name
   weaponIconPath: Weapon Icon
   characterIconPath: Character Icon

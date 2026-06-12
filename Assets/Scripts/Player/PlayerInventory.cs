@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -102,7 +102,7 @@ public class PlayerInventory : MonoBehaviour
         for (int i = 0; i < weaponSlots.Count; i++)
         {
             Weapon w = weaponSlots[i].item as Weapon;
-            if (w.data == data)
+            if (w != null && w.data == data)
             {
                 weaponSlots[i].Clear();
                 w.OnUnEquip();
@@ -117,12 +117,12 @@ public class PlayerInventory : MonoBehaviour
     {
         if (removeUpgradeAvailability) availablePassives.Remove(data);
 
-        for (int i = 0; i < weaponSlots.Count; i++)
+        for (int i = 0; i < passiveSlots.Count; i++)
         {
-            Passive p = weaponSlots[i].item as Passive;
-            if (p.data == data)
+            Passive p = passiveSlots[i].item as Passive;
+            if (p != null && p.data == data)
             {
-                weaponSlots[i].Clear();
+                passiveSlots[i].Clear();
                 p.OnUnEquip();
                 Destroy(p.gameObject);
                 return true;

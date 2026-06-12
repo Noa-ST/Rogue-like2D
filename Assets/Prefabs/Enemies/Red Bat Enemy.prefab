@@ -222,7 +222,7 @@ MonoBehaviour:
     dropRate: 100
   - name: Coin
     itemPrefab: {fileID: 7453044612578514901, guid: 55fc92d02cfd1e24294f2f152da7a884, type: 3}
-    dropRate: 30
+    dropRate: 100
   - name: Red Position
     itemPrefab: {fileID: 7725099762864629142, guid: 5f5126b5b4072d94a9b59c8066b74c90, type: 3}
     dropRate: 20

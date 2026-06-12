@@ -16,7 +16,7 @@ MonoBehaviour:
   maxLevel: 5
   evolutionsData:
   - name: Knife Update
-    condition: 0
+    condition: 1
     consumes: 2
     evolutionLevel: 1
     catalysts:
@@ -53,7 +53,10 @@ MonoBehaviour:
     number: 1
     piercing: 1
     maxInstances: 70
-    appliedBuffs: []
+    appliedBuffs:
+    - data: {fileID: 11400000, guid: ea493b270ee0e4d4ab2f359e1bf02c2f, type: 2}
+      variant: 0
+      probability: 1
   linearGrowth:
   - name: Level 2
     description: "Khi l\xEAn c\u1EA5p, tri\u1EC7u h\u1ED3i th\xEAm m\u1ED9t thanh

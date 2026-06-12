@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -76,7 +76,8 @@ public abstract class Weapon : Item
     protected virtual void Update()
     {
         currentCooldown -= Time.deltaTime;
-        if (currentCooldown <= 0f)
+        // Chỉ tấn công khi nhấn chuột trái và đã hết thời gian hồi chiêu
+        if (Input.GetMouseButton(0) && currentCooldown <= 0f)
         {
             Attack(currentStats.number + owner.Stats.amount);
         }

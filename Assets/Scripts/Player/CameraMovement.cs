@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
@@ -57,9 +57,6 @@ public class CameraMovement : MonoBehaviour
 
         // Sử dụng SmoothDamp để di chuyển mượt mà
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothSpeed);
-
-        // Debug vị trí camera
-        Debug.Log("Camera position: " + transform.position + ", Target position: " + target.position + ", View Size: " + viewSize);
     }
 
     // Phương thức công khai để gán target từ GameManager

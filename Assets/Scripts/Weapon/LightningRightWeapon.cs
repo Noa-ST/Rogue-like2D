@@ -19,7 +19,13 @@ public class LightningRightWeapon : ProjectileWeapon
 
         if (currentCooldown <= 0)
         {
-            allSelectedEnemies = new List<EnemyStat>(FindObjectsOfType<EnemyStat>());
+            // Dùng OverlapCircleAll thay vì FindObjectsOfType để tối ưu hiệu năng
+            Collider2D[] colliderTargets = Physics2D.OverlapCircleAll(Owner.transform.position, 20f); // Giới hạn bán kính tìm kiếm
+            allSelectedEnemies = new List<EnemyStat>();
+            foreach (var c in colliderTargets)
+            {
+                if (c.TryGetComponent(out EnemyStat es)) allSelectedEnemies.Add(es);
+            }
             ActivateCooldown(true);
             currentAttackCount = attackCount;
         }

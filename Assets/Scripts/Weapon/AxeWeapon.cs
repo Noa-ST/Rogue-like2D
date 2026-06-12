@@ -6,8 +6,10 @@ public class AxeWeapon : ProjectileWeapon
 {
     protected override float GetSpawnAngle()
     {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        float directionToMouseX = mousePos.x - transform.position.x;
         int offset = currentAttackCount > 0 ? currentStats.number - currentAttackCount : 0;
-        return 90f - Mathf.Sign(movement.lastMoveVector.x) * (5 * offset);
+        return 90f - Mathf.Sign(directionToMouseX) * (5 * offset);
     }
 
     protected override Vector2 GetSpawnOffSet(float spawnAngle = 0)

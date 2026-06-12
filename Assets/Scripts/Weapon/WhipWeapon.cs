@@ -24,7 +24,10 @@ public class WhipWeapon : ProjectileWeapon
             _currentSpawnYOffset = 0f;
         }
 
-        float spawnDir = Mathf.Sign(movement.lastMoveVector.x) * (_currentSpawnCount % 2 != 0 ? -1 : 1);
+        // Xác định hướng dựa trên vị trí chuột so với người chơi
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        float directionToMouseX = mousePos.x - transform.position.x;
+        float spawnDir = Mathf.Sign(directionToMouseX) * (_currentSpawnCount % 2 != 0 ? -1 : 1);
         Vector2 spawnOffset = new Vector2(spawnDir * Random.Range(currentStats.spawnVariance.xMin, currentStats.spawnVariance.xMax), _currentSpawnYOffset);
 
         if (currentStats.procEffect)

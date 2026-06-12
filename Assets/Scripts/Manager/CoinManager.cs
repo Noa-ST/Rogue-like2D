@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using TMPro;
 
 public class CoinManager : MonoBehaviour
@@ -31,7 +31,11 @@ public class CoinManager : MonoBehaviour
     {
         if (coinDisplay == null)
         {
-            coinDisplay = GameObject.FindObjectOfType<TMP_Text>(true); // Tìm TMP_Text đầu tiên, điều chỉnh nếu cần
+            // Tìm theo tên GameObject cụ thể để chính xác hơn
+            GameObject go = GameObject.Find("Coin Display Text");
+            if (go != null) coinDisplay = go.GetComponent<TMP_Text>();
+            
+            if (coinDisplay == null) coinDisplay = GameObject.FindObjectOfType<TMP_Text>(true);
             if (coinDisplay == null)
             {
                 Debug.LogWarning("No TMP_Text found for coin display!");

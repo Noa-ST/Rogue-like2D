@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using TMPro;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -8,6 +10,7 @@ using UnityEngine.UI;
 public class UICharacterSelector : MonoBehaviour
 {
     public CharacterData defaultCharacter;
+    public CharacterData[] allCharacters; // Thêm danh sách để chạy được khi build
     public static CharacterData selected;
     public UIStatsDisplay statsUI;
 
@@ -29,8 +32,15 @@ public class UICharacterSelector : MonoBehaviour
     void Start()
     {
         Pref.InitializeDefaultCharacter();
-        if (defaultCharacter) Select(defaultCharacter);
+        
+        // Chỉ chọn nhân vật mặc định, việc mở khóa miễn phí sẽ do Pref.InitializeDefaultCharacter() đảm nhận cho nhân vật đầu tiên (ID 0)
+        if (defaultCharacter) 
+        {
+            Select(defaultCharacter);
+        }
+        
         InitializeToggles();
+
         if (buyButton != null)
         {
             buyButton.onClick.AddListener(OnBuyButtonClicked); 
@@ -42,11 +52,26 @@ public class UICharacterSelector : MonoBehaviour
     private void InitializeToggles()
     {
         CharacterData[] characters = GetAllCharacterDataAssets();
-        foreach (var character in characters)
+
+        // Sắp xếp: Đã mở khóa lên đầu, sau đó theo CharacterId
+        System.Array.Sort(characters, (a, b) =>
         {
+            bool aUnlocked = Pref.IsCharacterUnlocked(a.CharacterId);
+            bool bUnlocked = Pref.IsCharacterUnlocked(b.CharacterId);
+            if (aUnlocked && !bUnlocked) return -1;
+            if (!aUnlocked && bUnlocked) return 1;
+            return a.CharacterId.CompareTo(b.CharacterId);
+        });
+
+        for (int i = 0; i < characters.Length; i++)
+        {
+            var character = characters[i];
             Toggle toggle = selectableToggles.Find(t => t.name == character.Name);
             if (toggle != null)
             {
+                // Đưa các nhân vật đã sở hữu lên đầu trong UI
+                toggle.transform.SetSiblingIndex(i);
+
                 Transform lockIcon = toggle.transform.Find("Lock Icon");
                 if (lockIcon != null)
                 {
@@ -56,9 +81,14 @@ public class UICharacterSelector : MonoBehaviour
                 Transform costText = toggle.transform.Find(costTextPath);
                 if (costText != null && costText.TryGetComponent(out TextMeshProUGUI costTmp))
                 {
-                    costTmp.text = "Cost: " + character.Cost.ToString();
-                    costTmp.gameObject.SetActive(!Pref.IsCharacterUnlocked(character.CharacterId));
+                    bool isUnlocked = Pref.IsCharacterUnlocked(character.CharacterId);
+                    costTmp.text = character.Cost.ToString();
+                    costTmp.gameObject.SetActive(!isUnlocked);
                 }
+            }
+            else
+            {
+                Debug.LogWarning($"Không tìm thấy Toggle cho nhân vật: {character.Name}. Hãy đảm bảo tên GameObject của Toggle trùng với thuộc tính Name của CharacterData.");
             }
         }
     }
@@ -66,24 +96,23 @@ public class UICharacterSelector : MonoBehaviour
     // Phương thức tĩnh để lấy dữ liệu của nhân vật hiện tại
     public static CharacterData[] GetAllCharacterDataAssets()
     {
-        List<CharacterData> characters = new List<CharacterData>();
-
-#if UNITY_EDITOR
-        string[] allAssetPaths = AssetDatabase.GetAllAssetPaths();
-
-        foreach (string assetPath in allAssetPaths)
+        UICharacterSelector instance = FindObjectOfType<UICharacterSelector>();
+        if (instance != null && instance.allCharacters != null && instance.allCharacters.Length > 0)
         {
-            if (assetPath.EndsWith(".asset"))
-            {
-                CharacterData characterData = AssetDatabase.LoadAssetAtPath<CharacterData>(assetPath);
-                if (characterData != null)
-                {
-                    characters.Add(characterData);
-                }
-            }
+            return instance.allCharacters;
+        }
+
+        List<CharacterData> characters = new List<CharacterData>();
+#if UNITY_EDITOR
+        string[] guids = AssetDatabase.FindAssets("t:CharacterData");
+        foreach (string guid in guids)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(guid);
+            CharacterData data = AssetDatabase.LoadAssetAtPath<CharacterData>(path);
+            if (data != null) characters.Add(data);
         }
 #else 
-            Debug.LogWarning("Chức năng không thể gọi khi builds.");
+        Debug.LogWarning("Chức năng không thể gọi khi builds. Hãy gán allCharacters trong Inspector.");
 #endif
         return characters.ToArray();
     }

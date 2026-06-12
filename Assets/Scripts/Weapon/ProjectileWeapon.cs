@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class ProjectileWeapon : Weapon
 {
@@ -60,7 +60,14 @@ public class ProjectileWeapon : Weapon
 
     protected virtual float GetSpawnAngle()
     {
-        return Mathf.Atan2(movement.lastMoveVector.y, movement.lastMoveVector.x) * Mathf.Rad2Deg;
+        // Lấy vị trí chuột trong thế giới
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePos.z = 0; // Đảm bảo z = 0 cho game 2D
+        
+        // Tính toán hướng từ người chơi đến chuột
+        Vector2 direction = (mousePos - transform.position).normalized;
+        
+        return Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
     }
 
     protected virtual Vector2 GetSpawnOffSet(float spawnAngle = 0)

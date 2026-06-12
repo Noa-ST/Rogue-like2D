@@ -18,7 +18,7 @@ public class TreasureChest : MonoBehaviour
         foreach (PlayerInventory.Slot s in inventory.weaponSlots)
         {
             Weapon w = s.item as Weapon;
-            if (w.data.evolutionsData == null) continue;
+            if (w == null || w.data == null || w.data.evolutionsData == null) continue;
 
             foreach (ItemData.Evolution e in w.data.evolutionsData)
             {

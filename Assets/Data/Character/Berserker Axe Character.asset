@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Berserker Axe Character
   m_EditorClassIdentifier: 
   characterId: 1
-  cost: 1
+  cost: 10
   characterPrefab: {fileID: 1057602585509886172, guid: 15e8b1bfe84a4b342856cad5623fa55b, type: 3}
   icon: {fileID: -1474138904, guid: fe9a89d377caf434ba70bb4ae8e4e61b, type: 3}
   name: 'Berserker '

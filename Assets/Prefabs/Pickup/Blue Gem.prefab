@@ -161,9 +161,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bafc291180ce4c2489bcf6c5884528eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sortingActive: 1
+  minimumDistance: 0.2
+  player: {fileID: 0}
+  stopDistance: 5
+  safeDistance: 1
   lifespan: 0.5
   bobbingAnimation:
     frequency: 2
     direction: {x: 0, y: 0.3}
-  experience: 50
+  experience: 100
   health: 0
+  coins: 0
